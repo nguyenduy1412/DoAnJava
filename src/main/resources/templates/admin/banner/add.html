@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
+<!-- Mirrored from adminlte.io/themes/v3/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Aug 2023 09:23:18 GMT -->
+
+<head th:replace="admin/fragments/head::head"></head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+	<div class="wrapper">
+
+		<div class="preloader flex-column justify-content-center align-items-center">
+			<img class="animation__shake" th:src="@{/asset/img/AdminLTELogo.png}" alt="AdminLTELogo" height="60" width="60">
+		</div>
+
+		<header th:replace="admin/fragments/header::header" ></header>
+
+
+		<div th:replace="admin/fragments/sidebar::sidebar" ></div>
+
+		<div class="content-wrapper">
+
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 class="m-0">Thêm banner</h1>
+						</div>
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a th:href="@{/admin}">Trang chủ</a></li>
+								<li class="breadcrumb-item active">Thêm banner</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+			</div>
+				 <section class="content">
+			
+			      <!-- Default box -->
+			      <div class="col-8">
+						<div class="card p-5">
+							<form role="form" method="post" th:action="@{/admin/add-banner}" th:object="${banner}"  enctype="multipart/form-data">
+							<div class="box-body">
+								<div class="form-group">
+									<label for="exampleInputFile">Ảnh</label>
+									<div class="input-group">
+										<div class="custom-file">
+											<input type="file" class="custom-file-input" id="exampleInputFile" name="fileImage">
+											<label class="custom-file-label" for="exampleInputFile">Choose file</label>
+										</div>
+										<div class="input-group-append">
+											<span class="input-group-text">Tải ảnh</span>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputPassword1">Trạng thái</label>
+									<div class="form-check">
+									  <input class="form-check-input" type="radio" value="1" th:field="*{status}" >
+									  <label class="form-check-label" for="flexCheckDefault">
+									    Hiện
+									  </label>
+									</div>
+									<div class="form-check">
+									  <input class="form-check-input" type="radio" value="0" th:field="*{status}">
+									  <label class="form-check-label" for="flexCheckChecked">
+									    Ẩn
+									  </label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail1">Vị trí</label>
+									<input type="text" class="form-control" th:field="*{position}">
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail1">Link</label>
+									<input type="text" class="form-control" th:field="*{link}">
+								</div>
+							</div>
+
+							<div class="box-footer">
+								<button type="submit" class="btn btn-primary">Thêm</button>
+							</div>
+						</form>
+						
+						</div>
+			      </div>
+			    </section>
+		
+		</div>
+		
+
+	</div>
+
+ <footer th:replace="admin/fragments/footer::footer"></footer>
+
+	<aside class="control-sidebar control-sidebar-dark">
+
+	</aside>
+
+	</div>
+	
+		
+
+  <div th:replace="admin/fragments/scrip::scrip"></div>
+<script>
+			CKEDITOR.replace( 'editor1' );
+		</script>
+<script>
+	$(".nav-link").each(function () {
+            var paragraph = $(this).find("p"); // Tìm thẻ <p> trong thẻ <a>
+            var paragraphText = paragraph.text().trim(); // Lấy nội dung của thẻ <p>
+
+            // Kiểm tra nội dung của thẻ <p>
+            if (paragraphText === "Banner") {
+                $(this).addClass("active"); // Thêm class "active" vào thẻ <a>
+            }
+        });
+</script>	
+</body>
+
+<!-- Mirrored from adminlte.io/themes/v3/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Aug 2023 09:23:47 GMT -->
+
+</html>

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" class="no-js" xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
+<head th:replace="layout/head::head"></head>
+
+<body class="home-4">
+  <header th:replace="layout/header::header"></header>
+  <div id="chieucao"></div>
+  <div th:replace="layout/bannerstart::bannerstart"></div>
+
+
+  <div class="home-main-area mt-30">
+		<div class="container">
+			<div class="row">
+				<div th:replace="layout/category::category" ></div>
+				<div th:replace="layout/product::product" ></div>
+			</div>
+		</div>
+	</div>
+  <div class="banner-area-5 mtb-70 " >
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="banner-img-2 for-height">
+						<a href="#"><img th:src="@{fe/img/banner/5.jpg}" alt="banner" /></a>
+						<div class="banner-text">
+							<h3>G. Meyer Sách & Nhà xuất bản bản Du lịch Tâm linh</h3>
+							<h2>GIẢM GIÁ LÊN ĐẾN 30%</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+  <div th:replace="layout/social::social"></div>
+  <footer th:replace="layout/footer::footer"></footer>
+  <div th:replace="layout/js::js"></div>
+
+  <!-- <script src="https://uhchat.net/code.php?f=b9201e"></script> -->
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+<div class="slider-group  mt-30" th:fragment="bannerstart">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-9 col-md-12 col-12">
+				<!-- slider-area-start -->
+				<div class="slider-area">
+					<div class="slider-active owl-carousel"  >
+							<div th:each="banner : ${listBanners}" >
+							<div class="single-slider pt-154 pb-154 bg-img"
+								th:style="'background-image:url(uploads/'+${banner.img}+');'">
+								<div class="slider-content-4 slider-animated-1 pl-40">
+									<h1>Giảm giá tới 30%</h1>
+									<h2>Khi mua 3 sản phẩm</h2>
+									<a th:href="${banner.link}">Mua sắm ngay bây giờ</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- slider-area-end -->
+			</div>
+			<div class="col-lg-3 col-md-12 col-12">
+				<!-- banner-static-2-start -->
+				<div class="banner-static-2">
+					<div class="row">
+						<div class="col-lg-12 col-md-6 col-12">
+							<div class="banner-img-2">
+								<a href="#"><img th:src="@{fe/img/banner/20.jpg}" alt="banner" /></a>
+							</div>
+						</div>
+						<div class="col-lg-12 col-md-6 col-12">
+							<!-- banner-area-3-start -->
+							<div class="banner-area-3">
+								<div class="row">
+									<div class="col-12">
+										<!-- single-banner-2-start -->
+										<div class="single-banner-2 mt-16">
+											<div class="single-icon-2">
+												<a href="#">
+													<img class="service-blue-img"
+														th:src="@{fe/img/icon-img/service-1.png}" alt="banner" />
+													<img class="service-white-img"
+														th:src="@{fe/img/icon-img/service-1-white.png}" alt="banner" />
+												</a>
+											</div>
+											<div class="single-text-2">
+												<h2>Mặt hàng miễn phí vận chuyển</h2>
+												<!-- <p>Đối với tất cả các đơn hàng trên 500.000 VND</p> -->
+											</div>
+										</div>
+										<!-- single-banner-2-end -->
+									</div>
+									<div class="col-12">
+										<!-- single-banner-2-start -->
+										<div class="single-banner-2 mt-16">
+											<div class="single-icon-2">
+												<a href="#">
+													<img class="service-blue-img"
+														th:src="@{fe/img/icon-img/service-2.png}" alt="banner" />
+													<img class="service-white-img"
+														th:src="@{fe/img/icon-img/service-2-white.png}" alt="banner" />
+												</a>
+											</div>
+											<div class="single-text-2">
+												<h2>Đảm bảo hoàn lại tiền 100%</h2>
+												<!-- <p>Đảm bảo hoàn lại tiền 100%</p> -->
+											</div>
+										</div>
+										<!-- single-banner-2-end -->
+									</div>
+									<div class="col-12">
+										<!-- single-banner-2-start -->
+										<div class="single-banner-2 mt-16">
+											<div class="single-icon-2">
+												<a href="#">
+													<img class="service-blue-img"
+														th:src="@{fe/img/icon-img/service-3.png}" alt="banner" />
+													<img class="service-white-img"
+														th:src="@{fe/img/icon-img/service-3-white.png}" alt="banner" />
+												</a>
+											</div>
+											<div class="single-text-2">
+												<h2>Thanh toán khi giao hàng</h2>
+												<!-- <p>Lorem ipsum dolor amet</p> -->
+											</div>
+										</div>
+										<!-- single-banner-2-end -->
+									</div>
+								</div>
+							</div>
+							<!-- banner-area-3-end -->
+						</div>
+					</div>
+
+				</div>
+				<!-- banner-static-2-end -->
+			</div>
+		</div>
+	</div>
+</div>

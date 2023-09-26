@@ -1,0 +1,51 @@
+<div class="modal-dialog" role="document">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+					aria-hidden="true">x</span></button>
+		</div>
+		<div class="modal-body">
+			<div class="row">
+				<div class="col-md-5 col-sm-5 col-xs-12">
+					<div class="modal-tab">
+						<div class="product-details-large tab-content">
+							<div class="tab-pane active " id="image-1">
+								<img th:src="@{'/uploads/'+${book.image}}" alt="" class="imgShow" />
+							</div>
+							<div th:each="img : ${book.imageProducts}" class="tab-pane " th:id="${img.id}">
+								<img th:src="@{'/uploads/'+${img.image}}" class="imgShow" alt="" />
+							</div>
+						</div>
+
+						
+					</div>
+				</div>
+				<div class="col-md-7 col-sm-7 col-xs-12">
+					<div class="modal-pro-content">
+						<h3 th:text="${book.bookName}"></h3>
+						<div class="product-info-stock-sku">
+							<span th:text="${book.author}"></span>
+							<div class="product-attribute">
+								
+								<span class="value"></span>
+							</div>
+						</div>
+						<div class="price">
+							<span
+								th:text="${#numbers.formatDecimal(book.priceSale, 0, 'POINT', 0, 'COMMA')+ ' đ'}"></span>
+						</div>
+						<p
+							th:utext="${#strings.length(book.description) > 1000 ? #strings.substring(book.description, 0, 1000) + '...' : book.description}">
+						</p>
+						<form class="mt-5" th:action="@{/cart}" method="post">
+							<input type="hidden" name="id" th:value="${book.id}" />
+							<input type="number" name="quantity" value="1" />
+							<button type="submit">Add to cart</button>
+						</form>
+						<span><i class="fa fa-check"></i> In stock</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

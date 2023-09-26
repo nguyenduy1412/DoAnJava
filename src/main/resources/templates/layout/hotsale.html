@@ -1,0 +1,70 @@
+<div class="hot-sell-area-2 pb-50" th:fragment="hotsale">
+	<div class="section-title-2 title-big bt pt-50 mb-30">
+		<h3>Đang giảm giá</h3>
+	</div>
+	<div class="hot-sell-active owl-carousel">
+		<!-- single-product-start -->
+
+		<!-- single-product-end -->
+		<!-- single-product-start -->
+
+		<!-- single-product-end -->
+		<!-- single-product-start -->
+		<div class="product-wrapper" th:each="book : ${bookSale}">
+			<div class="product-img">
+				<a th:href="@{/book-detail/{id}(id=${book.id})}">
+					<img th:src="@{'/uploads/'+${book.image}}" alt="book" class="primary" />
+				</a>
+				<div class="quick-view">
+					<a class="action-view text-light" th:id="${book.id}" data-bs-target="#productModal" data-bs-toggle="modal"
+						title="Xem chi tiết">
+						<i class="fa fa-search-plus"></i>
+					</a>
+				</div>
+				<div class="product-flag">
+					<ul>
+						<li><span class="discount-percentage" th:text="${book.sale} +'%'"></span></li>
+					</ul>
+				</div>
+			</div>
+			<div class="product-details text-center">
+				<div class="timer-2 text-center">
+					<div data-countdown="2023/10/15"></div>
+				</div>
+				<div class="product-rating mt-20">
+					<ul>
+						<li><a href="#"><i class="fa fa-star"></i></a></li>
+						<li><a href="#"><i class="fa fa-star"></i></a></li>
+						<li><a href="#"><i class="fa fa-star"></i></a></li>
+						<li><a href="#"><i class="fa fa-star"></i></a></li>
+						<li><a href="#"><i class="fa fa-star"></i></a></li>
+					</ul>
+				</div>
+				<h4><a href="#"
+						th:text="${#strings.length(book.bookName) > 15 ? #strings.substring(book.bookName, 0, 15) + '...' : book.bookName}"></a>
+				</h4>
+				<div class="product-price">
+					<ul>
+						<li class="pricebook" th:text="${book.priceSale}"></li>
+						<li class="old-price pricebook" th:text="${book.price}"></li>
+					</ul>
+				</div>
+			</div>
+			<div class="product-link">
+				<div class="product-button">
+					<a th:if="${session.user == null}" th:href="@{/login}" title="Add to cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+					<button class="add-to-card" th:id="${book.id}" th:if="${session.user != null}" title="Add to cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+				</div>
+				<div class="add-to-link">
+					<ul>
+						<li><a th:href="@{/book-detail/{id}(id=${book.id})}" title="Details"><i class="fa fa-external-link"></i></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<!-- single-product-end -->
+		<!-- single-product-start -->
+		<!-- single-product-end -->
+	</div>
+</div>

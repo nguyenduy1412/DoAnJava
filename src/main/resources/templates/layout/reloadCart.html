@@ -1,0 +1,36 @@
+<ul>
+	<li><a th:href="@{/cart}"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a>
+		<span id="itemCart">
+			<span th:text="${session.soluong}"></span>
+		</span>
+
+		<div th:if="${session.user !=null}" class="mini-cart-sub">
+			<div class="cart-product scrollcss">
+				<div class="single-cart" th:each="cartItem : ${session.listItem}" th:data-id="${cartItem.id}">
+					<div class="cart-img">
+						<a href="#"><img th:src="@{'/uploads/'+${cartItem.book.image}}" alt="book" /></a>
+					</div>
+					<div class="cart-info">
+						<h5><a href="#" th:text="${cartItem.book.bookName}"></a></h5>
+						<p><span class="bg-white" th:text="${cartItem.quantity}"></span> x <span class="bg-white"
+								th:text="${#numbers.formatDecimal(cartItem.book.priceSale, 0, 'POINT', 0, 'COMMA')+ ' đ'}"></span>
+						</p>
+					</div>
+					<div class="cart-icon">
+						<a class="deleteItem" th:id="${cartItem.id}"><i class="fa fa-remove"></i></a>
+					</div>
+				</div>
+
+			</div>
+			<div class="cart-totals">
+				<h5>Tổng <span id="total"><span
+							th:text="${#numbers.formatDecimal(session.total, 0, 'POINT', 0, 'COMMA')+ ' đ'}"></span>
+					</span></h5>
+			</div>
+			<div class="cart-bottom">
+				<a class="view-cart" th:href="@{/cart}">Xem giỏ hàng</a>
+				<a th:href="@{/checkout}">Mua hàng</a>
+			</div>
+		</div>
+	</li>
+</ul>

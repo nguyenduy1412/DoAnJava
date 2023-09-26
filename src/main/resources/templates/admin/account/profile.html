@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
+<!-- Mirrored from adminlte.io/themes/v3/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Aug 2023 09:23:18 GMT -->
+
+<head th:replace="admin/fragments/head::head"></head>
+<style>
+	.imgCustomer {
+		width: 40%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding-right: 10%;
+	}
+
+	.imgCus {
+		width: 150px;
+		height: 150px;
+		border-radius: 50%;
+		border: 1px solid gray;
+		overflow: hidden;
+	}
+
+	.anhcustomer {
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+	}
+
+	.bg-white {
+		background-color: #fff;
+	}
+</style>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+	<div class="wrapper">
+
+		<div class="preloader flex-column justify-content-center align-items-center">
+			<img class="animation__shake" th:src="@{/asset/img/AdminLTELogo.png}" alt="AdminLTELogo" height="60"
+				width="60">
+		</div>
+
+		<header th:replace="admin/fragments/header::header"></header>
+
+
+		<div th:replace="admin/fragments/sidebar::sidebar"></div>
+
+		<div class="content-wrapper">
+
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 class="m-0">Dashboard</h1>
+						</div>
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="#">Home</a></li>
+								<li class="breadcrumb-item active">Dashboard v1</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+			</div>
+			<section class="content">
+				<form th:action="@{/admin/profile-edit}" th:object="${user}" method="post"enctype="multipart/form-data">
+				<div class="row align-items-center bg-white">
+					
+					<div class="col-lg-6">
+						<div class="card-body">
+							<input type="hidden" class="form-control"  th:field="*{id}" >
+							<input type="hidden" class="form-control"  th:field="*{userName}" >
+							<input type="hidden" class="form-control"  th:field="*{passWord}" >
+							<input type="hidden" class="form-control"  th:field="*{img}" >
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fas fa-user"></i></span>
+									</div>
+									<input type="text" class="form-control" placeholder="Full Name"  th:field="*{fullName}" >
+								</div>
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fas fa-envelope"></i></span>
+									</div>
+									<input type="email" class="form-control" placeholder="Email" th:field="*{email}" >
+								</div>
+								<div class="form-group">
+									<label for="exampleInputPassword1">Gender</label>
+									<div class="d-flex">
+										<div class="form-check ">
+											<input class="form-check-input" type="radio" value="1" th:field="*{gender}">
+											<label class="form-check-label" for="flexCheckDefault">
+												Nam
+											</label>
+										</div>
+										<div class="form-check ml-5">
+											<input class="form-check-input" type="radio" value="0" th:field="*{gender}">
+											<label class="form-check-label" for="flexCheckChecked">
+												Nữ
+											</label>
+										</div>
+									</div>
+
+								</div>
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+									</div>
+									<input type="text" class="form-control" placeholder="Address"  th:field="*{address}">
+								</div>
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fas fa-phone"></i></span>
+										</div>
+										<input type="text" class="form-control"
+											data-inputmask="&quot;mask&quot;: &quot;(999) 999-9999&quot;" data-mask=""
+											inputmode="text" placeholder="Phone"  th:field="*{telephone}">
+									</div>
+
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail1">Birthday</label>
+									<input type="date" class="form-control" name="date1" th:value="${#dates.format(birthday, 'yyyy-MM-dd')}">
+								</div>
+								<button type="submit" class="btn btn-primary">Lưu</button>
+						</div>
+					</div>
+					<div class="col-lg-6 d-flex align-items-center justify-content-center">
+						<div class="imgCustomer">
+							<div class="imgCus mb-3">
+								<img id="imgCus" th:src="@{'/uploads/'+${user.img}}" alt="" class="w-100">
+							</div>
+							<input style="display: none;" type="file" id="imageInput" name="fileImage">
+							<button type="button" class="btn btn-success" id="chooseButton">Chọn ảnh</button>
+						</div>
+					</div>
+					
+				</div>
+				
+			</form>
+			</section>
+
+		</div>
+
+
+	</div>
+
+	<footer th:replace="admin/fragments/footer::footer"></footer>
+
+	<aside class="control-sidebar control-sidebar-dark">
+
+	</aside>
+
+	</div>
+
+
+	<div th:replace="admin/fragments/scrip::scrip"></div>
+
+</body>
+
+<!-- Mirrored from adminlte.io/themes/v3/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Aug 2023 09:23:47 GMT -->
+
+</html>

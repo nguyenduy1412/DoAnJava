@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
+<!-- Mirrored from adminlte.io/themes/v3/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Aug 2023 09:23:18 GMT -->
+
+<head th:replace="admin/fragments/head::head"></head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+	<div class="wrapper">
+
+		<div class="preloader flex-column justify-content-center align-items-center">
+			<img class="animation__shake" th:src="@{/asset/img/AdminLTELogo.png}" alt="AdminLTELogo" height="60" width="60">
+		</div>
+
+		<header th:replace="admin/fragments/header::header" ></header>
+
+
+		<div th:replace="admin/fragments/sidebar::sidebar" ></div>
+
+		<div class="content-wrapper">
+
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 class="m-0">Cập nhật sách</h1>
+						</div>
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+								<li class="breadcrumb-item active">Cập nhật sách</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+			</div>
+				 <section class="content">
+			
+			      <!-- Default box -->
+			      <div class="col-8">
+						<div class="card p-5">
+							<form role="form" method="post" th:action="@{/admin/book-edit}" th:object="${book}" enctype="multipart/form-data">
+							<div class="box-body">
+								<input type="hidden" class="form-control" th:field="*{id}">
+								<input type="hidden" class="form-control" th:field="*{image}">
+								
+								<div class="form-group">
+									<label for="exampleInputEmail1">Tên Sách</label>
+									<input type="text" class="form-control" th:field="*{bookName}">
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail1">Tác giả</label>
+									<input type="text" class="form-control" th:field="*{author}">
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail1">Giá</label>
+									<input type="text" class="form-control" th:field="*{price}">
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail1">Sale</label>
+									<input type="text" class="form-control" th:field="*{sale}">
+								</div>
+								<div class="form-group">
+									<label for="exampleInputFile">Ảnh</label>
+									<div class="input-group">
+										<div class="custom-file">
+											<input type="file" class="custom-file-input" id="exampleInputFile" name="fileImage">
+											<label class="custom-file-label" for="exampleInputFile">Choose file</label>
+										</div>
+										<div class="input-group-append">
+											<span class="input-group-text">Tải ảnh</span>
+										</div>
+									</div>
+								</div>
+								<img th:src="@{'/uploads/'+${book.image}}" class="pt-2" width="200px">
+								<div class="form-group">
+									<label for="exampleInputFile">Ảnh mô tả</label>
+									<div class="input-group">
+										<div class="custom-file">
+											<input type="file" class="custom-file-input" id="exampleInputFile" name="fileImages" multiple>
+											<label class="custom-file-label" for="exampleInputFile">Choose file</label>
+										</div>
+										<div class="input-group-append">
+											<span class="input-group-text">Tải ảnh</span>
+										</div>
+									</div>
+									<div class="d-flex">
+										<div class="divxoa" th:each="img : ${book.ImageProducts}" >
+											<img th:src="@{/asset/img/delete.png}" class="btndelete" alt="">
+											<img  th:src="@{'/uploads/'+${img.image}}" class="p-2 w-100">
+											<input type="hidden" th:value="${img.id}"  >
+										</div>
+										<input type="hidden" name="listChoose" value="" id="listChoose"  >
+									</div>
+									
+								</div>
+								
+											
+								<div class="form-group">
+									<label for="exampleInputEmail1">Nhà xuất bản</label>
+									<input type="text" class="form-control" th:field="*{publicsher}">
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail1">Năm xuất bản</label>
+									<input type="text" class="form-control" th:field="*{publicationYear}">
+								</div>
+								<div class="form-group">
+									<label for="exampleInputEmail1">Ngày nhập</label>
+									<input type="date" class="form-control" name="ngayNhap" th:value="${#dates.format(ngayNhap, 'yyyy-MM-dd')}">
+								</div>
+								<div class="form-group">
+									<label for="exampleSelectBorderWidth2">Danh mục</label>
+									<select class="custom-select form-control-border border-width-2" id="exampleSelectBorderWidth2" th:field="*{category.id}">
+										<option th:each="category : ${listCate}" th:value="${category.id}" th:text="${category.categoryName}" ></option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputPassword1">Trạng thái</label>
+									<div class="form-check">
+									  <input class="form-check-input" type="radio" value="1" th:field="*{status}" >
+									  <label class="form-check-label" for="flexCheckDefault">
+									    Hiện
+									  </label>
+									</div>
+									<div class="form-check">
+									  <input class="form-check-input" type="radio" value="0" th:field="*{status}">
+									  <label class="form-check-label" for="flexCheckChecked">
+									    Ẩn
+									  </label>
+									</div>
+								</div>
+								<div class="form-group">
+									<textarea name="editor1" id="editor1" rows="10" cols="80" th:field="*{description}">
+						               
+						            </textarea>
+					            </div>
+							</div>
+
+							<div class="box-footer">
+								<button type="submit" class="btn btn-primary">Cập nhật</button>
+							</div>
+						</form>
+						
+						</div>
+			      </div>
+			    </section>
+		
+		</div>
+		
+
+	</div>
+
+ <footer th:replace="admin/fragments/footer::footer"></footer>
+
+	<aside class="control-sidebar control-sidebar-dark">
+
+	</aside>
+
+	</div>
+
+  <div th:replace="admin/fragments/scrip::scrip"></div>
+  <script>
+        $(document).ready(function() {
+			var listChoose="";
+            $(".btndelete").click(function() {
+				
+                // Tìm ảnh banner1 liền kề với nút delete được nhấp
+               $(this).closest(".divxoa").hide();
+                var idXoa= $(this).next().next().val()
+          		
+          		listChoose+=idXoa+" "
+          		
+                $("#listChoose").val(listChoose);
+            });
+            
+        });
+    </script>
+<script>
+	CKEDITOR.replace('editor1');
+</script>
+<script>
+	$(".nav-link").each(function () {
+            var paragraph = $(this).find("p"); // Tìm thẻ <p> trong thẻ <a>
+            var paragraphText = paragraph.text().trim(); // Lấy nội dung của thẻ <p>
+
+            // Kiểm tra nội dung của thẻ <p>
+            if (paragraphText === "Sách") {
+                $(this).addClass("active"); // Thêm class "active" vào thẻ <a>
+            }
+        });
+</script>	
+</body>
+
+<!-- Mirrored from adminlte.io/themes/v3/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Aug 2023 09:23:47 GMT -->
+
+</html>

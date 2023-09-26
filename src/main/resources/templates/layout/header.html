@@ -1,0 +1,263 @@
+<header th:fragment="header" id="header-sticky" class="sticky-header bg-white">
+	<!-- header-top-area-start -->
+	<div class="header-top-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-md-6 col-12">
+					<div class="language-area">
+						<ul>
+							<li><img th:src="@{/fe/img/flag/4.jpg}" alt="flag" /><a href="#">Việt Nam<i
+										class="fa fa-angle-down"></i></a>
+								<div class="header-sub">
+									<ul>
+										<li><a href="#"><img th:src="@{/fe/img/flag/2.jpg}" alt="flag" />france</a></li>
+										<li><a href="#"><img th:src="@{/fe/img/flag/3.jpg}" alt="flag" />croatia</a>
+										</li>
+									</ul>
+								</div>
+							</li>
+							<li><a href="#">VND<i class="fa fa-angle-down"></i></a>
+								<div class="header-sub dolor">
+									<ul>
+										<li><a th:href="@{/logout}">EUR €</a></li>
+										<li><a href="#">USD $</a></li>
+									</ul>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-6 col-12">
+					<div class="account-area text-right">
+						<ul>
+							<li th:if="${session.user !=null}" class="user-menu" style="cursor: pointer">
+								<div class="d-flex align-items-center" id="showAcc">
+									<div>
+										<img th:src="@{'/uploads/'+${session.user.img ==null ? 'avata.jpg' : session.user.img }}" class="user-image" alt="User Image">
+									</div>
+									<div>
+										<span class="text-primary" th:text="${session.user.userName}"></span>
+									</div>
+								 
+								</div>
+								<ul class="dropdown-menu " id="menuShow">
+								  <!-- User image -->
+									<div class="p-2"><a th:href="@{/myacount}">Tài khoản</a></div>
+									<div class="p-2"><a th:href="@{/logout}">Đăng xuất</a></div>
+								</ul>
+							</li>
+							<!-- <li ><a th:href="@{/myacount}">My Account</a></li> -->
+							<li th:if="${session.user ==null}"><a th:href="@{/login}">Đăng nhập</a></li>
+							<li th:if="${session.user ==null}"><a th:href="@{/register}">Đăng ký</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- header-top-area-end -->
+	<!-- header-mid-area-start -->
+	<div class="header-mid-area ptb-40">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-4 col-12">
+					<div class="logo-area">
+						<a th:href="@{/}"><img th:src="@{/fe/img/logo/3.png}" alt="logo" /></a>
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-5 col-12">
+					<div class="header-search">
+						<form th:action="@{/find-book}" method="post" >
+							<input type="text" name="keyword" placeholder="Tìm kiếm sản phẩm" th:value="${keyword}" />
+							<button type="submit"><i class="fa fa-search"></i></button>
+						</form>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-3 col-12">
+					<div class="my-cart" id="reloadCart" >
+						<ul>
+							<li><a th:href="@{/cart}"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a>
+							<span id="itemCart">
+								<span th:text="${session.soluong}"></span>
+								<span th:if="${session.soluong == null}">0</span>
+							</span>
+								
+								<div th:if="${session.user !=null}" class="mini-cart-sub">
+									<div class="cart-product scrollcss"  >
+										<div class="single-cart" th:each="cartItem : ${session.listItem}" th:data-id="${cartItem.id}" >
+											<div class="cart-img">
+												<a href="#"><img th:src="@{'/uploads/'+${cartItem.book.image}}"
+														alt="book" /></a>
+											</div>
+											<div class="cart-info">
+												<h5><a href="#" th:text="${cartItem.book.bookName}"></a></h5>
+												<p><span class="bg-white" th:text="${cartItem.quantity}"></span> x <span
+														class="bg-white"
+														th:text="${#numbers.formatDecimal(cartItem.book.priceSale, 0, 'POINT', 0, 'COMMA')+ ' đ'}"></span>
+												</p>
+											</div>
+											<div class="cart-icon">
+												<a class="deleteItem" th:id="${cartItem.id}" ><i class="fa fa-remove"></i></a>
+											</div>
+										</div>
+
+									</div>
+									<div class="cart-totals">
+										<h5>Tổng <span id="total"><span th:text="${#numbers.formatDecimal(session.total, 0, 'POINT', 0, 'COMMA')+ ' đ'}"></span> </span></h5>
+									</div>
+									<div class="cart-bottom">
+										<a class="view-cart" th:href="@{/cart}">Xem giỏ hàng</a>
+										<a th:href="@{/checkout}">Mua hàng</a>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- header-mid-area-end -->
+	<!-- main-menu-area-start -->
+	<div class="main-menu-area d-md-none d-none d-lg-block">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="menu-area">
+						<nav>
+							<ul>
+								<li class="active"><a href="index.html">Trang chủ</a>
+									
+								</li>
+								<li><a href="Book-details.html">Sách<i class="fa fa-angle-down"></i></a>
+									<div class="mega-menu">
+										<span>
+											<a href="#" class="title">Jackets</a>
+											<a href="shop.html">Tops & Tees</a>
+											<a href="shop.html">Polo Short Sleeve</a>
+											<a href="shop.html">Graphic T-Shirts</a>
+											<a href="shop.html">Jackets & Coats</a>
+											<a href="shop.html">Fashion Jackets</a>
+										</span>
+										<span>
+											<a href="#" class="title">weaters</a>
+											<a href="shop.html">Crochet</a>
+											<a href="shop.html">Sleeveless</a>
+											<a href="shop.html">Stripes</a>
+											<a href="shop.html">Sweaters</a>
+											<a href="shop.html">hoodies</a>
+										</span>
+										<span>
+											<a href="#" class="title">Bottoms</a>
+											<a href="shop.html">Heeled sandals</a>
+											<a href="shop.html">Polo Short Sleeve</a>
+											<a href="shop.html">Flat sandals</a>
+											<a href="shop.html">Short Sleeve</a>
+											<a href="shop.html">Long Sleeve</a>
+										</span>
+										<span>
+											<a href="#" class="title">Jeans Pants</a>
+											<a href="shop.html">Polo Short Sleeve</a>
+											<a href="shop.html">Sleeveless</a>
+											<a href="shop.html">Graphic T-Shirts</a>
+											<a href="shop.html">Hoodies</a>
+											<a href="shop.html">Jackets</a>
+										</span>
+									</div>
+								</li>
+								<li><a href="shop.html">Bật Cookies</a></li>
+								<li><a href="Book-details-2.html">Trang<i class="fa fa-angle-down"></i></a>
+									<div class="sub-menu sub-menu-2">
+										<ul>
+											<li><a href="shop.html">shop</a></li>
+											<li><a href="shop-list.html">shop list view</a></li>
+											<li><a href="Book-details.html">Book-details</a></li>
+											<li><a href="Book-details-affiliate.html">Book-affiliate</a></li>
+											<li><a href="blog.html">blog</a></li>
+											<li><a href="blog-details.html">blog-details</a></li>
+											<li><a href="contact.html">contact</a></li>
+											<li><a href="about.html">about</a></li>
+											<li><a href="login.html">login</a></li>
+											<li><a href="register.html">register</a></li>
+											<li><a href="my-account.html">my-account</a></li>
+											<li><a href="cart.html">cart</a></li>
+											<li><a href="compare.html">compare</a></li>
+											<li><a href="checkout.html">checkout</a></li>
+											<li><a href="wishlist.html">wishlist</a></li>
+											<li><a href="404.html">404 Page</a></li>
+										</ul>
+									</div>
+								</li>
+								<li><a href="contact.html">liên hệ chúng tôi</a></li>
+								<li><a href="#">Bài viết<i class="fa fa-angle-down"></i></a>
+									<div class="sub-menu">
+										<ul>
+											<li><a href="blog.html">bài viết</a></li>
+											<li><a href="blog-details.html">blog-details</a></li>
+										</ul>
+									</div>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- main-menu-area-end -->
+	<!-- mobile-menu-area-start -->
+	<div class="mobile-menu-area d-lg-none d-block fix">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="mobile-menu">
+						<nav id="mobile-menu-active">
+							<ul id="nav">
+								<li><a href="index.html">Home</a>
+									<ul>
+										<li><a href="index.html">Home-1</a></li>
+										<li><a href="index-2.html">Home-2</a></li>
+										<li><a href="index-3.html">Home-3</a></li>
+										<li><a href="index-4.html">Home-4</a></li>
+										<li><a href="index-5.html">Home-5</a></li>
+										<li><a href="index-6.html">Home-6</a></li>
+										<li><a href="index-7.html">Home-7</a></li>
+									</ul>
+								</li>
+								<li><a href="shop.html">Enable Cookies</a></li>
+								<li><a href="Book-details.html">Pages</a>
+									<ul>
+										<li><a href="shop.html">shop</a></li>
+										<li><a href="shop-list.html">shop list view</a></li>
+										<li><a href="Book-details.html">Book-details</a></li>
+										<li><a href="Book-details-affiliate.html">Book-affiliate</a></li>
+										<li><a href="blog.html">blog</a></li>
+										<li><a href="blog-details.html">blog-details</a></li>
+										<li><a href="contact.html">contact</a></li>
+										<li><a href="about.html">about</a></li>
+										<li><a href="login.html">login</a></li>
+										<li><a href="register.html">register</a></li>
+										<li><a href="my-account.html">my-account</a></li>
+										<li><a href="cart.html">cart</a></li>
+										<li><a href="compare.html">compare</a></li>
+										<li><a href="checkout.html">checkout</a></li>
+										<li><a href="wishlist.html">wishlist</a></li>
+										<li><a href="404.html">404 Page</a></li>
+									</ul>
+								</li>
+								<li><a href="contact.html">contact us</a></li>
+								<li><a href="#">blog</a>
+									<ul>
+										<li><a href="blog.html">Blog</a></li>
+										<li><a href="blog-details.html">blog-details</a></li>
+									</ul>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- mobile-menu-area-end -->
+</header>

@@ -1,0 +1,25 @@
+<div class="col-lg-9 col-md-8 col-12" th:fragment="product">
+	<!-- banner-area-5-start -->
+	<div class="banner-area-5">
+		<div class="single-banner-4 xs-mb">
+			<div class="banner-img-2">
+				<a href="#"><img th:src="@{fe/img/banner/24.jpg}" alt="banner" /></a>
+			</div>
+		</div>
+		<div class="single-banner-5">
+			<div class="banner-img-2">
+				<a href="#"><img th:src="@{fe/img/banner/23.jpg}" alt="banner" /></a>
+			</div>
+		</div>
+	</div>
+	<!-- banner-area-5-end -->
+	<!-- new-book-area-start -->
+	<div th:replace="layout/newbook::newbook" ></div>
+	<!-- new-book-area-start -->
+	<!-- hot-sell-area-2-start -->
+	<div th:replace="layout/hotsale::hotsale" ></div>
+	<!-- hot-sell-area-2-end -->
+	<!-- product-area-start -->
+	<div th:replace="layout/productare::productare" ></div>
+	<!-- product-area-end -->
+</div>

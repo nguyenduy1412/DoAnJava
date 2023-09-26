@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
+<!-- Mirrored from adminlte.io/themes/v3/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Aug 2023 09:23:18 GMT -->
+
+<head th:replace="admin/fragments/head::head"></head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+	<div class="wrapper">
+
+		<div class="preloader flex-column justify-content-center align-items-center">
+			<img class="animation__shake" th:src="@{/asset/img/AdminLTELogo.png}" alt="AdminLTELogo" height="60" width="60">
+		</div>
+
+		<header th:replace="admin/fragments/header::header" ></header>
+
+
+		<div th:replace="admin/fragments/sidebar::sidebar" ></div>
+
+		<div class="content-wrapper">
+
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 class="m-0">Dashboard</h1>
+						</div>
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="#">Home</a></li>
+								<li class="breadcrumb-item active">Dashboard v1</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+			</div>
+			<section class="content">
+				<iframe src="https://sinhvien.epu.edu.vn/" width="800" height="600" frameborder="0"></iframe>
+			</section>
+
+			
+		</div>
+		
+
+	</div>
+
+ <footer th:replace="admin/fragments/footer::footer"></footer>
+
+	<aside class="control-sidebar control-sidebar-dark">
+
+	</aside>
+
+	</div>
+
+
+  <div th:replace="admin/fragments/scrip::scrip"></div>
+
+</body>
+
+<!-- Mirrored from adminlte.io/themes/v3/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Aug 2023 09:23:47 GMT -->
+
+</html>

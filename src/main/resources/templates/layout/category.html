@@ -1,0 +1,164 @@
+<div class="col-lg-3 col-md-4 col-12" th:fragment="category">
+	<!-- category-area-start -->
+	<div class="category-area mb-30">
+		<h3><a href="#">Danh mục <i class="fa fa-bars"></i></a></h3>
+		<div class="category-menu">
+			<nav class="menu">
+				<ul>
+
+					<li th:each="cate : ${listCate}"><a th:href="@{/find-category/{id}(id=${cate.id})}"
+							th:if="${cate.categoryStatus}" th:text="${cate.categoryName}"></a></li>
+
+					<li class="rx-child"><a href="shop.html">Health, Fitness</a></li>
+					<li class="rx-parent">
+						<a class="rx-default">
+							<span class="cat-thumb fa fa-plus"></span>
+							More categories
+						</a>
+						<a class="rx-show">
+							<span class="cat-thumb fa fa-minus"></span>
+							close menu
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+	<!-- category-area-end -->
+	<!-- banner-area-start -->
+	<div class="banner-area mb-30">
+		<div class="banner-img-2">
+			<a href="#"><img th:src="@{fe/img/banner/21.jpg}" alt="banner" /></a>
+		</div>
+	</div>
+	<!-- banner-area-end -->
+	<!-- most-product-area-start -->
+	<div class="most-product-area mb-30">
+		<div class="section-title-2 mb-30">
+			<h3>Sản phẩm nổi bật </h3>
+		</div>
+		<div class="product-active-2 owl-carousel">
+			<div class="product-total-2">
+				<div class="single-most-product bd mb-18" th:each="book : ${listTrend2}">
+					<div class="most-product-img">
+						<a th:href="@{/book-detail/{id}(id=${book.id})}">
+						<img th:src="@{'/uploads/'+${book.image}}" alt="book" class="primary" />
+					</a>
+					</div>
+					<div class="most-product-content">
+						<h4><a th:href="@{/book-detail/{id}(id=${book.id})}"
+							th:text="${#strings.length(book.bookName) > 15 ? #strings.substring(book.bookName, 0, 15) + '...' : book.bookName}"></a></h4>
+						<div class="product-price">
+							<ul>
+								<li class="pricebook" th:text="${book.priceSale}" ></li>
+								<li class="old-price pricebook" th:if="${book.sale > 0}" th:text="${book.price}"></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+
+			<div class="product-total-2">
+				<div class="single-most-product bd mb-18" th:each="book : ${listTrend1}">
+					<div class="most-product-img">
+						<a th:href="@{/book-detail/{id}(id=${book.id})}">
+						<img th:src="@{'/uploads/'+${book.image}}" alt="book" class="primary" />
+					</a>
+					</div>
+					<div class="most-product-content">
+						<h4><a th:href="@{/book-detail/{id}(id=${book.id})}"
+							th:text="${#strings.length(book.bookName) > 15 ? #strings.substring(book.bookName, 0, 15) + '...' : book.bookName}"></a></h4>
+						<div class="product-price">
+							<ul>
+								<li class="pricebook" th:text="${book.priceSale}" ></li>
+								<li class="old-price pricebook" th:if="${book.sale > 0}" th:text="${book.price}"></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<!-- most-product-area-end -->
+	<!-- recent-post-area-start -->
+	<div class="recent-post-area mb-30">
+		<div class="section-title-2 mb-30">
+			<h3>BÀI VIẾT GẦN ĐÂY</h3>
+		</div>
+		<div class="post-active-2 owl-carousel">
+			<div class="single-post">
+				<div class="post-img">
+					<a href="#"><img th:src="@{fe/img/post/1.jpg}" alt="post" /></a>
+					<div class="blog-date-time">
+						<span class="day-time">06</span>
+						<span class="moth-time">Dec</span>
+					</div>
+				</div>
+				<div class="post-content">
+					<h3><a href="#">The History and the Hype</a></h3>
+					<span class="meta-author"> Demo koparion </span>
+					<p>Discover five of our favourite dresses from our new collection that are destined
+						to be worn and loved immediately.</p>
+				</div>
+			</div>
+			<div class="single-post">
+				<div class="post-img">
+					<a href="#"><img th:src="@{fe/img/post/2.jpg}" alt="post" /></a>
+					<div class="blog-date-time">
+						<span class="day-time">07</span>
+						<span class="moth-time">Dec</span>
+					</div>
+				</div>
+				<div class="post-content">
+					<h3><a href="#">Answers to your Questions</a></h3>
+					<span class="meta-author"> Demo koparion </span>
+					<p>Discover five of our favourite dresses from our new collection that are destined
+						to be worn and loved immediately.</p>
+				</div>
+			</div>
+			<div class="single-post">
+				<div class="post-img">
+					<a href="#"><img th:src="@{fe/img/post/3.jpg}" alt="post" /></a>
+					<div class="blog-date-time">
+						<span class="day-time">08</span>
+						<span class="moth-time">Dec</span>
+					</div>
+				</div>
+				<div class="post-content">
+					<h3><a href="#">What is Bootstrap?</a></h3>
+					<span class="meta-author"> Demo koparion </span>
+					<p>Discover five of our favourite dresses from our new collection that are destined
+						to be worn and loved immediately.</p>
+				</div>
+			</div>
+			<div class="single-post">
+				<div class="post-img">
+					<a href="#"><img th:src="@{fe/img/post/4.jpg}" alt="post" /></a>
+					<div class="blog-date-time">
+						<span class="day-time">09</span>
+						<span class="moth-time">Dec</span>
+					</div>
+				</div>
+				<div class="post-content">
+					<h3><a href="#">Etiam eros massa</a></h3>
+					<span class="meta-author"> Demo koparion </span>
+					<p>Discover five of our favourite dresses from our new collection that are destined
+						to be worn and loved immediately.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- recent-post-area-end -->
+	<!-- block-newsletter-area-start -->
+	<div class="block-newsletter">
+		<h2>ĐĂNG KÝ GỬI BẢN TIN</h2>
+		<p>Bạn có thể luôn cập nhật thông tin mới của công ty chúng tôi!</p>
+		<form action="#">
+			<input type="text" placeholder="Nhập địa chỉ email của bạn" />
+		</form>
+		<a href="#">gửi mail</a>
+	</div>
+	<!-- block-newsletter-area-end -->
+</div>

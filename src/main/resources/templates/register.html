@@ -1,0 +1,95 @@
+<!doctype html>
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/head::head" ></head>
+<body class="home-4">
+
+	<header th:replace="layout/header::header"></header>
+	<div id="chieucao"></div>
+	<!-- header-area-end -->
+	<!-- slider-group-start -->
+
+			<div class="breadcrumbs-area mb-70">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="breadcrumbs-menu">
+							<ul>
+								<li><a href="#">Home</a></li>
+								<li><a href="#" class="active">login</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- breadcrumbs-area-end -->
+		<!-- user-login-area-start -->
+		<div class="user-login-area mb-70">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="login-title text-center mb-30">
+							<h2>Đăng ký</h2>
+						</div>
+					</div>
+					<div class="offset-lg-3 col-lg-6 col-md-12 col-12">
+						<form class="login-form" th:action="@{/register}" method="post" th:object="${user}" onsubmit="return validate()" >
+							
+							<div class="single-login">
+								<label>Tên đăng nhập<span>*</span></label>
+								<input type="text" th:field="*{userName}" />
+								<span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" class="text-danger"></span>
+							</div>
+							<div class="single-login">
+								<label>Số điện thoại<span>*</span></label>
+								<input type="text" th:field="*{telephone}" />
+								<span th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}" class="text-danger"></span>
+							</div>
+							<div class="single-login">
+								<label>Mật khẩu <span>*</span></label>
+								<input type="password" th:field="*{passWord}" id="pass1" />
+								<span th:if="${#fields.hasErrors('passWord')}" th:errors="*{passWord}" class="text-danger"></span>
+							</div>
+							<div class="single-login">
+								<label>Nhập lại mật khẩu <span>*</span></label>
+								<input type="password" id="pass2" />
+								<div><span class="text-danger" id="error_pass"></span></div>
+							</div>
+							
+							<div class="single-login single-login-2">
+								<button type="submit">Đăng ký</button>
+								<input id="rememberme" type="checkbox" name="rememberme" value="forever">
+								<span>Remember me</span>
+							</div>
+							<div><a href="#">Quên mật khẩu</a>	</div>
+							<div><a th:href="@{/signin}">Đăng nhập</a></div>
+										
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	<footer th:replace="layout/footer::footer"></footer>
+	<!-- all js here -->
+	<!-- jquery latest version -->
+	<div th:replace="layout/js::js"></div>
+	<script>
+		function validate(){
+			var pass1=$('#pass1').val();
+			var pass2=$('#pass2').val();
+			if(pass1 !== pass2){
+				$('#error_pass').text('Mật khẩu không khớp')
+				return false;
+			}
+			else{
+				return true;
+			}
+		}
+	</script>
+</body>
+
+
+<!-- Mirrored from htmldemo.net/koparion/koparion/index-4.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 09 Aug 2023 12:02:53 GMT -->
+</html>
