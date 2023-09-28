@@ -1,5 +1,7 @@
 package demo.api;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,5 +21,9 @@ public class BookApi {
 	@GetMapping("/{id}")
 	public String reloadItem(@PathVariable("id") Integer id ) {
 		return "layout/reloadCartItem";
+	}
+	@GetMapping
+	public List<Book> getBook() {
+		return this.bookService.getAll();
 	}
 }

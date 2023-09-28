@@ -52,6 +52,6 @@ public class Book {
 	@JsonIgnore
 	private Category category;
 	@OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
-	@JsonIgnore
+//	@JsonIgnore
 	private Set<ImageProduct> imageProducts;
 }

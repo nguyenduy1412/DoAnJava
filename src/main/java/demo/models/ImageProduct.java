@@ -1,5 +1,7 @@
 package demo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -30,6 +32,7 @@ public class ImageProduct {
 	private String image;
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="bookId",referencedColumnName = "id")
+	@JsonIgnore
 	private Book book;
 	
 }
