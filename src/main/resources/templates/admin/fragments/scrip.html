@@ -172,6 +172,18 @@
 					reader.readAsDataURL(file);
 				}
 			});
+			$('#input').change(function () {
+				var file = this.files[0];
+				if (file) {
+					var reader = new FileReader();
+					reader.onload = function (e) {
+						$('#imgChange').attr('src', e.target.result);
+						$('#imgChange').show();
+						$('#imgChange').removeClass('d-none');
+					};
+					reader.readAsDataURL(file);
+				}
+			});
 		});
 	</script>
 </div>

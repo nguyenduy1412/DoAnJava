@@ -13,15 +13,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import demo.models.Category;
 import demo.services.CategoryService;
+import demo.services.StorageService;
 
 @Controller
 @RequestMapping("/admin")
 public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;
+	@Autowired
+	private StorageService storageService;
 	@GetMapping("/category")
     public String index(Model model,@Param("keyword") String keyword,
     		@RequestParam(name="page",defaultValue = "1") Integer page) {
@@ -44,8 +48,10 @@ public class CategoryController {
     	return "admin/category/add";
     }
     @PostMapping("/add-category")
-    public String save(Model model,@ModelAttribute("category") Category category) {
-    	
+    public String save(Model model,@ModelAttribute("category") Category category,@RequestParam("fileImage") MultipartFile file) {
+    	this.storageService.store(file);
+		String fileName = file.getOriginalFilename();
+		category.setImg(fileName);
     	if(this.categoryService.create(category)) {
     		return "redirect:/admin/category";
     	}
@@ -61,7 +67,13 @@ public class CategoryController {
     	return "admin/category/edit";
     }
     @PostMapping("edit-category")
-    public String update(@ModelAttribute("category") Category category) {
+    public String update(@ModelAttribute("category") Category category,@RequestParam("fileImage") MultipartFile file) {
+    	String fileName = file.getOriginalFilename();
+		boolean isEmpty = fileName == null || fileName.trim().length() == 0;
+		if (!isEmpty) {
+			this.storageService.store(file);
+			category.setImg(fileName);
+		}
     	if(this.categoryService.create(category)) {
     		return "redirect:/admin/category";
     	}

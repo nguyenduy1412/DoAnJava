@@ -36,6 +36,7 @@
 										<img th:src="@{'/uploads/'+${session.user.img ==null ? 'avata.jpg' : session.user.img }}" class="user-image" alt="User Image">
 									</div>
 									<div>
+										<input type="hidden" id="userId" th:value="${session.user.id}"  ></input>
 										<span class="text-primary" th:text="${session.user.userName}"></span>
 									</div>
 								 

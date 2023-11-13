@@ -49,8 +49,12 @@
 									<input type="text" class="form-control" th:field="*{bookName}">
 								</div>
 								<div class="form-group">
-									<label for="exampleInputEmail1">Tác giả</label>
-									<input type="text" class="form-control" th:field="*{author}">
+									<label for="exampleSelectBorderWidth2">Tác giả</label>
+									<select class="custom-select form-control-border border-width-2"
+										id="exampleSelectBorderWidth2" th:field="*{author.id}">
+										<option th:each="author : ${listAuthor}" th:value="${author.id}"
+											th:text="${author.nameAuthor}"></option>
+									</select>
 								</div>
 								<div class="form-group">
 									<label for="exampleInputEmail1">Giá</label>
@@ -97,17 +101,18 @@
 								
 											
 								<div class="form-group">
-									<label for="exampleInputEmail1">Nhà xuất bản</label>
-									<input type="text" class="form-control" th:field="*{publicsher}">
+									<label for="exampleSelectBorderWidth2">Nhà xuất bản</label>
+									<select class="custom-select form-control-border border-width-2"
+										id="exampleSelectBorderWidth2" th:field="*{publicsher.id}">
+										<option th:each="publicsher : ${listPublicsher}" th:value="${publicsher.id}"
+											th:text="${publicsher.namePublicsher}"></option>
+									</select>
 								</div>
 								<div class="form-group">
 									<label for="exampleInputEmail1">Năm xuất bản</label>
 									<input type="text" class="form-control" th:field="*{publicationYear}">
 								</div>
-								<div class="form-group">
-									<label for="exampleInputEmail1">Ngày nhập</label>
-									<input type="date" class="form-control" name="ngayNhap" th:value="${#dates.format(ngayNhap, 'yyyy-MM-dd')}">
-								</div>
+								
 								<div class="form-group">
 									<label for="exampleSelectBorderWidth2">Danh mục</label>
 									<select class="custom-select form-control-border border-width-2" id="exampleSelectBorderWidth2" th:field="*{category.id}">

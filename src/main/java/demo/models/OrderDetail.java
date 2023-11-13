@@ -29,11 +29,13 @@ public class OrderDetail {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JsonIgnore
 	@JoinColumn(name="orderId",referencedColumnName = "id")
 	private Orders orders;
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="bookId",referencedColumnName = "id")
 	private Book book;
 	private Integer quantity;
-	private Double price;
+	private long price;
+	private Integer statusRate;
 }

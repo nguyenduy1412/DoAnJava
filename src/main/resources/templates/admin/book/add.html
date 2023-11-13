@@ -47,13 +47,14 @@
 									<label for="exampleInputEmail1">Tên Sách</label>
 									<input type="text" class="form-control" th:field="*{bookName}">
 								</div>
+								
 								<div class="form-group">
-									<label for="exampleInputEmail1">Tác giả</label>
-									<input type="text" class="form-control" th:field="*{author}">
-								</div>
-								<div class="form-group">
-									<label for="exampleInputEmail1">Giá</label>
-									<input type="text" class="form-control" th:field="*{price}">
+									<label for="exampleSelectBorderWidth2">Tác giả</label>
+									<select class="custom-select form-control-border border-width-2"
+										id="exampleSelectBorderWidth2" th:field="*{author.id}">
+										<option th:each="author : ${listAuthor}" th:value="${author.id}"
+											th:text="${author.nameAuthor}"></option>
+									</select>
 								</div>
 								<div class="form-group">
 									<label for="exampleInputEmail1">Sale</label>
@@ -63,7 +64,7 @@
 									<label for="exampleInputFile">Ảnh</label>
 									<div class="input-group">
 										<div class="custom-file">
-											<input type="file" class="custom-file-input" id="exampleInputFile"
+											<input type="file" class="custom-file-input" id="input"
 												name="fileImage">
 											<label class="custom-file-label" for="exampleInputFile">Choose file</label>
 										</div>
@@ -72,6 +73,7 @@
 										</div>
 									</div>
 								</div>
+								<img id="imgChange" th:src="@{'/uploads/anh.jpg'}" class="pt-2 d-none" width="200px">
 								<div class="form-group">
 									<label for="exampleInputFile">Ảnh mô tả</label>
 									<div class="input-group">
@@ -86,17 +88,18 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="exampleInputEmail1">Nhà xuất bản</label>
-									<input type="text" class="form-control" th:field="*{publicsher}">
+									<label for="exampleSelectBorderWidth2">Nhà xuất bản</label>
+									<select class="custom-select form-control-border border-width-2"
+										id="exampleSelectBorderWidth2" th:field="*{publicsher.id}">
+										<option th:each="publicsher : ${listPublicsher}" th:value="${publicsher.id}"
+											th:text="${publicsher.namePublicsher}"></option>
+									</select>
 								</div>
 								<div class="form-group">
 									<label for="exampleInputEmail1">Năm xuất bản</label>
-									<input type="text" class="form-control" th:field="*{publicationYear}">
+									<input type="number" class="form-control" th:field="*{publicationYear}">
 								</div>
-								<div class="form-group">
-									<label for="exampleInputEmail1">Ngày nhập</label>
-									<input type="date" class="form-control" name="ngayNhap">
-								</div>
+								
 								<div class="form-group">
 									<label for="exampleSelectBorderWidth2">Danh mục</label>
 									<select class="custom-select form-control-border border-width-2"
@@ -122,7 +125,6 @@
 								</div>
 								<div class="form-group">
 									<textarea name="editor1" id="editor1" rows="10" cols="80" th:field="*{description}">
-						                
 						            </textarea>
 								</div>
 							</div>

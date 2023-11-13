@@ -33,5 +33,10 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return this.userRepository.findAll();
 	}
+	@Override
+	public User findById(Long id) {
+		// TODO Auto-generated method stub
+		return this.userRepository.findById(id).get();
+	}
 
 }

@@ -6,11 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import demo.models.Book;
-import demo.models.Category;
+
 
 
 public interface BookRepository extends JpaRepository<Book, Integer>{
 	List<Book> findByBookNameContainingIgnoreCaseOrderByBookNameAsc(String keyword);
+	List<Book> findAllByOrderByBookNameAsc();
 	List<Book> findByCategoryIdOrderByIdDesc(Integer id);
 	@Query("SELECT c FROM Book c WHERE c.sale > 0")
 	List<Book> findBookSale();

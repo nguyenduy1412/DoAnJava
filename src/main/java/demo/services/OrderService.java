@@ -14,4 +14,5 @@ public interface OrderService {
 	Orders findByOrder(Integer id);
 	List<Orders> getAllOrderByIdDesc();
 	List<Orders> getByUserOrderByIdDesc(User user);
+	List<Orders> findByStatusAndUserIdOrderByIdDesc(Integer status,long userId);
 }

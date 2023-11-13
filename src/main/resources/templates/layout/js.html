@@ -28,9 +28,9 @@
 	<script th:src="@{/fe/js/main.js}"></script>
 	<script th:src="@{fe/js/plugins1.js}"></script>
 	<script th:src="@{fe/js/custom.js}"></script>
-	 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" ></script>
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<!-- Bootstrap JS -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script>
 		$(document).ready(function () {
 			$('#chooseButton').click(function () {
@@ -82,16 +82,16 @@
 								$('#reloadCart').html(data);
 								Xoa();
 								// ajax reloadCartItem
-								Ajax("/reloadCartItem", "#reloadCartItem", ChangQuantity,"POST");
-							/*	Swal.fire({
-									position: 'buttom-end',
-									icon: 'success',
-									title: 'Xóa thành công',
-									showConfirmButton: false,
-									timer: 1500
-								})
-									*/
-								toatsjs("Xóa thành công")	
+								Ajax("/reloadCartItem", "#reloadCartItem", ChangQuantity, "POST");
+								/*	Swal.fire({
+										position: 'buttom-end',
+										icon: 'success',
+										title: 'Xóa thành công',
+										showConfirmButton: false,
+										timer: 1500
+									})
+										*/
+								toatsjs("Xóa thành công")
 							},
 							error: function (error) {
 								// Xử lý lỗi nếu có
@@ -110,42 +110,35 @@
 		Xoa();
 		function AddCart() {
 			$('.add-to-card').click(function () {
-				// Xử lý sự kiện click ở đây
-				// Ví dụ: In ra nội dung của nút được click
 				let bookId = $(this).attr('id');
-				$.ajax({
-					type: "POST",
-					url: `/api/cartItem/${bookId}`,
-					cache: false,
-					timeout: 600000,
-					success: function () {
-						// Xử lý khi request DELETE thành công (nếu cần)
-						$.ajax({
-							url: '/reloadCart', // Điền URL của controller trả về view ở đây
-							type: 'GET', // Hoặc 'POST' tùy thuộc vào phương thức của bạn
-							success: function (data) {
-								// Thay đổi nội dung của một phần tử trên trang web bằng nội dung từ view
-								$('#reloadCart').html(data);
-								Xoa();
-								toatsjs("Thêm thành công")
-
-							},
-							error: function (error) {
-								// Xử lý lỗi nếu có
-								console.error(error);
-							}
-						});
-					},
-					error: function (e) {
-						console.log("Lỗi: " + e);
-					}
-				});
-
-
+				let userId = $('#userId').val();
+				console.log(userId);
+				let data = {
+					bookId: parseInt(bookId),
+					userId: parseInt(userId)  
+				};
+				console.log(data)
+				axios.post('/api/cartItem/add',data)
+                .then(function (response) {
+                    axios.get('/reloadCart')
+				    .then(function (response) {
+				        // Thay đổi nội dung của một phần tử trên trang web bằng nội dung từ view
+				        document.getElementById('reloadCart').innerHTML = response.data;
+				        Xoa();
+				        toatsjs("Thêm thành công");
+				    })
+				    .catch(function (error) {
+				        // Xử lý lỗi nếu có
+				        console.error(error);
+				    });
+                })
+                .catch(function (error) {
+                    console.error('Lỗi: ' + error);
+                });
 			});
 		}
 		AddCart();
-		function Ajax(url, id, callback,method) {
+		function Ajax(url, id, callback, method) {
 			$.ajax({
 				type: method,
 				url: url, // Loại bỏ dấu ngoặc đơn xung quanh biến
@@ -178,8 +171,8 @@
 					dataType: 'json',
 					cache: false,
 					timeout: 600000,
-					success: function (data) {
-						console.log("SUCCESS : ", data);
+					success: function (data,status) {
+						console.log("SUCCESS : ", status);
 						console.log("1");
 						$.ajax({
 							url: '/reloadCart', // Điền URL của controller trả về view ở đây
@@ -188,7 +181,7 @@
 								// Thay đổi nội dung của một phần tử trên trang web bằng nội dung từ view
 								$('#reloadCart').html(data);
 								Xoa();
-								Ajax("/reloadCartItem", "#reloadCartItem",ChangQuantity,"POST");
+								Ajax("/reloadCartItem", "#reloadCartItem", ChangQuantity, "POST");
 								toatsjs("Cập nhật thành công")
 							},
 							error: function (error) {
@@ -235,30 +228,30 @@
 				return price.toFixed(0);
 			}
 		}
-		function toatsjs(messege){
+		function toatsjs(messege) {
 			$('.toast-body').text(messege)
 			$('#liveToast').toast('show');
-		} 
-		function XemSanPham(){
+		}
+		function XemSanPham() {
 			$('.action-view').click(function () {
-			let bookId = $(this).attr('id');
-			console.log("Hello")
-			$.ajax({
-				type: 'GET',
-				url: `/api/book/view/${bookId}`, // Loại bỏ dấu ngoặc đơn xung quanh biến
-				cache: false,
-				timeout: 60000, // Đã sửa thành 60000 (milliseconds)
-				success: function (data) {
-					// Loại bỏ dấu ngoặc đơn xung quanh biến id
-					console.log("Helllo");
-					$('#productModal').html(data);
-					XemSanPham();
-				},
-				error: function (e) {
-					console.log("Lỗi: " + e);
-				}
+				let bookId = $(this).attr('id');
+				console.log("Hello")
+				$.ajax({
+					type: 'GET',
+					url: `/api/book/view/${bookId}`, // Loại bỏ dấu ngoặc đơn xung quanh biến
+					cache: false,
+					timeout: 60000, // Đã sửa thành 60000 (milliseconds)
+					success: function (data) {
+						// Loại bỏ dấu ngoặc đơn xung quanh biến id
+						console.log("Helllo");
+						$('#productModal').html(data);
+						XemSanPham();
+					},
+					error: function (e) {
+						console.log("Lỗi: " + e);
+					}
+				});
 			});
-		});
 		}
 		XemSanPham();
 	</script>

@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import demo.models.Book;
@@ -71,6 +75,18 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 			}
 		}
 		return listBook;
+	}
+
+	@Override
+	public Page<Book> findBookTrend(Integer page) {
+		List<Book> list = this.findBookTrend();
+		Pageable pageable = PageRequest.of(page - 1, 4);
+		int start = (int) pageable.getOffset();
+		int end = Math.min(start + pageable.getPageSize(), list.size());
+
+		List<Book> sublist = list.subList(start, end);
+
+		return new PageImpl<>(sublist, pageable, list.size());
 	}
 
 

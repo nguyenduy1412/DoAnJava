@@ -66,9 +66,8 @@
 											<th>STT</th>
 											<th>Tên sách</th>
 											<th>Tác giả</th>
-											<th>Giá</th>
+											<th>Nhà xuất bản</th>
 											<th>Ảnh</th>
-											<th>Ngày nhập</th>
 											<th>Trạng thái</th>
 											<th>Danh mục</th>
 											<th>Tùy chọn</th>
@@ -78,12 +77,12 @@
 										<tr th:each="book,number : ${list}">
 											<td th:text="${number.count}"></td>
 											<td th:text="${#strings.length(book.bookName) > 12 ? #strings.substring(book.bookName, 0, 12) + '...' : book.bookName}"></td>
-											<td th:text="${book.author}"></td>
-											<td th:text="${book.price}"></td>
+											<td th:text="${book.author.nameAuthor}"></td>
+											<td th:text="${book.publicsher.namePublicsher}"></td>
 											<td>
 												<img th:src="@{'/uploads/'+${book.image}}" width="100px">
 											</td>
-											<td th:text="${#dates.format(book.dateAdded,'dd/MM/yyyy')}"></td>
+											
 											<td th:if="${book.status}"><span class="badge bg-success">Hiện</span></td>
 											<td th:if="${!book.status}"><span class="badge bg-danger">Ẩn</span></td>
 											<td th:text="${book.category.categoryName}"></td>

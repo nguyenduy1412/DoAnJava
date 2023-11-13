@@ -15,9 +15,14 @@ import demo.models.Book;
 import demo.models.Cart;
 import demo.models.CartItem;
 import demo.models.CustomUserDetails;
+import demo.models.DetailReceipt;
+import demo.models.Receipt;
+import demo.models.User;
 import demo.services.BookService;
 import demo.services.CartItemService;
 import demo.services.CartService;
+import demo.services.DetailReceiptService;
+import demo.services.ReceiptService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -28,10 +33,13 @@ public class HeaderAjax {
 	private CartItemService cartItemService;
 	@Autowired
 	private BookService bookService;
-
+	@Autowired
+	private ReceiptService receiptService;
+	@Autowired
+	private DetailReceiptService detailReceiptService;
 	@RequestMapping("/reloadCart")
 	public String reload(Principal principal, HttpSession session) {
-		Double total = null;
+		Long total = null;
 		Integer soluong = null;
 		try {
 			CustomUserDetails userCus = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
@@ -49,7 +57,7 @@ public class HeaderAjax {
 
 		}
 		soluong = (soluong == null) ? 0 : soluong;
-		total = (total == null) ? 0.0 : total;
+		total = (total == null) ? 0 : total;
 		session.setAttribute("soluong", soluong);
 		session.setAttribute("total", total);
 		return "layout/reloadCart";
@@ -69,5 +77,21 @@ public class HeaderAjax {
 		Book book=this.bookService.findById(id);
 		model.addAttribute("book", book);
 		return "layout/xemSanPham";
+	}
+	@RequestMapping("/reloadReceipt")
+	public String reloadReceipt(Model model,HttpSession session) {
+		List<Book> listBook=this.bookService.findAllByOrderByBookNameAsc();
+		model.addAttribute("listBook",listBook);
+		Receipt receipt= (Receipt) session.getAttribute("receipt");
+		receipt=this.receiptService.findById(receipt.getId());
+		List<DetailReceipt> detail=this.detailReceiptService.findByReceiptId(receipt.getId());
+		long sum=0;
+		for (DetailReceipt detailReceipt : detail) {
+			sum+=(detailReceipt.getPrice() * detailReceipt.getQuantity());
+		}
+		receipt.setSumMoney(sum);
+		model.addAttribute("listDetail", detail);
+		model.addAttribute("receipt", receipt);
+		return "admin/fragments/reloadReceipt";
 	}
 }

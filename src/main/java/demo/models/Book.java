@@ -20,6 +20,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -33,25 +34,41 @@ public class Book {
 	private Integer id;
 	@Column(columnDefinition = "nvarchar(255)")
 	private String bookName;
-	@Column(columnDefinition = "nvarchar(255)")
-	private String author;
-	private Double price;
-	private Double priceSale;
+
+	private long price;
+	private long priceSale;
 	private String image;
-	@Column(columnDefinition = "nvarchar(255)")
-	private String publicsher;
+
 	private Integer publicationYear;
 	private Integer sale;
-	@Column(columnDefinition = "Date")
-	private Date dateAdded;
 	@Column(columnDefinition = "nvarchar(4000)")
 	private String description;
 	private Boolean status;
+	// danh muc
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "categoryId",referencedColumnName = "id")
-	@JsonIgnore
-	private Category category;
-	@OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+	@JoinColumn(name = "categoryId", referencedColumnName = "id")
 //	@JsonIgnore
+	private Category category;
+	// tac gia
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "authorId", referencedColumnName = "id")
+//	@JsonIgnore
+	private Author author;
+	// nha xuat ban
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "publicsherId", referencedColumnName = "id")
+//	@JsonIgnore
+	private Publicsher publicsher;
+	// anh chi tiết
+	@OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+	@JsonIgnore
 	private Set<ImageProduct> imageProducts;
+	// chi tiet phieu nhap
+	@OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+	@JsonIgnore
+	private Set<DetailReceipt> detailReceipts ;
+	@OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+	
+	private Set<Review> reviews;
+	private Double star;
 }

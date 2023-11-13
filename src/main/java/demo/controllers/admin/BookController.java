@@ -19,14 +19,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import demo.models.Author;
 import demo.models.Book;
 import demo.models.Category;
 import demo.models.ImageProduct;
+import demo.models.Publicsher;
+import demo.models.WareHouse;
 import demo.repository.CategoryRepository;
 import demo.services.CategoryService;
 import demo.services.ImageProductService;
+import demo.services.PublicsherService;
+import demo.services.AuthorService;
 import demo.services.BookService;
 import demo.services.StorageService;
+import demo.services.WareHouseService;
 
 @Controller
 @RequestMapping("/admin")
@@ -39,12 +45,18 @@ public class BookController {
 	private StorageService storageService;
 	@Autowired
 	private ImageProductService imageProductService;
+	@Autowired
+	private AuthorService authorService;
+	@Autowired
+	private PublicsherService publicsherService;
+	@Autowired
+	private WareHouseService wareHouseService;
 	@RequestMapping("/book")
 	public String index(Model model,@Param("keyword") String keyword,
     		@RequestParam(name="page",defaultValue = "1") Integer page) {
 		Page<Book> list=this.bookService.getAll(page);
 		if(keyword !=null) {
-			list=this.bookService.searchBook(keyword,page,4);
+			list=this.bookService.searchBook(keyword,page,6);
 			model.addAttribute("keyword",keyword);
 		}
 		model.addAttribute("totalPage", list.getTotalPages());
@@ -57,34 +69,33 @@ public class BookController {
 	public String add(Model model) {
 		Book book = new Book();
 		book.setStatus(true);
-		List<Category> listCate = categoryService.getAll();
+		List<Category> listCate = this.categoryService.getAll();
+		List<Author> listAuthor = this.authorService.getAll();
+		List<Publicsher> listPublicsher= this.publicsherService.getAll();
 		model.addAttribute("book", book);
 		model.addAttribute("listCate", listCate);
+		model.addAttribute("listAuthor", listAuthor);
+		model.addAttribute("listPublicsher", listPublicsher);
 		return "admin/book/add";
 	}
 
 	@PostMapping("/add-book")
-	public String save(Model model, @ModelAttribute("book") Book book,@RequestParam("fileImage") MultipartFile file,@RequestParam("ngayNhap") String ngayNhap,
+	public String save(Model model, @ModelAttribute("book") Book book,@RequestParam("fileImage") MultipartFile file,
 		@RequestParam("fileImages") MultipartFile[] files  ) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-			Date parsedDate = sdf.parse(ngayNhap);
-			book.setDateAdded(parsedDate);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		Double priceSale;
-		priceSale=book.getPrice()- book.getPrice()* book.getSale() /100;
-		book.setPriceSale(priceSale);
 		this.storageService.store(file);
 		String fileName = file.getOriginalFilename();
 		book.setImage(fileName);
+		book.setPrice(0);
+		book.setPriceSale(0);
 		String fileName1=files[0].getOriginalFilename();		
 		Boolean isEmpty1=fileName1==null || fileName1.trim().length()==0;
-		
+		WareHouse kho= new WareHouse();
+		kho.setQuantity(0);
 		if (this.bookService.create(book)) {
+			kho.setBook(book);
+			if(this.wareHouseService.create(kho)) {
+				System.out.println("Thêm vào kho thành công");
+			}
 			if(!isEmpty1) {
 				for (MultipartFile multipartFile : files) {
 					ImageProduct imageProduct=new ImageProduct();
@@ -104,16 +115,19 @@ public class BookController {
 	public String edit(Model model, @PathVariable("id") Integer id) {
 		Book book = this.bookService.findById(id);
 		model.addAttribute("book", book);
-		Date ngayNhap=book.getDateAdded();	
+		
 		List<Category> listCate = categoryService.getAll();
 		model.addAttribute("listCate", listCate);
-		model.addAttribute("ngayNhap",ngayNhap);
+		List<Author> listAuthor = this.authorService.getAll();
+		List<Publicsher> listPublicsher= this.publicsherService.getAll();
+		model.addAttribute("listAuthor", listAuthor);
+		model.addAttribute("listPublicsher", listPublicsher);
 		return "admin/book/edit";
 	}
 
 	@PostMapping("/book-edit")
 	public String update(Model model, @ModelAttribute("book") Book book,
-		@RequestParam("fileImage") MultipartFile file,@RequestParam("ngayNhap") String ngayNhap
+		@RequestParam("fileImage") MultipartFile file
 		,@RequestParam("listChoose")String listChoose,@RequestParam("fileImages") MultipartFile[] files) {
 		
 		String fileName = file.getOriginalFilename();
@@ -133,15 +147,8 @@ public class BookController {
 		String fileName1=files[0].getOriginalFilename();
 		Boolean isEmpty1=fileName1==null || fileName1.trim().length()==0;
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-			Date parsedDate = sdf.parse(ngayNhap);
-			book.setDateAdded(parsedDate);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Double priceSale;
+		
+		Long priceSale;
 		priceSale=book.getPrice()- book.getPrice()* book.getSale() /100;
 		book.setPriceSale(priceSale);
 		
@@ -164,6 +171,7 @@ public class BookController {
 	@GetMapping("delete-book/{id}")
 	public String delete(Model model, @PathVariable("id") Integer id) {
 		this.imageProductService.deleteByBookId(id);
+		this.wareHouseService.deleteByBookId(id);
 		if (this.bookService.delete(id)) {
 			return "redirect:/admin/book";
 		}

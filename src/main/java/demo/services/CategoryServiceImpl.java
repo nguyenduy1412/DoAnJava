@@ -84,6 +84,9 @@ public class CategoryServiceImpl implements CategoryService{
 		list=list.subList(start, end);
 		return new PageImpl<Category>(list, pageable, this.searchCategory(keyword).size());
 	}
-	
+	@Override
+	public List<Category> findAllByOrderByIdAsc() {
+		return this.categoryRepository.findAllByOrderByIdAsc();
+	}
 	
 }

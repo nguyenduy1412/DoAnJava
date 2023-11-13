@@ -44,8 +44,10 @@ public class HomeController {
 	@RequestMapping("/")
 	public String index(Model model,HttpServletRequest request,Principal principal,HttpSession session) {
 		List<Banner> listBanners = this.bannerService.getAll();
+		System.out.println("Alo1");
 		model.addAttribute("listBanners", listBanners);
 		List<Book> bookSale=this.bookService.findBookSale();
+		System.out.println("Alo1");
 		List<List<Book>> listBig = new ArrayList();
 		for (int i = 1; i <=6 ; i++) {
 			//có 2 sản phẩm
@@ -54,7 +56,7 @@ public class HomeController {
 			List<Book> bookList = bookNew.getContent();
 			listBig.add(bookList);
 		}
-		
+		System.out.println("Alo");
 		List<Category> listCate=this.categoryService.getAll();
 		model.addAttribute("listBig", listBig);
 		model.addAttribute("bookSale", bookSale);
@@ -74,7 +76,7 @@ public class HomeController {
 		}
 		model.addAttribute("listTrend1", listTrend1);
 		model.addAttribute("listTrend2", listTrend2);
-		Double total=null;
+		Long total=null;
 		Integer soluong=null;
 		
 		try {

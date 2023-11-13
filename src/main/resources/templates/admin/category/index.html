@@ -67,6 +67,7 @@
 									<tr>
 										<th>STT</th>
 										<th>Tên danh mục</th>
+										<th>Ảnh</th>
 										<th>Trạng thái</th>
 										<th>Tùy chọn</th>
 									</tr>
@@ -75,6 +76,9 @@
 									<tr th:each="category,number : ${list}">
 										<td th:text="${number.count}"></td>
 										<td th:text="${category.categoryName}"></td>
+										<td>
+											<img th:src="@{'/uploads/'+${category.img}}" width="100px">
+										</td>
 										<td th:if="${category.categoryStatus}"><span
 												class="badge bg-success">Hiện</span></td>
 										<td th:if="${!category.categoryStatus}"><span class="badge bg-danger">Ẩn</span>

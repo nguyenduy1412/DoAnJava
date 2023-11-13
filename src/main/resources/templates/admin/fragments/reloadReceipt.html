@@ -1,0 +1,89 @@
+<section class="content">
+	<div class="row bg-white pt-2">
+		<div class="col-6">
+			<div class="card-body card table-responsive p-0" style="height: 300px;">
+				<table class="table table-head-fixed text-nowrap">
+					<thead>
+						<tr>
+							<th>STT</th>
+							<th>Ảnh</th>
+							<th>Giá</th>
+							<th>Lãi</th>
+							<th>Số lượng</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="detail,number : ${listDetail}">
+							<td th:text="${number.count}"></td>
+							<td>
+								<img th:src="@{'/uploads/'+${detail.book.image}}" width="40px">
+							</td>
+
+							<td>
+								<input type="number" class="form-control ipPrice" th:data-id="${detail.id}"
+									th:value="${detail.price}">
+							</td>
+							<td style="width: 20%;">
+								<input type="number" class="form-control ipProfit" th:data-id="${detail.id}" th:value="${detail.profit}">
+							</td>
+							<td style="width: 10%;">
+								<input type="number" class="form-control ipQuantity" th:data-id="${detail.id}" th:value="${detail.quantity}">
+							</td>
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="card-body card table-responsive p-0" style="height: 300px;">
+				<table class="table table-head-fixed text-nowrap">
+					<thead>
+						<tr>
+							<th>STT</th>
+							<th>Ảnh</th>
+							<th>Tên sách</th>
+							<th>Giá</th>
+							<th>Tùy chọn</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="book,number : ${listBook}">
+							<td th:text="${number.count}"></td>
+							<td>
+								<img th:src="@{'/uploads/'+${book.image}}" width="40px">
+							</td>
+							<td
+								th:text="${#strings.length(book.bookName) > 12 ? #strings.substring(book.bookName, 0, 12) + '...' : book.bookName}">
+							</td>
+							<td th:text="${book.price}"></td>
+
+							<td>
+								<button th:id="${book.id}" type="submit"
+									class="btn btn-success add-receipt">Thêm</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="row bg-white justify-content-end pr-5">
+
+		<form class="jusify-conten-center" role="form" method="post" th:action="@{/admin/add-receipt}"
+			th:object="${receipt}" enctype="multipart/form-data">
+			<input type="hidden" class="form-control receiptId" th:field="*{id}">
+			<div class="box-body">
+				<div class="form-group">
+					<label for="exampleInputEmail1">Tổng tiền</label>
+					<input type="text" class="form-control" th:field="*{sumMoney}">
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary w-100">Thêm</button>
+				</div>
+			</div>
+
+			
+		</form>
+	</div>
+</section>

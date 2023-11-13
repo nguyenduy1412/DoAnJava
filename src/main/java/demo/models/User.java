@@ -49,7 +49,7 @@ public class User {
 
 	@Column(columnDefinition = "nvarchar(255)")
 	private String fullName;
-	private Boolean gender;
+	private Integer gender;
 	@Column(columnDefinition = "nvarchar(255)")
 	private String address;
 	private String email;
@@ -59,6 +59,8 @@ public class User {
 	private Date birthday;
 	@Column(columnDefinition = "nvarchar(255)")
 	private String img;
+	@Column(columnDefinition = "nvarchar(255)")
+	private String imgCover;
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	@JsonIgnore
 	private Set<UserRole> userRoles;	

@@ -20,7 +20,10 @@ public interface BookService {
 	List<Book> searchBook(String keyword);
 	Page<Book> getAll(Integer page);
 	Page<Book> listBookNew(Integer page);
+	Page<Book> listBookSale(Integer page);
 	Page<Book> searchBook(String keyword,Integer page,Integer limit);
 	List<Book> findByCategoryId(Integer id);
 	Page<Book> findByCateId(Integer id,Integer page);
+	// lấy danh sách sách theo thứ tự alphabeta
+	List<Book> findAllByOrderByBookNameAsc();
 }

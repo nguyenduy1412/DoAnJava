@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import demo.models.CartItem;
+
 import demo.models.OrderDetail;
-import demo.models.Orders;
+
 import jakarta.transaction.Transactional;
 
 public interface OrderDetailRepository extends JpaRepository<OrderDetail, Integer>{

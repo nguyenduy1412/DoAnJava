@@ -2,6 +2,8 @@ package demo.services;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import demo.models.Book;
 import demo.models.OrderDetail;
 import demo.models.Orders;
@@ -13,4 +15,5 @@ public interface OrderDetailService {
 	OrderDetail findById(Integer id);
 	Boolean deleteByOrdersId(Integer id);
 	List<Book> findBookTrend();
+	Page<Book> findBookTrend(Integer page);
 }

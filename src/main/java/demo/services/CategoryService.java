@@ -8,6 +8,7 @@ import demo.models.Category;
 
 public interface CategoryService {
 	List<Category> getAll();
+	List<Category> findAllByOrderByIdAsc();
 	Boolean create(Category a);
 	Boolean update(Category a);
 	Boolean delete(Integer id);

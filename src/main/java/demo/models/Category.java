@@ -31,6 +31,8 @@ public class Category {
 	@Column(columnDefinition = "nvarchar(255)",unique = true)
 	private String categoryName;
 	private Boolean categoryStatus;
+	@Column(columnDefinition = "nvarchar(255)")
+	private String img;
 	@OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
 	@JsonIgnore
 	private Set<Book> books;

@@ -32,7 +32,7 @@ public class Orders {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private Long sumMoney;
+	private long sumMoney;
 	private Integer status;
 	private Date dateOrder;
 	@Column(columnDefinition = "nvarchar(255)")
@@ -40,8 +40,10 @@ public class Orders {
 	private String phone;
 	@Column(columnDefinition = "nvarchar(255)")
 	private String note;
+	@Column(columnDefinition = "nvarchar(255)")
+	private String fullName;
 	@OneToMany(mappedBy = "orders", fetch = FetchType.EAGER)
-	@JsonIgnore
+	
 	private Set<OrderDetail> orderDetails;
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "userId",referencedColumnName = "id")

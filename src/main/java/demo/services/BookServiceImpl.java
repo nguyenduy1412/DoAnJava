@@ -89,14 +89,14 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public Page<Book> getAll(Integer page) {
-		Pageable pageable = PageRequest.of(page - 1, 2);
+		Pageable pageable = PageRequest.of(page - 1, 4);
 		return this.bookRepository.findAll(pageable);
 	}
 
 	@Override
 	public Page<Book> listBookNew(Integer page) {
-		List list = this.findBookNew();
-		Pageable pageable = PageRequest.of(page - 1, 2);
+		List<Book> list = this.findBookNew();
+		Pageable pageable = PageRequest.of(page - 1, 4);
 		int start = (int) pageable.getOffset();
 		int end = Math.min(start + pageable.getPageSize(), list.size());
 
@@ -126,7 +126,25 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public Page<Book> findByCateId(Integer id,Integer page) {
 		List<Book> list=this.findByCategoryId(id);
-		Pageable pageable = PageRequest.of(page - 1, 12);
+		Pageable pageable = PageRequest.of(page - 1, 4);
+		int start = (int) pageable.getOffset();
+		int end = Math.min(start + pageable.getPageSize(), list.size());
+
+		List<Book> sublist = list.subList(start, end);
+
+		return new PageImpl<>(sublist, pageable, list.size());
+	}
+
+	@Override
+	public List<Book> findAllByOrderByBookNameAsc() {
+		// TODO Auto-generated method stub
+		return this.bookRepository.findAllByOrderByBookNameAsc();
+	}
+
+	@Override
+	public Page<Book> listBookSale(Integer page) {
+		List<Book> list = this.findBookSale();
+		Pageable pageable = PageRequest.of(page - 1, 4);
 		int start = (int) pageable.getOffset();
 		int end = Math.min(start + pageable.getPageSize(), list.size());
 

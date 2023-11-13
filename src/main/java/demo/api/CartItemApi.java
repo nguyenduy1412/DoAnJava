@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import demo.modelApi.UserBookId;
+import demo.models.Book;
 import demo.models.Cart;
 import demo.models.CartItem;
 import demo.models.Orders;
@@ -22,6 +24,7 @@ import demo.services.BookService;
 import demo.services.CartItemService;
 import demo.services.CartService;
 import demo.services.OrderService;
+import demo.services.UserService;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
@@ -33,6 +36,8 @@ public class CartItemApi {
 	private CartService cartService;
 	@Autowired
 	private BookService bookService;
+	@Autowired
+	private UserService userService;
 	@GetMapping
 	public List<CartItem> list(){
 		return this.cartItemService.getAll();
@@ -50,24 +55,23 @@ public class CartItemApi {
 
 	    return new ResponseEntity<>("Xóa đối tượng thành công", HttpStatus.OK);
 	}
-	@PostMapping("/{id}")
-	public ResponseEntity<String> addCartItem(@PathVariable("id") Integer id,HttpSession session) {
-	    User user=(User) session.getAttribute("user");
+	@PostMapping("/add")
+	public ResponseEntity<String> addCartItem(@RequestBody UserBookId request) {
+		User user=this.userService.findById(request.getUserId());
 	    Cart cart = cartService.findByUserId(user.getId());
 		if (cart == null) {
 			cart = new Cart();
 			cart.setUser(user);
 			this.cartService.create(cart);
 		}
-
-		CartItem cartItem = this.cartItemService.findByCartIdAndBookId(cart.getId(), id);
+		CartItem cartItem = this.cartItemService.findByCartIdAndBookId(cart.getId(),request.getBookId());
 		if (cartItem != null) {
 			Integer soluong = cartItem.getQuantity() + 1;
 			cartItem.setQuantity(soluong);
 		} else {
 			cartItem = new CartItem();
 			cartItem.setCart(cart);
-			cartItem.setBook(this.bookService.findById(id));
+			cartItem.setBook(this.bookService.findById(request.getBookId()));
 			cartItem.setQuantity(1);
 		}
 		this.cartItemService.createOrUpdate(cartItem);

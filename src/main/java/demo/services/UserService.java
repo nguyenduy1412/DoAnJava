@@ -9,4 +9,5 @@ public interface UserService {
 	User findByUserName(String userName);
 	User update(User a);
 	List<User> getAll();
+	User findById(Long id);
 }

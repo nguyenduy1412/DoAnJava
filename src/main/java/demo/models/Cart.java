@@ -39,8 +39,9 @@ public class Cart {
 	@OneToMany(mappedBy ="cart",fetch = FetchType.EAGER)
 	@JsonIgnore
 	private Set<CartItem> cartItems;
-	public Double totalPrice() {
-		Double totalPrice=0.0;
+	private Long total;
+	public Long totalPrice() {
+		Long totalPrice=(long) 0;
 		for (CartItem a : cartItems) {
 			totalPrice+=a.getQuantity() * a.getBook().getPriceSale();
 		}

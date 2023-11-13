@@ -71,4 +71,9 @@ public class OrderServiceImpl implements OrderService{
 		return false;
 	}
 
+	@Override
+	public List<Orders> findByStatusAndUserIdOrderByIdDesc(Integer status,long userId) {
+		return this.orderRepository.findByStatusAndUserIdOrderByIdDesc(status,userId);
+	}
+
 }
