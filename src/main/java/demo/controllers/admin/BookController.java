@@ -85,8 +85,11 @@ public class BookController {
 		this.storageService.store(file);
 		String fileName = file.getOriginalFilename();
 		book.setImage(fileName);
-		book.setPrice(0);
-		book.setPriceSale(0);
+		// giá nhập / 1,lai 
+		long price=(long) (book.getPriceEnter() * ((double)book.getProfit()/100 +1));
+		long priceSale= (long) (price + price * (double)book.getSale()/100);	
+		book.setPrice(price);
+		book.setPriceSale(priceSale);
 		String fileName1=files[0].getOriginalFilename();		
 		Boolean isEmpty1=fileName1==null || fileName1.trim().length()==0;
 		WareHouse kho= new WareHouse();

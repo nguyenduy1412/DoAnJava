@@ -50,6 +50,7 @@ public class UserApi {
 		User user=this.userService.findByUserName(username);
 		if(user==null)
 		{
+
 			return null;
 		}
 		if(passwordEncoder.matches(password, user.getPassWord())) {
@@ -64,7 +65,14 @@ public class UserApi {
 	}
 	@PostMapping("/signup")
 	public ResponseEntity<String> addAccount(@RequestBody User user) {
+		User a=this.userService.findByUserName(user.getUserName());
+		System.out.println(a);
+		if(a!=null){
+			System.out.println("Alooo");
+			return new ResponseEntity<>("Tên đăng nhập đã tồn tại", HttpStatus.BAD_REQUEST);
+		}
 		String pass=new BCryptPasswordEncoder().encode(user.getPassWord());
+		
 		user.setGender(1);
 		user.setPassWord(pass);
 		user.setImgCover("coverdefault.png");
@@ -76,9 +84,9 @@ public class UserApi {
 			Favourite favourite=new Favourite();
 			favourite.setUser(user);
 			this.favouriteService.create(favourite);
-			return new ResponseEntity<>("Thêm thành công", HttpStatus.OK);
+			return new ResponseEntity<>("Đăng kí thành công", HttpStatus.OK);
 		}
-		return new ResponseEntity<>("Thêm thất bại", HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>("Đăng kí thất bại", HttpStatus.BAD_REQUEST);
 	}
 	@PutMapping("/uploadAvata/{id}")
 	public ResponseEntity<String> uploadAvata(@PathVariable Long id,@RequestParam("file") MultipartFile file,
@@ -153,6 +161,6 @@ public class UserApi {
 				return new ResponseEntity<>("thất bại", HttpStatus.BAD_REQUEST);
 			}
 		}
-		return new ResponseEntity<>("sai pass", HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>("Sai mật khẩu", HttpStatus.BAD_REQUEST);
 	}
 }

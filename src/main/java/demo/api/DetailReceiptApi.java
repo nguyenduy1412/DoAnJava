@@ -52,11 +52,12 @@ public class DetailReceiptApi {
 		try {
 			// tìm kiếm xem sách đã được thêm vào chi tiết phiếu nhập chưa
 			// nếu thêm rồi thì lấy giá và lãi cũ để hiển thị 
-			DetailReceipt detail=this.detailReceiptService.findByBookId(bookId);
-			lai=detail.getProfit();
-			price=(long) (detail.getBook().getPrice()/((double)lai/100 +1));
-			System.out.println("Gias"+price);
-			System.out.println(detail.getPrice());
+			/*
+			 * DetailReceipt detail=this.detailReceiptService.findByBookId(bookId);
+			 * lai=detail.getProfit(); price=(long)
+			 * (detail.getBook().getPrice()/((double)lai/100 +1));
+			 * System.out.println("Gias"+price); System.out.println(detail.getPrice());
+			 */
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -71,8 +72,8 @@ public class DetailReceiptApi {
 	    	detailReceipt.setBook(book);
 			detailReceipt.setReceipt(receipt);
 			detailReceipt.setQuantity(1);
-			detailReceipt.setPrice(price);
-			detailReceipt.setProfit(lai);
+//			detailReceipt.setPrice(price);
+//			detailReceipt.setProfit(lai);
 	    }
 	    else {
 	    	detailReceipt.setQuantity(detailReceipt.getQuantity()+1);
@@ -82,23 +83,23 @@ public class DetailReceiptApi {
 	}
 	@PutMapping("/{id}")
 	ResponseEntity<String> update(@PathVariable("id") Integer id, @RequestBody DetailReceipt detailReceipt) {
-			long priceNhap=detailReceipt.getPrice();
-			int profit=detailReceipt.getProfit();
-			DetailReceipt detailReceiptOld=this.detailReceiptService.findById(id);
-			detailReceiptOld.setPrice(priceNhap);
-			detailReceiptOld.setProfit(profit);
-			long priceBook=(long) ( priceNhap + (priceNhap * (double)profit/100));
-			System.out.println("Price: "+priceBook);
-			Book book=detailReceiptOld.getBook();
-			book.setPrice(priceBook);
-			long priceSale= (long) (priceBook + priceBook * (double)book.getSale()/100);
-			book.setPriceSale(priceSale);
-			System.out.println(book.getPrice() + "----"+ book.getPriceSale());
-			
-			this.bookService.create(book);
-			if(this.detailReceiptService.create(detailReceiptOld) != null) {
-				return new ResponseEntity<>("Thêm đối tượng thành công", HttpStatus.OK);
-			}
+//			long priceNhap=detailReceipt.getPrice();
+//			int profit=detailReceipt.getProfit();
+//			DetailReceipt detailReceiptOld=this.detailReceiptService.findById(id);
+//			detailReceiptOld.setPrice(priceNhap);
+//			detailReceiptOld.setProfit(profit);
+//			long priceBook=(long) ( priceNhap + (priceNhap * (double)profit/100));
+//			System.out.println("Price: "+priceBook);
+//			Book book=detailReceiptOld.getBook();
+//			book.setPrice(priceBook);
+//			long priceSale= (long) (priceBook + priceBook * (double)book.getSale()/100);
+//			book.setPriceSale(priceSale);
+//			System.out.println(book.getPrice() + "----"+ book.getPriceSale());
+//			
+//			this.bookService.create(book);
+//			if(this.detailReceiptService.create(detailReceiptOld) != null) {
+//				return new ResponseEntity<>("Thêm đối tượng thành công", HttpStatus.OK);
+//			}
 			return new ResponseEntity<>("Thất bại", HttpStatus.BAD_REQUEST);
 	}
 	@PutMapping("/updatequantity/{id}")

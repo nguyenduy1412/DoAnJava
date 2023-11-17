@@ -40,6 +40,7 @@ public class Cart {
 	@JsonIgnore
 	private Set<CartItem> cartItems;
 	private Long total;
+
 	public Long totalPrice() {
 		Long totalPrice=(long) 0;
 		for (CartItem a : cartItems) {

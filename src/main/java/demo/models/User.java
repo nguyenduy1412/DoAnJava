@@ -46,7 +46,7 @@ public class User {
 	@Column(columnDefinition = "nvarchar(255)")
 	private String passWord;
 	private Boolean enabled;
-
+	private String codeOtp;
 	@Column(columnDefinition = "nvarchar(255)")
 	private String fullName;
 	private Integer gender;

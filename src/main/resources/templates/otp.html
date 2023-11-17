@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<style>
+    .code{
+        border: 1px solid #1877f2;
+        width: 120px;
+        height: 25px;
+        border-radius: 7px;
+        background: #e7f3ff;
+        text-align: center;
+        padding-top: 15px;
+        padding-bottom: 10px;
+        font-weight: bold;
+        font-size: 15px;
+        font-family: LucidaGrande,tahoma,verdana,arial,sans-serif;
+    }
+</style>
+</head>
+<body style="    font-family: Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;">
+	<p th:text="${'Xin chào, '+name+','}"></p>
+	<p>Chúng tôi đã nhận được yêu cầu đặt lại mật khẩu của bạn</p>
+	<p>Nhập mã đặt lại mật khẩu sau đây</p>
+	<div class="code" th:text="${otp}">
+    </div>
+	<p>Lưu ý đây là mã được tạo bởi hệ thống và chỉ có giá trị trong vòng 24h</p>
+	<p>Bạn vui lòng đổi lại để đảm bảo an toàn thông tin</p>
+	<p>Đây là email tự động vui lòng không trả lời</p>
+</body>
+</html>

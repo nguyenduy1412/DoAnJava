@@ -34,11 +34,11 @@ public class Book {
 	private Integer id;
 	@Column(columnDefinition = "nvarchar(255)")
 	private String bookName;
-
+	private long priceEnter;
 	private long price;
 	private long priceSale;
 	private String image;
-
+	private Integer profit;
 	private Integer publicationYear;
 	private Integer sale;
 	@Column(columnDefinition = "nvarchar(4000)")

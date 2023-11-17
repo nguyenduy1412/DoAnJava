@@ -33,7 +33,6 @@ public class DetailReceipt {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="receiptId",referencedColumnName = "id")
 	private Receipt receipt;
-	private long price;
-	private Integer profit;
+
 	
 }

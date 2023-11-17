@@ -87,7 +87,7 @@ public class HeaderAjax {
 		List<DetailReceipt> detail=this.detailReceiptService.findByReceiptId(receipt.getId());
 		long sum=0;
 		for (DetailReceipt detailReceipt : detail) {
-			sum+=(detailReceipt.getPrice() * detailReceipt.getQuantity());
+			sum+=(detailReceipt.getBook().getPriceEnter() * detailReceipt.getQuantity());
 		}
 		receipt.setSumMoney(sum);
 		model.addAttribute("listDetail", detail);

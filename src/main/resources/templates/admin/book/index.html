@@ -66,7 +66,7 @@
 											<th>STT</th>
 											<th>Tên sách</th>
 											<th>Tác giả</th>
-											<th>Nhà xuất bản</th>
+											<th>Giá</th>
 											<th>Ảnh</th>
 											<th>Trạng thái</th>
 											<th>Danh mục</th>
@@ -78,7 +78,7 @@
 											<td th:text="${number.count}"></td>
 											<td th:text="${#strings.length(book.bookName) > 12 ? #strings.substring(book.bookName, 0, 12) + '...' : book.bookName}"></td>
 											<td th:text="${book.author.nameAuthor}"></td>
-											<td th:text="${book.publicsher.namePublicsher}"></td>
+											<td th:text="${book.price}"></td>
 											<td>
 												<img th:src="@{'/uploads/'+${book.image}}" width="100px">
 											</td>
