@@ -77,7 +77,7 @@ public class CustomController {
 		} catch (Exception e) {
 			birthday=null;
 		}
-		List<Orders> listOrder=this.orderService.getByUserOrderByIdDesc(user);
+		List<Orders> listOrder=this.orderService.getByUserIdOrderByIdDesc(user.getId());
 		model.addAttribute("listOrder",listOrder);
 		model.addAttribute("birthday",birthday);
 		model.addAttribute("user", user);

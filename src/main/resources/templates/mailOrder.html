@@ -21,12 +21,13 @@
 </head>
 <body style="font-family: Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;">
 	<p th:text="${'Xin chào, '+name+','}"></p>
-	<p>Chúng tôi đã nhận được yêu cầu đặt lại mật khẩu của bạn</p>
-	<p>Nhập mã đặt lại mật khẩu sau đây</p>
-	<div class="code" th:text="${otp}">
-    </div>
-	<p>Lưu ý đây là mã được tạo bởi hệ thống và chỉ có giá trị trong vòng 24h</p>
-	<p>Bạn vui lòng đổi lại để đảm bảo an toàn thông tin</p>
+	<p>Chúng tôi đã nhận được yêu cầu đặt hàng của bạn</p>
+	<p>Thông tin đơn hàng</p>
+	<p th:text="${'Mã đơn hàng: '+id}"></p>
+	<p th:text="${'Ngày đặt hàng: ' + #dates.format(ngaydat, 'dd-MM-yyyy')}"></p>
+	<p th:text="${'Tổng tiền: '+ #numbers.formatDecimal(tongtien, 0, 'POINT', 0, 'COMMA')+ ' VNĐ'}"></p>
+	<p th:text="${'Tình trạng đơn hàng: '+status}"></p>
+	<p>Hãy chú ý thời gian nhận hàng</p>
 	<p>Đây là email tự động vui lòng không trả lời</p>
 </body>
 </html>

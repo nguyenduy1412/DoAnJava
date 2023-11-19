@@ -66,11 +66,15 @@ public class UserApi {
 	@PostMapping("/signup")
 	public ResponseEntity<String> addAccount(@RequestBody User user) {
 		User a=this.userService.findByUserName(user.getUserName());
-		System.out.println(a);
+		if(this.userService.findByEmail(user.getEmail())!=null) {
+			System.out.println("Alooo");
+			return new ResponseEntity<>("Email đã tồn tại", HttpStatus.BAD_REQUEST);
+		}
 		if(a!=null){
 			System.out.println("Alooo");
 			return new ResponseEntity<>("Tên đăng nhập đã tồn tại", HttpStatus.BAD_REQUEST);
 		}
+		
 		String pass=new BCryptPasswordEncoder().encode(user.getPassWord());
 		
 		user.setGender(1);
@@ -128,6 +132,10 @@ public class UserApi {
 	@PutMapping("/updateAccount/{id}")
 	public ResponseEntity<String> updateAccount(@PathVariable Long id,@RequestBody UserDTO user){
 		User userOld=this.userService.findById(id);
+		User check=this.userService.findByEmail(user.getEmail());
+		if(check != null && check!=userOld) {
+			return new ResponseEntity<>("Email đã tồn tại", HttpStatus.BAD_REQUEST);
+		}
 		
 		userOld.setFullName(user.getFullName());
 		userOld.setAddress(user.getAddress());

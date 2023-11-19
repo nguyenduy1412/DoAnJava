@@ -15,5 +15,6 @@ public interface OrderDetailService {
 	OrderDetail findById(Integer id);
 	Boolean deleteByOrdersId(Integer id);
 	List<Book> findBookTrend();
+	List<Book> findAllBookTrend();
 	Page<Book> findBookTrend(Integer page);
 }

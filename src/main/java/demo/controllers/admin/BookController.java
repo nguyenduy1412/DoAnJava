@@ -90,6 +90,7 @@ public class BookController {
 		long priceSale= (long) (price + price * (double)book.getSale()/100);	
 		book.setPrice(price);
 		book.setPriceSale(priceSale);
+		book.setStar(5.0);
 		String fileName1=files[0].getOriginalFilename();		
 		Boolean isEmpty1=fileName1==null || fileName1.trim().length()==0;
 		WareHouse kho= new WareHouse();

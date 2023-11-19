@@ -49,12 +49,13 @@ public class HomeController {
 		List<Book> bookSale=this.bookService.findBookSale();
 		System.out.println("Alo1");
 		List<List<Book>> listBig = new ArrayList();
-		for (int i = 1; i <=6 ; i++) {
+		for (int i = 1; i <6 ; i++) {
 			//có 2 sản phẩm
 			Page<Book> bookNew = this.bookService.listBookNew(i);
-			
+			System.out.println("Uaaa");
 			List<Book> bookList = bookNew.getContent();
 			listBig.add(bookList);
+			System.out.println("Uaaa111");
 		}
 		System.out.println("Alo");
 		List<Category> listCate=this.categoryService.getAll();

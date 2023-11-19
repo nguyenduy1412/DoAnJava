@@ -79,7 +79,7 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 
 	@Override
 	public Page<Book> findBookTrend(Integer page) {
-		List<Book> list = this.findBookTrend();
+		List<Book> list = this.findAllBookTrend();
 		Pageable pageable = PageRequest.of(page - 1, 4);
 		int start = (int) pageable.getOffset();
 		int end = Math.min(start + pageable.getPageSize(), list.size());
@@ -87,6 +87,17 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 		List<Book> sublist = list.subList(start, end);
 
 		return new PageImpl<>(sublist, pageable, list.size());
+	}
+
+	@Override
+	public List<Book> findAllBookTrend() {
+		List<Integer> listId=this.orderDetailRepository.findBookTrend();
+		List<Book> listBook=new ArrayList<Book>();
+		
+		for (Integer id : listId) {
+			listBook.add(this.bookService.findById(id));
+		}
+		return listBook;
 	}
 
 

@@ -3,8 +3,13 @@ package demo.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import demo.models.Book;
 import demo.models.Orders;
 import demo.models.User;
 import demo.repository.OrderRepository;
@@ -55,9 +60,9 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public List<Orders> getByUserOrderByIdDesc(User user) {
+	public List<Orders> getByUserIdOrderByIdDesc(long id) {
 		// TODO Auto-generated method stub
-		return this.orderRepository.findByUserOrderByIdDesc(user);
+		return this.orderRepository.findByUserIdOrderByIdDesc(id);
 	}
 
 	@Override
@@ -75,5 +80,33 @@ public class OrderServiceImpl implements OrderService{
 	public List<Orders> findByStatusAndUserIdOrderByIdDesc(Integer status,long userId) {
 		return this.orderRepository.findByStatusAndUserIdOrderByIdDesc(status,userId);
 	}
+
+	@Override
+	public Page<Orders> getByStatusAndUserIdOrderByIdDesc(Integer status, long userId, Integer page, Integer limit) {
+		List<Orders> list = this.findByStatusAndUserIdOrderByIdDesc(status, userId);
+		Pageable pageable = PageRequest.of(page - 1, limit);
+		int start = (int) pageable.getOffset();
+		int end = Math.min(start + pageable.getPageSize(), list.size());
+
+		List<Orders> sublist = list.subList(start, end);
+
+		return new PageImpl<>(sublist, pageable, list.size());
+		
+	}
+
+	@Override
+	public Page<Orders> getByUserId(long id, Integer page, Integer limit) {
+	
+		List<Orders> list = this.getByUserIdOrderByIdDesc(id);
+		Pageable pageable = PageRequest.of(page - 1, limit);
+		int start = (int) pageable.getOffset();
+		int end = Math.min(start + pageable.getPageSize(), list.size());
+
+		List<Orders> sublist = list.subList(start, end);
+
+		return new PageImpl<>(sublist, pageable, list.size());
+	}
+
+	
 
 }

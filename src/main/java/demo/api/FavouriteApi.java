@@ -45,8 +45,9 @@ public class FavouriteApi {
 	@Autowired
 	private UserService userService;
 	@GetMapping("/{id}")
-	public List<FavouriteItem> getListFavourite(@PathVariable("id") long id) {
-		Favourite favourite=this.favouriteService.findByUserId(id);
+	public List<FavouriteItem> getListFavourite(@PathVariable("id") long userId
+		) {
+		Favourite favourite=this.favouriteService.findByUserId(userId);
 		
 		return this.favouriteItemService.findByFavouriteIdOrderByIdDesc(favourite.getId());
 	}
