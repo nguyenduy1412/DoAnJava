@@ -29,6 +29,7 @@ public class CartApi {
 	public Cart getCart(@PathVariable("id") long id) {
 		Cart cart=this.cartService.findByUserId(id);
 		cart.setTotal(cart.totalPrice());
+		this.cartService.create(cart);
 		return cart;
 	}
 	@GetMapping("/listItem/{id}")

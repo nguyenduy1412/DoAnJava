@@ -87,7 +87,7 @@ public class BookController {
 		book.setImage(fileName);
 		// giá nhập / 1,lai 
 		long price=(long) (book.getPriceEnter() * ((double)book.getProfit()/100 +1));
-		long priceSale= (long) (price + price * (double)book.getSale()/100);	
+		long priceSale= (long) (price - price * (double)book.getSale()/100);	
 		book.setPrice(price);
 		book.setPriceSale(priceSale);
 		book.setStar(5.0);
