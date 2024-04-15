@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import demo.method.FileName;
 import demo.models.Banner;
 import demo.models.Category;
 
@@ -52,9 +53,9 @@ public class BannerController {
 				 System.out.println("ERORRR");
 				 return "admin/banner/add";
 			 }
-		 
-		 	this.storageService.store(file);
-			 String fileName=file.getOriginalFilename();
+			 String fileName=FileName.getFileNameToDateNow();
+		 	this.storageService.store(file,fileName);
+			
 			 banner.setImg(fileName);
 			 if(this.bannerService.create(banner)) {
 				 return "redirect:/admin/banner";
@@ -84,7 +85,8 @@ public class BannerController {
 		String fileName = file.getOriginalFilename();
 		boolean isEmpty = fileName == null || fileName.trim().length() == 0;
 		if (!isEmpty) {
-			this.storageService.store(file);
+			fileName=FileName.getFileNameToDateNow();
+			this.storageService.store(file,fileName);
 			banner.setImg(fileName);
 		}
 		if (this.bannerService.update(banner)) {

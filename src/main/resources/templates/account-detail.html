@@ -24,8 +24,8 @@
 				<div class="col-lg-12">
 					<div class="breadcrumbs-menu">
 						<ul>
-							<li><a href="#">Home</a></li>
-							<li><a href="#" class="active">my-account</a></li>
+							<li><a href="#">Trang chủ</a></li>
+							<li><a href="#" class="active">Tài khoản của bạn</a></li>
 						</ul>
 					</div>
 				</div>
@@ -62,6 +62,8 @@
 												class="fa fa-user"></i>Thông tin tài khoản</a>
 										<a href="#account-pass" data-bs-toggle="tab"><i class="fa fa-lock"></i>Đổi mật
 											khẩu</a>
+										<a href="#bell" data-bs-toggle="tab"><i class="fa fa-bell"></i>Thông
+											báo</a>
 										<a href="#orders" data-bs-toggle="tab"><i class="fa fa-cart-arrow-down"></i>
 											Đơn hàng</a>
 										<a th:href="@{/logout}"><i class="fa fa-sign-out"></i>Đăng xuất</a>
@@ -94,15 +96,46 @@
 														<tbody>
 															<tr th:each="order,number : ${listOrder}">
 																<td th:text="${number.count}"></td>
-																<td th:text="${#dates.format(order.dateOrder, 'dd/MM/yyyy HH:mm:ss')}"></td>
+																<td
+																	th:text="${#dates.format(order.dateOrder, 'dd/MM/yyyy HH:mm:ss')}">
+																</td>
 																<td th:if="${order.status==0}">Chờ xác nhận</td>
 																<td th:if="${order.status==1}">Đã duyệt</td>
 																<td th:if="${order.status==2}">Đang giao</td>
 																<td th:if="${order.status==3}">Giao thành công</td>
-																<td th:text="${#numbers.formatDecimal(order.sumMoney, 0, 'POINT', 0, 'COMMA')+ ' đ'}"></td>
-																<td><a th:href="@{/order-detail/{id}(id=${order.id})}" class="btn btn-sqr">View</a>
+																<td th:if="${order.status==4}">Yêu cầu hủy</td>
+																<td th:if="${order.status==5}">Đã hủy</td>
+																<td
+																	th:text="${#numbers.formatDecimal(order.sumMoney, 0, 'POINT', 0, 'COMMA')+ ' đ'}">
 																</td>
-															
+																<td><a th:href="@{/order-detail/{id}(id=${order.id})}"
+																		class="btn btn-sqr">View</a>
+																</td>
+
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+										<div class="tab-pane fade" id="bell" role="tabpanel">
+											<div class="myaccount-content">
+												<h5>Thông báo</h5>
+												<div class="myaccount-table table-responsive text-center">
+													<table class="table table-bordered">
+														
+														<tbody>
+															<tr th:each="nofication,number : ${listNofi}">
+																<td >
+																	<div class="d-flex justify-content-between">
+																		<div>
+																		<span class="text-left" th:text="${nofication.message}"></span>
+																	</div>
+																	<div>
+																		<span th:text="${#dates.format(nofication.date, 'dd/MM/yyyy')}"></span>
+																	</div>
+																	</div>
+																	
+																</td>
 														</tbody>
 													</table>
 												</div>
@@ -113,61 +146,76 @@
 											<div class="myaccount-content">
 												<h5>Thông tin tài khoản</h5>
 												<div class="account-details-form">
-													<form th:action="@{/myacount}" th:object="${user}" method="post" enctype="multipart/form-data">
-														<input type="hidden" class="form-control"  th:field="*{id}" >
-														<input type="hidden" class="form-control"  th:field="*{userName}" >
-														<input type="hidden" class="form-control"  th:field="*{passWord}" >
-														<input type="hidden" class="form-control"  th:field="*{img}" >
+													<form th:action="@{/myacount}" th:object="${user}" method="post"
+														enctype="multipart/form-data">
+														<input type="hidden" class="form-control" th:field="*{id}">
+														<input type="hidden" class="form-control"
+															th:field="*{userName}">
+														<input type="hidden" class="form-control"
+															th:field="*{passWord}">
+														<input type="hidden" class="form-control" th:field="*{img}">
 														<div class="row">
 															<div class="col-lg-6">
 																<div class="single-input-item">
-																	<label for="display-name" class="required">Họ tên</label>
+																	<label for="display-name" class="required">Họ
+																		tên</label>
 																	<input type="text" id="display-name"
-																		placeholder="Full Name"  th:field="*{fullName}" />
+																		placeholder="Full Name"
+																		th:field="*{fullName}" />
 																</div>
 																<div class="single-input-item">
 																	<label for="email" class="required">Email</label>
-																	<input type="email" id="email"
-																		placeholder="Email" th:field="*{email}" />
+																	<input type="email" id="email" placeholder="Email"
+																		th:field="*{email}" />
 																</div>
 																<div class="single-input-item">
 																	<label for="email" class="required">Địa chỉ</label>
-																	<input type="text" id="email"
-																		placeholder="Address" th:field="*{address}" />
+																	<input type="text" id="email" placeholder="Address"
+																		th:field="*{address}" />
 																</div>
 																<div class="single-input-item">
-																	<label for="email" class="required">Số điện thoại</label>
-																	<input type="text" id="email"
-																		placeholder="Phone" th:field="*{telephone}" />
+																	<label for="email" class="required">Số điện
+																		thoại</label>
+																	<input type="text" id="email" placeholder="Phone"
+																		th:field="*{telephone}" />
 																</div>
 																<div class="form-group mt-3">
 																	<label for="exampleInputPassword1">Giới tính</label>
 																	<div class="d-flex">
 																		<div class="form-check ">
-																			<input class="form-check-input" type="radio" value="1" th:field="*{gender}" >
-																			<label class="form-check-label" for="flexCheckDefault">
+																			<input class="form-check-input" type="radio"
+																				value="1" th:field="*{gender}">
+																			<label class="form-check-label"
+																				for="flexCheckDefault">
 																				Nam
 																			</label>
 																		</div>
-																		<div class="form-check" style="margin-left: 10px;">
-																			<input class="form-check-input" type="radio" value="0" th:field="*{gender}" >
-																			<label class="form-check-label" for="flexCheckChecked">
+																		<div class="form-check"
+																			style="margin-left: 10px;">
+																			<input class="form-check-input" type="radio"
+																				value="0" th:field="*{gender}">
+																			<label class="form-check-label"
+																				for="flexCheckChecked">
 																				Nữ
 																			</label>
 																		</div>
 																	</div>
-								
+
 																</div>
 																<div class="single-input-item">
-																	<label for="email" class="required">Ngày sinh</label>
-																	<input type="date" id="email" name="date1" th:value="${#dates.format(birthday, 'yyyy-MM-dd')}" />
+																	<label for="email" class="required">Ngày
+																		sinh</label>
+																	<input type="date" id="email" name="date1"
+																		th:value="${#dates.format(birthday, 'yyyy-MM-dd')}" />
 																</div>
 															</div>
 															<div
 																class="col-lg-6 d-flex align-items-center justify-content-center">
 																<div class="imgCustomer">
 																	<div class="imgCus mb-3">
-																		<img id="imgCus" th:src="@{'/uploads/'+${user.img}}" alt="" class="w-100">
+																		<img id="imgCus"
+																			th:src="@{'/uploads/'+${user.img}}" alt=""
+																			class="w-100">
 																	</div>
 																	<input style="display: none;" type="file"
 																		id="imageInput" name="fileImage">
@@ -179,7 +227,8 @@
 
 
 														<div class="single-input-item">
-															<button type="submit" class="btn btn-sqr">Lưu thay đổi</button>
+															<button type="submit" class="btn btn-sqr">Lưu thay
+																đổi</button>
 														</div>
 													</form>
 												</div>
@@ -192,22 +241,24 @@
 													<div class="account-details-form">
 														<form th:action="@{/updatePass}" method="post">
 															<div class="single-input-item">
-																<label for="current-pwd" class="required">Mật khẩu cũ</label>
+																<label for="current-pwd" class="required">Mật khẩu
+																	cũ</label>
 																<input type="password" name="oldPass" id="current-pwd"
 																	placeholder="Mật khẩu cũ" />
 															</div>
 															<div class="row">
 																<div class="col-lg-6">
 																	<div class="single-input-item">
-																		<label for="new-pwd" class="required">Mật khẩu mới</label>
-																		<input type="password" id="new-pwd" name="newPass"
-																			placeholder="New Password" />
+																		<label for="new-pwd" class="required">Mật khẩu
+																			mới</label>
+																		<input type="password" id="new-pwd"
+																			name="newPass" placeholder="New Password" />
 																	</div>
 																</div>
 																<div class="col-lg-6">
 																	<div class="single-input-item">
-																		<label for="confirm-pwd"
-																			class="required">Nhập lại mật khẩu</label>
+																		<label for="confirm-pwd" class="required">Nhập
+																			lại mật khẩu</label>
 																		<input type="password" id="confirm-pwd"
 																			placeholder="Confirm Password" />
 																	</div>
@@ -215,7 +266,8 @@
 															</div>
 
 															<div class="single-input-item">
-																<button type="submit" class="btn btn-sqr">Lưu thay đổi</button>
+																<button type="submit" class="btn btn-sqr">Lưu thay
+																	đổi</button>
 															</div>
 														</form>
 													</div>
@@ -238,13 +290,13 @@
 	<footer th:replace="layout/footer::footer"></footer>
 	<!-- Modal end -->
 	<div th:replace="layout/js::js"></div>
-	<input class="mess" type="hidden" th:value="${messege}" ></input>
-	<script th:if="${messege !=null}")>
-		let mess=$('.mess').val();
-		console.log("Mess",mess);
+	<input class="mess" type="hidden" th:value="${messege}"></input>
+	<script th:if="${messege !=null}" )>
+		let mess = $('.mess').val();
+		console.log("Mess", mess);
 		toatsjs(mess);
 	</script>
-	
+
 	<!-- all js here -->
 	<!-- jquery latest version -->
 

@@ -31,6 +31,7 @@ public class WareHouse {
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="bookId",referencedColumnName = "id")
 	private Book book;
-	
-	private int quantity;
+	private Integer quantity;
+	private Integer quantityEnter;
+	private Integer sold;
 }

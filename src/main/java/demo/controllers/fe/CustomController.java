@@ -20,8 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import demo.models.CustomUserDetails;
+import demo.models.Notification;
 import demo.models.Orders;
 import demo.models.User;
+import demo.services.NotificationService;
 import demo.services.OrderService;
 import demo.services.StorageService;
 import demo.services.UserService;
@@ -38,6 +40,8 @@ public class CustomController {
 	private OrderService orderService;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	private NotificationService notificationService;
 	@RequestMapping("/login")
 	public String signin() {
 		return "login";
@@ -78,9 +82,11 @@ public class CustomController {
 			birthday=null;
 		}
 		List<Orders> listOrder=this.orderService.getByUserIdOrderByIdDesc(user.getId());
+		List<Notification> listNofi=this.notificationService.findByUserIdAndOrderByIdDesc(user.getId());
 		model.addAttribute("listOrder",listOrder);
 		model.addAttribute("birthday",birthday);
 		model.addAttribute("user", user);
+		model.addAttribute("listNofi", listNofi);
 		return "account-detail";
 	}
 	@PostMapping("/myacount")

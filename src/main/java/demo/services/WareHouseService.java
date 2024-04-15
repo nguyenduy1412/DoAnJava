@@ -12,4 +12,5 @@ public interface WareHouseService {
 	Boolean delete(Integer id);
 	WareHouse findById(Integer id);
 	Boolean deleteByBookId(Integer id);
+	WareHouse findByBookId(Integer id);
 }

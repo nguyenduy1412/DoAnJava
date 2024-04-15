@@ -45,7 +45,7 @@ public class BookApi {
 	}
 	@GetMapping("/new")
 	public Page<Book> getBookNew(@RequestParam("page") Integer page) {
-		return this.bookService.listBookNew(page);
+		return this.bookService.listBookNew(page,4);
 	}
 	@GetMapping("/trend")
 	public Page<Book> getBookTrend(@RequestParam("page") Integer page) {

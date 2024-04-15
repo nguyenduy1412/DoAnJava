@@ -47,37 +47,30 @@ public class DetailReceiptApi {
 	@PostMapping
 	public ResponseEntity<String> addDetailReceipt(@RequestParam("receiptId") Integer id,@RequestParam("bookId") Integer bookId,
 			HttpSession session) {
+		System.out.println("Id "+id);
 		long price=0;
 		int lai=0;
-		try {
-			// tìm kiếm xem sách đã được thêm vào chi tiết phiếu nhập chưa
-			// nếu thêm rồi thì lấy giá và lãi cũ để hiển thị 
-			/*
-			 * DetailReceipt detail=this.detailReceiptService.findByBookId(bookId);
-			 * lai=detail.getProfit(); price=(long)
-			 * (detail.getBook().getPrice()/((double)lai/100 +1));
-			 * System.out.println("Gias"+price); System.out.println(detail.getPrice());
-			 */
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		System.out.println("1");
 		// tìm kiếm xem sách đã có trong chi tiết phiếu nhập chưa 
 		// nếu có rồi thì cập nhật số lượng ngược lại thì thêm mới
 	    DetailReceipt detailReceipt=this.detailReceiptService.findByReceiptIdAndBookId(id, bookId);
 	    if(detailReceipt==null)
 	    {
+	    	System.out.println("2");
 	    	Receipt receipt=this.receiptService.findById(id);
+	    	System.out.println("Phieu"+receipt);
 			Book book=this.bookService.findById(bookId);
+			System.out.println("book"+book.getBookName());
 	    	detailReceipt=new DetailReceipt();
 	    	detailReceipt.setBook(book);
 			detailReceipt.setReceipt(receipt);
 			detailReceipt.setQuantity(1);
-//			detailReceipt.setPrice(price);
-//			detailReceipt.setProfit(lai);
+			System.out.println("detail"+detailReceipt);
 	    }
 	    else {
 	    	detailReceipt.setQuantity(detailReceipt.getQuantity()+1);
 	    }
+	    System.out.println("Phieu nhap"+detailReceipt);
 		this.detailReceiptService.create(detailReceipt);
 	    return new ResponseEntity<>("Thêm đối tượng thành công", HttpStatus.OK);
 	}

@@ -18,10 +18,12 @@ import demo.models.Author;
 import demo.models.Book;
 import demo.models.DetailReceipt;
 import demo.models.Receipt;
+import demo.models.WareHouse;
 import demo.services.BookService;
 import demo.services.DetailReceiptService;
 import demo.services.ReceiptService;
 import demo.services.StorageService;
+import demo.services.WareHouseService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
@@ -34,8 +36,22 @@ public class ReceiptController {
 	private BookService bookService;
 	@Autowired
 	private DetailReceiptService detailReceiptService;
+	@Autowired
+	private WareHouseService wareHouseService;
 	@GetMapping("/receipt")
 	public String index(Model model) {
+		// xóa các phiếu nhập clone
+		try {
+			List<Receipt> listReceipt=this.receiptService.findBySumMoney(0);
+			for (Receipt a : listReceipt) {
+				if(this.detailReceiptService.deleteByReceiptId(a.getId())) {
+					
+				}
+				this.receiptService.delete(a.getId());
+			}	
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		List<Receipt> list = this.receiptService.getAll();
 		model.addAttribute("list", list);
 		return "admin/receipt/index";
@@ -44,11 +60,15 @@ public class ReceiptController {
 	public String add(Model model,HttpSession session) {
 		Receipt receipt = new Receipt();
 		receipt.setDateAdded(new Date());
+		receipt.setSumMoney(0);
+		if(this.receiptService.create(receipt)) {
+			
+		}
+		
 		List<Book> listBook=this.bookService.findAllByOrderByBookNameAsc();
 		model.addAttribute("listBook", listBook);
-		receipt.setSumMoney(0);
-		this.receiptService.create(receipt);
-		System.out.println("Id: "+receipt.getId());
+		
+		
 		session.setAttribute("receipt", receipt);
 		List<DetailReceipt> detai=this.detailReceiptService.findByReceiptId(receipt.getId());
 		model.addAttribute("listDetail", detai);
@@ -58,8 +78,36 @@ public class ReceiptController {
 	@PostMapping("/add-receipt")
 	public String addReceipt(@ModelAttribute("receipt") Receipt receipt){
 		receipt.setDateAdded(new Date());
+		List<DetailReceipt> list=this.detailReceiptService.findByReceiptId(receipt.getId());
+		
 		if(this.receiptService.create(receipt))
 		{
+			// thêm số sách vừa nhập vào kho
+			// tìm kiếm xem sách đã có trong kho hay chưa nếu có rồi thì cập nhật số lượng
+			
+			for (DetailReceipt a : list) {
+				WareHouse wareHouse=this.wareHouseService.findByBookId(a.getBook().getId());
+				//chưa có sách trong kho thì thêm mới
+				if(wareHouse==null) {
+					wareHouse=new WareHouse();
+					wareHouse.setBook(a.getBook());
+					wareHouse.setQuantity(a.getQuantity());
+					wareHouse.setQuantityEnter(a.getQuantity());
+					wareHouse.setSold(0);
+				}
+				// cap nhat so luong
+				else {
+					Integer quantityNew=wareHouse.getQuantity()+a.getQuantity();
+					wareHouse.setQuantity(quantityNew);
+					wareHouse.setQuantityEnter(a.getQuantity()+wareHouse.getQuantityEnter());
+				}
+				// cập nhật lại kho
+				if(this.wareHouseService.create(wareHouse)) {
+					System.out.println("Cap nhat thanh cong");
+				}
+			}
+			
+			
 			return "redirect:/admin/receipt";
 		}
 		return "admin/receipt/add";

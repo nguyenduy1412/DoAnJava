@@ -26,7 +26,7 @@ import demo.services.CategoryService;
 import demo.services.OrderDetailService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-
+import java.time.LocalDateTime;
 @Controller
 public class HomeController {
 	@Autowired
@@ -51,13 +51,16 @@ public class HomeController {
 		List<List<Book>> listBig = new ArrayList();
 		for (int i = 1; i <6 ; i++) {
 			//có 2 sản phẩm
-			Page<Book> bookNew = this.bookService.listBookNew(i);
+			Page<Book> bookNew = this.bookService.listBookNew(i,2);
 			System.out.println("Uaaa");
 			List<Book> bookList = bookNew.getContent();
 			listBig.add(bookList);
 			System.out.println("Uaaa111");
 		}
 		System.out.println("Alo");
+		for (List<Book> list : listBig) {
+			System.out.println(list);
+		}
 		List<Category> listCate=this.categoryService.getAll();
 		model.addAttribute("listBig", listBig);
 		model.addAttribute("bookSale", bookSale);

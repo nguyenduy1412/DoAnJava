@@ -94,9 +94,9 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Page<Book> listBookNew(Integer page) {
+	public Page<Book> listBookNew(Integer page,Integer limit) {
 		List<Book> list = this.findBookNew();
-		Pageable pageable = PageRequest.of(page - 1, 4);
+		Pageable pageable = PageRequest.of(page - 1, limit);
 		int start = (int) pageable.getOffset();
 		int end = Math.min(start + pageable.getPageSize(), list.size());
 

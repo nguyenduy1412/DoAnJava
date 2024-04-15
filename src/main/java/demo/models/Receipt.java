@@ -30,7 +30,7 @@ public class Receipt {
 	private Integer id;
 	private Date dateAdded;
 	private long sumMoney;
-	@OneToMany(mappedBy = "receipt", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy ="receipt",fetch = FetchType.EAGER)
 	@JsonIgnore
 	private Set<DetailReceipt> detailReceipts;
 }

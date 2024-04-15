@@ -42,7 +42,7 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public Orders findByOrder(Integer id) {
+	public Orders findById(Integer id) {
 		// TODO Auto-generated method stub
 		return this.orderRepository.findById(id).get();
 	}
@@ -68,7 +68,7 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public Boolean delete(Integer id) {
 		try {
-			this.orderRepository.delete(findByOrder(id));
+			this.orderRepository.delete(findById(id));
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -105,6 +105,12 @@ public class OrderServiceImpl implements OrderService{
 		List<Orders> sublist = list.subList(start, end);
 
 		return new PageImpl<>(sublist, pageable, list.size());
+	}
+
+	@Override
+	public List<Orders> findByMonthAndYear(Integer month, Integer year) {
+		// TODO Auto-generated method stub
+		return this.orderRepository.findByMonthAndYear(month, year);
 	}
 
 	

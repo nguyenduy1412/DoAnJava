@@ -62,7 +62,8 @@
 											<th>Ảnh</th>
 											<th>Tên sách</th>
 											<th>Số lượng</th>
-											<th>Tùy chọn</th>
+											<th>Số lượng nhập</th>
+											<th>Đã bán</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -72,10 +73,8 @@
 											<td><img th:src="@{'/uploads/'+${warehouse.book.image}}" width="60px" /></td>
 											<td th:text="${warehouse.book.bookName}"></td>
 											<td th:text="${warehouse.quantity}"></td>
-											<td>
-												<a th:href="@{/admin/edit-author/{id}(id=${warehouse.id})}" class="btn btn-success">Xem chi tiết</a>
-												
-											</td>
+											<td th:text="${warehouse.quantityEnter}"></td>
+											<td th:text="${warehouse.sold}"></td>
 										</tr>
 									</tbody>
 								</table>
@@ -108,7 +107,7 @@
             var paragraphText = paragraph.text().trim(); // Lấy nội dung của thẻ <p>
 
             // Kiểm tra nội dung của thẻ <p>
-            if (paragraphText === "Tác giả") {
+            if (paragraphText === "Kho") {
                 $(this).addClass("active"); // Thêm class "active" vào thẻ <a>
             }
         });

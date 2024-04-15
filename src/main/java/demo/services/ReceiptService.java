@@ -11,4 +11,5 @@ public interface ReceiptService {
 	Boolean create(Receipt a);
 	Boolean delete(Integer id);
 	Receipt findById(Integer id);
+	List<Receipt> findBySumMoney(long sumMoney);
 }

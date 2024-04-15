@@ -22,12 +22,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString
 @Table(name = "review")
 public class Review {
 	@Id
@@ -37,10 +39,7 @@ public class Review {
 	@JoinColumn(name = "bookId", referencedColumnName = "id")
 	@JsonIgnore
 	private Book book;
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "detailOrderId", referencedColumnName = "id")
-	@JsonIgnore
-	private OrderDetail orderDetail;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "userId", referencedColumnName = "id")
 //	@JsonIgnore
@@ -51,4 +50,6 @@ public class Review {
 	@Column(columnDefinition = "nvarchar(255)")
 	private String img;
 	private Date reviewDate;
+	private Boolean status;
+
 }

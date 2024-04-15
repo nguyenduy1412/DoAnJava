@@ -16,8 +16,8 @@
 				<div class="col-lg-12">
 					<div class="breadcrumbs-menu">
 						<ul>
-							<li><a href="#">Home</a></li>
-							<li><a href="#" class="active">cart</a></li>
+							<li><a href="#">Trang chủ</a></li>
+							<li><a href="#" class="active">Chi tiết đơn hàng</a></li>
 						</ul>
 					</div>
 				</div>
@@ -31,7 +31,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="entry-header-title">
-						<h2>Cart</h2>
+						<h2>Chi tiết đơn hàng</h2>
 					</div>
 				</div>
 			</div>
@@ -53,7 +53,7 @@
 										<th class="product-price">Giá</th>
 										<th class="product-quantity">Số lượng</th>
 										<th class="product-subtotal">Tổng</th>
-
+										<th class="product-subtotal">Tùy chọn</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -64,11 +64,18 @@
 										<td class="product-price"><span class="amount"
 												th:text="${#numbers.formatDecimal(detail.book.priceSale, 0, 'POINT', 0, 'COMMA')+ ' đ'}"></span>
 										</td>
-										<td th:text="${detail.quantity}"></td>
+										<td class="product-quantity" th:text="${detail.quantity}"></td>
 										<td class="product-subtotal"
 											th:text="${#numbers.formatDecimal(detail.price * detail.quantity, 0, 'POINT', 0, 'COMMA')+ ' đ'}">
 										</td>
-
+										<td class="product-add-to-cart" th:if="${detail.review.status == false && order.status==3}" >
+											
+											<a th:href="@{'/add-rating/'+ ${detail.id}}" class="add-to-rating">Đánh giá</a>
+										</td>
+										<td class="product-add-to-cart" th:if="${detail.review.status == true}" disabled="disabled" >
+											
+											<a class="add-to-rating">Đã đánh giá</a>
+										</td>
 									</tr>
 								</tbody>
 							</table>
@@ -77,10 +84,10 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-lg-8 col-md-6 col-12">
+				<div class="col-lg-6 col-md-6 col-12">
 
 				</div>
-				<div class="col-lg-4 col-md-6 col-12">
+				<div class="col-lg-6 col-md-6 col-12">
 					<div class="cart_totals">
 						<h2>Tổng số hàng</h2>
 						<table>
@@ -112,6 +119,14 @@
 										<span class="amount" th:if="${order.status==1}">Đã duyệt</span>
 										<span class="amount" th:if="${order.status==2}">Đang giao</span>
 										<span class="amount" th:if="${order.status==3}">Giao thành công</span>
+										<span class="amount" th:if="${order.status==4}">Yêu cầu hủy</span>
+										<span class="amount" th:if="${order.status==5}">Đã hủy</span>
+									</td>
+								</tr>
+								<tr class="cart-subtotal">
+									<th>Phương thức thanh toán</th>
+									<td>
+										<span class="amount" th:text="${order.methodPay.payName}"></span>
 									</td>
 								</tr>
 								<tr class="order-total">
@@ -121,17 +136,23 @@
 											<span class="amount"
 												th:text="${#numbers.formatDecimal(order.sumMoney, 0, 'POINT', 0, 'COMMA')+ ' đ'}"></span>
 										</strong>
+										<div class="wc-proceed-to-checkout ">
+											<a th:if="${order.status==0 || order.status==1}"
+												th:href="@{/cancel/{id}(id=${order.id})}"
+												onclick="return confirm('Bạn có muốn hủy đơn hàng không?')">Hủy đơn
+												hàng</a>
+										</div>
 									</td>
 								</tr>
+
 							</tbody>
+
 						</table>
-						<div class="wc-proceed-to-checkout">
-							<a th:if="${order.status==0 || order.status==1}" th:href="@{/cancel/{id}(id=${order.id})}"
-								onclick="return confirm('Bạn có muốn hủy đơn hàng không?')">Hủy đơn hàng</a>
-						</div>
+
 					</div>
 				</div>
 			</div>
+
 		</div>
 	</div>
 

@@ -66,4 +66,17 @@ public class DetailReceiptServiceImpl implements DetailReceiptService{
 		return this.detailReceiptRepository.findByBookIdOrderByIdDesc(bookId).get(0);
 	}
 
+	@Override
+	public Boolean deleteByReceiptId(Integer id) {
+		try {
+			this.detailReceiptRepository.deleteByReceiptId(id);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();	
+		}
+		return false;
+	}
+
+	
+
 }

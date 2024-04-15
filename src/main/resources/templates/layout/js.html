@@ -115,26 +115,26 @@
 				console.log(userId);
 				let data = {
 					bookId: parseInt(bookId),
-					userId: parseInt(userId)  
+					userId: parseInt(userId)
 				};
 				console.log(data)
-				axios.post('/api/cartItem/add',data)
-                .then(function (response) {
-                    axios.get('/reloadCart')
-				    .then(function (response) {
-				        // Thay đổi nội dung của một phần tử trên trang web bằng nội dung từ view
-				        document.getElementById('reloadCart').innerHTML = response.data;
-				        Xoa();
-				        toatsjs("Thêm thành công");
-				    })
-				    .catch(function (error) {
-				        // Xử lý lỗi nếu có
-				        console.error(error);
-				    });
-                })
-                .catch(function (error) {
-                    console.error('Lỗi: ' + error);
-                });
+				axios.post('/api/cartItem/add', data)
+					.then(function (response) {
+						axios.get('/reloadCart')
+							.then(function (response) {
+								// Thay đổi nội dung của một phần tử trên trang web bằng nội dung từ view
+								document.getElementById('reloadCart').innerHTML = response.data;
+								Xoa();
+								toatsjs("Thêm thành công");
+							})
+							.catch(function (error) {
+								// Xử lý lỗi nếu có
+								console.error(error);
+							});
+					})
+					.catch(function (error) {
+						console.error('Lỗi: ' + error);
+					});
 			});
 		}
 		AddCart();
@@ -171,7 +171,7 @@
 					dataType: 'json',
 					cache: false,
 					timeout: 600000,
-					success: function (data,status) {
+					success: function (data, status) {
 						console.log("SUCCESS : ", status);
 						console.log("1");
 						$.ajax({
@@ -198,6 +198,35 @@
 			})
 		}
 		ChangQuantity();
+		function XoaWishList() {
+			$('.delete-favourite').click(function () {
+				// Xử lý sự kiện click ở đây
+				// Ví dụ: In ra nội dung của nút được click
+				let id = $(this).attr('id');
+				console.log(id);
+
+				var parentTr = $(this).closest('tr');
+
+				// Xóa đi phần tử cha <tr>
+				parentTr.remove();
+				$.ajax({
+					type: "DELETE",
+					url: `/api/favourite/delete/${id}`,
+					cache: false,
+					timeout: 600000,
+					success: function () {
+						// Xử lý khi request DELETE thành công (nếu cần)
+						toatsjs("Xóa thành công")
+					},
+					error: function (e) {
+						console.log("Lỗi: " + e);
+					}
+				});
+
+
+			});
+		}
+		XoaWishList();
 	</script>
 	<script>
 		$('.pricebook').each(function () {
@@ -254,5 +283,19 @@
 			});
 		}
 		XemSanPham();
+		$(document).ready(function () {
+			$(".review-control-vote .star").click(function () {
+				var index = $(this).index(); // Lấy chỉ mục của ngôi sao được click
+				$(".review-control-vote .star").each(function (idx) {
+					$(this).toggleClass('gold', idx <= index); // Thay đổi màu sắc của ngôi sao
+				});
+				var starCount = index + 1; // Chỉ mục bắt đầu từ 0 nên cần cộng thêm 1
+        		$("#star-count").text(starCount); // Hiển thị số sao được chọn
+        		$("#star").val(starCount);
+			});
+			
+		});
+
+
 	</script>
 </div>

@@ -13,4 +13,5 @@ public interface WareHouseRepository extends JpaRepository<WareHouse, Integer> {
     @Transactional
     @Query("DELETE FROM WareHouse k WHERE k.book.id =?1")
     void deleteByBookId(Integer bookId);
+	WareHouse findByBookId(Integer id);
 }

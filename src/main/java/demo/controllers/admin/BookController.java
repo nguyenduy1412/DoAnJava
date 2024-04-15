@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import demo.method.FileName;
 import demo.models.Author;
 import demo.models.Book;
 import demo.models.Category;
@@ -33,7 +34,8 @@ import demo.services.AuthorService;
 import demo.services.BookService;
 import demo.services.StorageService;
 import demo.services.WareHouseService;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 @Controller
 @RequestMapping("/admin")
 public class BookController {
@@ -82,10 +84,12 @@ public class BookController {
 	@PostMapping("/add-book")
 	public String save(Model model, @ModelAttribute("book") Book book,@RequestParam("fileImage") MultipartFile file,
 		@RequestParam("fileImages") MultipartFile[] files  ) {
-		this.storageService.store(file);
-		String fileName = file.getOriginalFilename();
+		// đặt tên file bằng ngày giờ hiện tại để không bị ghi đè file
+		String fileName=FileName.getFileNameToDateNow();
+		this.storageService.store(file,fileName);
 		book.setImage(fileName);
 		// giá nhập / 1,lai 
+		
 		long price=(long) (book.getPriceEnter() * ((double)book.getProfit()/100 +1));
 		long priceSale= (long) (price - price * (double)book.getSale()/100);	
 		book.setPrice(price);
@@ -103,9 +107,10 @@ public class BookController {
 			if(!isEmpty1) {
 				for (MultipartFile multipartFile : files) {
 					ImageProduct imageProduct=new ImageProduct();
-					imageProduct.setImage(multipartFile.getOriginalFilename());
+					String fileNames=FileName.getFileNameToDateNow();
+					imageProduct.setImage(fileNames);
 					imageProduct.setBook(book);
-					this.storageService.store(multipartFile);
+					this.storageService.store(multipartFile,fileNames);
 					this.imageProductService.create(imageProduct);
 				}
 			}
@@ -134,10 +139,12 @@ public class BookController {
 		@RequestParam("fileImage") MultipartFile file
 		,@RequestParam("listChoose")String listChoose,@RequestParam("fileImages") MultipartFile[] files) {
 		
-		String fileName = file.getOriginalFilename();
+		
+		String fileName=file.getOriginalFilename();
 		boolean isEmpty = fileName == null || fileName.trim().length() == 0;
 		if (!isEmpty) {
-			this.storageService.store(file);
+			fileName=FileName.getFileNameToDateNow();
+			this.storageService.store(file,fileName);
 			book.setImage(fileName);
 		}
 		if(!listChoose.isEmpty())
@@ -160,9 +167,10 @@ public class BookController {
 			if(!isEmpty1) {
 				for (MultipartFile multipartFile : files) {
 					ImageProduct imageProduct=new ImageProduct();
-					imageProduct.setImage(multipartFile.getOriginalFilename());
+					String fileNames=FileName.getFileNameToDateNow();
+					imageProduct.setImage(fileNames);
 					imageProduct.setBook(book);
-					this.storageService.store(multipartFile);
+					this.storageService.store(multipartFile,fileNames);
 					this.imageProductService.create(imageProduct);
 				}
 			}

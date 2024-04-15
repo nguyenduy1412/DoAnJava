@@ -59,4 +59,10 @@ public class WareHouseServiceImpl implements WareHouseService{
 
 	}
 
+	@Override
+	public WareHouse findByBookId(Integer id) {
+		// TODO Auto-generated method stub
+		return this.wareHouseRepository.findByBookId(id);
+	}
+
 }

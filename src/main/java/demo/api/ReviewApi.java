@@ -86,13 +86,13 @@ public class ReviewApi {
 		Review review=new Review();
 		review.setBook(book);
 		review.setUser(user);
-		review.setOrderDetail(detail);
+		
 		review.setStar(star);
 		review.setRating(rating);
 		review.setReviewDate(new Date());
 		review.setImg(img);
 		if(this.reviewService.create(review)) {
-			detail.setStatusRate(1);
+			
 			this.orderDetailService.create(detail);
 			return new ResponseEntity<>("Thêm đối tượng thành công", HttpStatus.OK);
 		}

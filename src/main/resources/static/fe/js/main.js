@@ -4,16 +4,16 @@
     /*----------------------------
      Top Menu Stick
     ------------------------------ */
-    var header = $('#header-stickyss');
-    var win = $(window);
-    
-    win.on('scroll', function() {
-        if ($(this).scrollTop() > 200) {
-            header.addClass("sticky-header bg-white");
-        } else {
-            header.removeClass("sticky-header bg-white");
-        }
-    });
+    var header = $('#header-sticky');
+	var win = $(window);
+	
+	win.on('scroll', function() {
+	    if ($(this).scrollTop() > 120) {
+	        header.addClass("sticky");
+	    } else {
+	        header.removeClass("sticky");
+	    }
+	});
     
     /*----------------------------
      Jquery MeanMenu

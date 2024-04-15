@@ -1,5 +1,6 @@
 package demo.services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,30 @@ public class ReviewServiceImpl implements ReviewService {
 	public List<Review> getAll() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Review> findByBookIdOrderByIdDesc(Integer id) {
+		// TODO Auto-generated method stub
+		return this.reviewRepository.findByBookIdOrderByIdDesc(id);
+	}
+
+	@Override
+	public List<Review> findByStarOrderByIdDesc(Integer id) {
+		// TODO Auto-generated method stub
+		return this.reviewRepository.findByStarOrderByIdDesc(id);
+	}
+
+	@Override
+	public List<Review> findAllByOrderByIdDesc() {
+		// TODO Auto-generated method stub
+		return this.reviewRepository.findAllByOrderByIdDesc();
+	}
+
+	@Override
+	public List<Review> findByReviewDateOrderByIdDesc(Date date) {
+		// TODO Auto-generated method stub
+		return this.reviewRepository.findByReviewDateOrderByIdDesc(date);
 	}
 
 }

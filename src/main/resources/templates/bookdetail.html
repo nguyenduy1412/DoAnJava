@@ -3,17 +3,6 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
 
 <head th:replace="layout/head::head"></head>
-<style>
-	.imgDetail {
-		width: 90px;
-		height: 90px;
-	}
-
-	.imgShow {
-		width: 330px;
-		height: 418px;
-	}
-</style>
 
 <body class="home-4">
 	<!--[if lt IE 8]>
@@ -32,8 +21,8 @@
 				<div class="col-lg-12">
 					<div class="breadcrumbs-menu">
 						<ul>
-							<li><a href="#">Home</a></li>
-							<li><a href="#" class="active">product-details</a></li>
+							<li><a href="#">Trang chủ</a></li>
+							<li><a href="#" class="active">Chi tiết sản phẩm</a></li>
 						</ul>
 					</div>
 				</div>
@@ -75,9 +64,9 @@
 										<h1 th:text="${book.bookName}"></h1>
 									</div>
 									<div class="product-info-stock-sku">
-										<span th:text="${book.author}"></span>
+										<span th:text="${book.author.nameAuthor}"></span>
 										<div class="product-attribute">
-											
+
 											<span class="value"></span>
 										</div>
 									</div>
@@ -90,8 +79,8 @@
 											<a href="#"><i class="fa fa-star"></i></a>
 										</div>
 										<div class="reviews-actions">
-											<a href="#">3 Reviews</a>
-											<a href="#" class="view">Add Your Review</a>
+											<a href="#">Kho: <span th:text="${book.wareHouse.quantity}"></span></a>
+											<a href="#" class="view"></a>
 										</div>
 									</div>
 									<div class="product-info-price">
@@ -113,13 +102,18 @@
 									</div>
 									<div class="product-social-links">
 										<div class="product-addto-links">
-											<a href="#"><i class="fa fa-heart"></i></a>
+											<form th:action="@{/add-favourite}" method="post">
+
+												<input type="hidden" name="id" th:value="${book.id}" />
+												<button type="submit"><i class="fa fa-heart"></i></button>
+											</form>
+
 											<a href="#"><i class="fa fa-pie-chart"></i></a>
 											<a href="#"><i class="fa fa-envelope-o"></i></a>
 										</div>
 										<div class="product-addto-links-text">
 											<p>Nhà xuất bản: <span class="text-success" style="font-weight: bold;"
-													th:text="${book.publicsher}"></span> </p>
+													th:text="${book.publicsher.namePublicsher}"></span> </p>
 											<span>Năm xuất: <span class="text-warning" style="font-weight: bold;"
 													th:text="${book.publicationYear}"></span> </span>
 											<p>Thể loại: <span class="text-primary" style="font-weight: bold;"
@@ -136,8 +130,9 @@
 					<div class="product-info-area mt-80">
 						<!-- Nav tabs -->
 						<ul class="nav">
-							<li><a class="active" href="#Details" data-bs-toggle="tab">Details</a></li>
-							<li><a href="#Reviews" data-bs-toggle="tab">Reviews 3</a></li>
+							<li><a class="active" href="#Details" data-bs-toggle="tab">Mô tả</a></li>
+							<li><a href="#Reviews" data-bs-toggle="tab">Đánh giá <span
+										th:text="${listReview.size}"></span></a></li>
 						</ul>
 						<div class="tab-content">
 							<div class="tab-pane fade show active" id="Details">
@@ -148,118 +143,35 @@
 							</div>
 							<div class="tab-pane fade" id="Reviews">
 								<div class="valu valu-2">
-									<div class="section-title mb-60 mt-60">
-										<h2>Customer Reviews</h2>
-									</div>
-									<ul>
-										<li>
-											<div class="review-title">
-												<h3>themes</h3>
+									<div class="row pb-4" th:each="review : ${listReview}">
+										<div class="col-lg-1" style="padding-right:0px ;">
+											<img th:src="@{'/uploads/'+${review.user.img}}" alt="" class="user-review">
+										</div>
+										<div class="col-lg-11">
+											<div>
+												<span th:text="${review.user.userName}"></span>
 											</div>
-											<div class="review-left">
-												<div class="review-rating">
-													<span>Price</span>
-													<div class="rating-result">
-														<a href="#"><i class="fa fa-star"></i></a>
-														<a href="#"><i class="fa fa-star"></i></a>
-														<a href="#"><i class="fa fa-star"></i></a>
-														<a href="#"><i class="fa fa-star"></i></a>
-														<a href="#"><i class="fa fa-star"></i></a>
-													</div>
-												</div>
-												<div class="review-rating">
-													<span>Value</span>
-													<div class="rating-result">
-														<a href="#"><i class="fa fa-star"></i></a>
-														<a href="#"><i class="fa fa-star"></i></a>
-														<a href="#"><i class="fa fa-star"></i></a>
-														<a href="#"><i class="fa fa-star"></i></a>
-														<a href="#"><i class="fa fa-star"></i></a>
-													</div>
-												</div>
-												<div class="review-rating">
-													<span>Quality</span>
-													<div class="rating-result">
-														<a href="#"><i class="fa fa-star"></i></a>
-														<a href="#"><i class="fa fa-star"></i></a>
-														<a href="#"><i class="fa fa-star"></i></a>
-														<a href="#"><i class="fa fa-star"></i></a>
-														<a href="#"><i class="fa fa-star"></i></a>
-													</div>
+											<div class="">
+												<div class="">
+													<a href="#"><i class="fa fa-star gold"></i></a>
+													<a href="#"><i class="fa fa-star gold"></i></a>
+													<a href="#"><i class="fa fa-star gold"></i></a>
+													<a href="#"><i class="fa fa-star gold"></i></a>
+													<a href="#"><i class="fa fa-star gold"></i></a>
 												</div>
 											</div>
-											<div class="review-right">
-												<div class="review-content">
-													<h4>themes </h4>
-												</div>
-												<div class="review-details">
-													<p class="review-author">Review by<a href="#">plaza</a></p>
-													<p class="review-date">Posted on <span>12/9/16</span></p>
-												</div>
+
+											<div>
+												<span
+													th:text="${#dates.format(review.reviewDate, 'dd/MM/yyyy HH:mm')}"></span>
 											</div>
-										</li>
-									</ul>
-									<div class="review-add">
-										<h3>You're reviewing:</h3>
-										<h4>Joust Duffle Bag</h4>
-									</div>
-									<div class="review-field-ratings">
-										<span>Your Rating <sup>*</sup></span>
-										<div class="control">
-											<div class="single-control">
-												<span>Value</span>
-												<div class="review-control-vote">
-													<a href="#"><i class="fa fa-star"></i></a>
-													<a href="#"><i class="fa fa-star"></i></a>
-													<a href="#"><i class="fa fa-star"></i></a>
-													<a href="#"><i class="fa fa-star"></i></a>
-													<a href="#"><i class="fa fa-star"></i></a>
-												</div>
+											<div class="pt-3">
+												<span th:text="${review.rating}"></span>
 											</div>
-											<div class="single-control">
-												<span>Quality</span>
-												<div class="review-control-vote">
-													<a href="#"><i class="fa fa-star"></i></a>
-													<a href="#"><i class="fa fa-star"></i></a>
-													<a href="#"><i class="fa fa-star"></i></a>
-													<a href="#"><i class="fa fa-star"></i></a>
-													<a href="#"><i class="fa fa-star"></i></a>
-												</div>
-											</div>
-											<div class="single-control">
-												<span>Price</span>
-												<div class="review-control-vote">
-													<a href="#"><i class="fa fa-star"></i></a>
-													<a href="#"><i class="fa fa-star"></i></a>
-													<a href="#"><i class="fa fa-star"></i></a>
-													<a href="#"><i class="fa fa-star"></i></a>
-													<a href="#"><i class="fa fa-star"></i></a>
-												</div>
+											<div class="pt-2">
+												<img th:src="@{'/uploads/'+${review.img}}" width="80" height="80" />
 											</div>
 										</div>
-									</div>
-									<div class="review-form">
-										<div class="single-form">
-											<label>Nickname <sup>*</sup></label>
-											<form action="#">
-												<input type="text" />
-											</form>
-										</div>
-										<div class="single-form single-form-2">
-											<label>Summary <sup>*</sup></label>
-											<form action="#">
-												<input type="text" />
-											</form>
-										</div>
-										<div class="single-form">
-											<label>Review <sup>*</sup></label>
-											<form action="#">
-												<textarea name="massage" cols="10" rows="4"></textarea>
-											</form>
-										</div>
-									</div>
-									<div class="review-form-button">
-										<a href="#">Submit Review</a>
 									</div>
 								</div>
 							</div>
@@ -269,25 +181,26 @@
 					<!-- new-book-area-start -->
 					<div class="new-book-area mt-60">
 						<div class="section-title text-center mb-30">
-							<h3>upsell products</h3>
+							<h3 th:if="${listRecent.size() >0}">Sản phẩm đã xem gần đây</h3>
 						</div>
-						<div class="tab-active-2 owl-carousel">
+						<div class="owl-carousel d-flex" >
 							<!-- single-product-start -->
-							<div class="product-wrapper">
+							<div class="product-wrapper recent-img pr-3" th:each="recent : ${listRecent}">
 								<div class="product-img">
-									<a href="#">
-										<img th:src="@{/fe/img/product/1.jpg}" alt="book" class="primary" />
+									<a th:href="@{/book-detail/{id}(id=${recent.book.id})}">
+										<img th:src="@{'/uploads/'+${recent.book.image}}" alt="book" class="primary" />
 									</a>
 									<div class="quick-view">
-										<a class="action-view" href="#" data-bs-target="#productModal"
-											data-bs-toggle="modal" title="Quick View">
+										<a class="action-view text-light" th:id="${recent.book.id}"
+											data-bs-target="#productModal" data-bs-toggle="modal" title="Xem chi tiết">
 											<i class="fa fa-search-plus"></i>
 										</a>
 									</div>
 									<div class="product-flag">
 										<ul>
 											<li><span class="sale">new</span></li>
-											<li><span class="discount-percentage">-5%</span></li>
+											<li th:if="${recent.book.sale > 0}"><span class="discount-percentage"
+													th:text="${recent.book.sale} +'%'"></span></li>
 										</ul>
 									</div>
 								</div>
@@ -301,176 +214,36 @@
 											<li><a href="#"><i class="fa fa-star"></i></a></li>
 										</ul>
 									</div>
-									<h4><a href="#">Joust Duffle Bag</a></h4>
+									<h4><a th:href="@{/book-detail/{id}(id=${recent.book.id})}"
+											th:text="${#strings.length(recent.book.bookName) > 15 ? #strings.substring(recent.book.bookName, 0, 15) + '...' : recent.book.bookName}"></a>
+									</h4>
 									<div class="product-price">
 										<ul>
-											<li>$60.00</li>
+											<li class="pricebook" th:text="${recent.book.priceSale}"></li>
+											<li class="old-price pricebook" th:if="${recent.book.sale > 0}"
+												th:text="${recent.book.price}"></li>
 										</ul>
 									</div>
 								</div>
 								<div class="product-link">
 									<div class="product-button">
-										<a href="#" title="Add to cart"><i class="fa fa-shopping-cart"></i>Add to
-											cart</a>
+
+										<a th:if="${session.user == null}" th:href="@{/login}" title="Add to cart"><i
+												class="fa fa-shopping-cart"></i>Add to cart</a>
+										<button class="add-to-card" th:id="${recent.book.id}"
+											th:if="${session.user != null}" title="Add to cart"><i
+												class="fa fa-shopping-cart"></i>Add to cart</button>
 									</div>
 									<div class="add-to-link">
 										<ul>
-											<li><a href="product-details.html" title="Details"><i
-														class="fa fa-external-link"></i></a></li>
+											<li><a th:href="@{/book-detail/{id}(id=${recent.book.id})}"
+													title="Details"><i class="fa fa-external-link"></i></a>
+											</li>
 										</ul>
 									</div>
 								</div>
 							</div>
-							<!-- single-product-end -->
-							<!-- single-product-start -->
-							<div class="product-wrapper">
-								<div class="product-img">
-									<a href="#">
-										<img th:src="@{/fe/img/product/3.jpg}" alt="book" class="primary" />
-									</a>
-									<div class="quick-view">
-										<a class="action-view" href="#" data-bs-target="#productModal"
-											data-bs-toggle="modal" title="Quick View">
-											<i class="fa fa-search-plus"></i>
-										</a>
-									</div>
-									<div class="product-flag">
-										<ul>
-											<li><span class="sale">new</span></li>
-										</ul>
-									</div>
-								</div>
-								<div class="product-details text-center">
-									<div class="product-rating">
-										<ul>
-											<li><a href="#"><i class="fa fa-star"></i></a></li>
-											<li><a href="#"><i class="fa fa-star"></i></a></li>
-											<li><a href="#"><i class="fa fa-star"></i></a></li>
-											<li><a href="#"><i class="fa fa-star"></i></a></li>
-											<li><a href="#"><i class="fa fa-star"></i></a></li>
-										</ul>
-									</div>
-									<h4><a href="#">Chaz Kangeroo Hoodie</a></h4>
-									<div class="product-price">
-										<ul>
-											<li>$52.00</li>
-										</ul>
-									</div>
-								</div>
-								<div class="product-link">
-									<div class="product-button">
-										<a href="#" title="Add to cart"><i class="fa fa-shopping-cart"></i>Add to
-											cart</a>
-									</div>
-									<div class="add-to-link">
-										<ul>
-											<li><a href="product-details.html" title="Details"><i
-														class="fa fa-external-link"></i></a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<!-- single-product-end -->
-							<!-- single-product-start -->
-							<div class="product-wrapper">
-								<div class="product-img">
-									<a href="#">
-										<img th:src="@{/fe/img/product/5.jpg}" alt="book" class="primary" />
-									</a>
-									<div class="quick-view">
-										<a class="action-view" href="#" data-bs-target="#productModal"
-											data-bs-toggle="modal" title="Quick View">
-											<i class="fa fa-search-plus"></i>
-										</a>
-									</div>
-									<div class="product-flag">
-										<ul>
-											<li><span class="discount-percentage">-5%</span></li>
-										</ul>
-									</div>
-								</div>
-								<div class="product-details text-center">
-									<div class="product-rating">
-										<ul>
-											<li><a href="#"><i class="fa fa-star"></i></a></li>
-											<li><a href="#"><i class="fa fa-star"></i></a></li>
-											<li><a href="#"><i class="fa fa-star"></i></a></li>
-											<li><a href="#"><i class="fa fa-star"></i></a></li>
-											<li><a href="#"><i class="fa fa-star"></i></a></li>
-										</ul>
-									</div>
-									<h4><a href="#">Set of Sprite Yoga Straps</a></h4>
-									<div class="product-price">
-										<ul>
-											<li> <span>Starting at</span>$34.00</li>
-										</ul>
-									</div>
-								</div>
-								<div class="product-link">
-									<div class="product-button">
-										<a href="#" title="Add to cart"><i class="fa fa-shopping-cart"></i>Add to
-											cart</a>
-									</div>
-									<div class="add-to-link">
-										<ul>
-											<li><a href="product-details.html" title="Details"><i
-														class="fa fa-external-link"></i></a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<!-- single-product-end -->
-							<!-- single-product-start -->
-							<div class="product-wrapper">
-								<div class="product-img">
-									<a href="#">
-										<img th:src="@{/fe/img/product/7.jpg}" alt="book" class="primary" />
-									</a>
-									<div class="quick-view">
-										<a class="action-view" href="#" data-bs-target="#productModal"
-											data-bs-toggle="modal" title="Quick View">
-											<i class="fa fa-search-plus"></i>
-										</a>
-									</div>
-									<div class="product-flag">
-										<ul>
-											<li><span class="sale">new</span></li>
-											<li><span class="discount-percentage">-5%</span></li>
-										</ul>
-									</div>
-								</div>
-								<div class="product-details text-center">
-									<div class="product-rating">
-										<ul>
-											<li><a href="#"><i class="fa fa-star"></i></a></li>
-											<li><a href="#"><i class="fa fa-star"></i></a></li>
-											<li><a href="#"><i class="fa fa-star"></i></a></li>
-											<li><a href="#"><i class="fa fa-star"></i></a></li>
-											<li><a href="#"><i class="fa fa-star"></i></a></li>
-										</ul>
-									</div>
-									<h4><a href="#">Strive Shoulder Pack</a></h4>
-									<div class="product-price">
-										<ul>
-											<li>$30.00</li>
-											<li class="old-price">$32.00</li>
-										</ul>
-									</div>
-								</div>
-								<div class="product-link">
-									<div class="product-button">
-										<a href="#" title="Add to cart"><i class="fa fa-shopping-cart"></i>Add to
-											cart</a>
-									</div>
-									<div class="add-to-link">
-										<ul>
-											<li><a href="product-details.html" title="Details"><i
-														class="fa fa-external-link"></i></a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<!-- single-product-end -->
+
 						</div>
 					</div>
 					<!-- new-book-area-start -->
@@ -478,7 +251,7 @@
 				<div class="col-lg-3 col-md-12 col-12 order-lg-2 order-2">
 					<div class="shop-left">
 						<div class="left-title mb-20">
-							<h4>Related Products</h4>
+							<h4>Sản phẩm tương tự</h4>
 						</div>
 						<div class="random-area mb-30">
 							<div class="product-active-2 owl-carousel">

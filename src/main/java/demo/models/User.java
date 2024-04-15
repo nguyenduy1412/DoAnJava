@@ -64,4 +64,10 @@ public class User {
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	@JsonIgnore
 	private Set<UserRole> userRoles;	
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	@JsonIgnore
+	private Set<Notification> notifications;
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	@JsonIgnore
+	private Set<Recent_Products> recentProducts;
 }

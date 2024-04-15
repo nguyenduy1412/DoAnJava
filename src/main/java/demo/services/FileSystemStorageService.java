@@ -9,29 +9,30 @@ import java.nio.file.StandardCopyOption;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 @Service
-public class FileSystemStorageService implements StorageService{
+public class FileSystemStorageService implements StorageService {
 	private final Path rootLocation;
+
 	public FileSystemStorageService() {
-		this.rootLocation=Paths.get("src/main/resources/static/uploads");
+		this.rootLocation = Paths.get("src/main/resources/static/uploads");
 	}
+
 	@Override
 	public void store(MultipartFile file) {
 		try {
-			
-			Path destinationFile = this.rootLocation.resolve(
-					Paths.get(file.getOriginalFilename()))
-					.normalize().toAbsolutePath();
+
+			Path destinationFile = this.rootLocation.resolve(Paths.get(file.getOriginalFilename())).normalize()
+					.toAbsolutePath();
 			try (InputStream inputStream = file.getInputStream()) {
-				Files.copy(inputStream, destinationFile,
-					StandardCopyOption.REPLACE_EXISTING);
+				Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
 			}
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
+
 	@Override
 	public void init() {
 		try {
@@ -39,7 +40,21 @@ public class FileSystemStorageService implements StorageService{
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
+
+	}
+
+	@Override
+	public void store(MultipartFile file, String fileName) {
+		try {
+
+			Path destinationFile = this.rootLocation.resolve(Paths.get(fileName)).normalize()
+					.toAbsolutePath();
+			try (InputStream inputStream = file.getInputStream()) {
+				Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

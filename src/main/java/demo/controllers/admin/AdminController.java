@@ -26,7 +26,7 @@ import demo.services.CustomUserDetailService;
 import demo.services.StorageService;
 import demo.services.UserService;
 import jakarta.servlet.http.HttpSession;
-
+import java.time.LocalDateTime;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -38,7 +38,8 @@ public class AdminController {
 	private CategoryService categoryService;
 	@GetMapping
 	public String index(HttpSession session) {
-		
+		LocalDateTime currentDateTime = LocalDateTime.now();
+		System.out.println("Time: "+currentDateTime.toString());
 		try {
 			User user=(User) session.getAttribute("user");
 			if(user ==null)

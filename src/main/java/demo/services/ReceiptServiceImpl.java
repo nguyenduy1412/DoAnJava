@@ -48,4 +48,12 @@ public class ReceiptServiceImpl implements ReceiptService{
 		return this.receiptRepository.findById(id).get();
 	}
 
+	@Override
+	public List<Receipt> findBySumMoney(long sumMoney) {
+		// TODO Auto-generated method stub
+		return this.receiptRepository.findBySumMoney(sumMoney);
+	}
+
+	
+
 }

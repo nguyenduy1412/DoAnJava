@@ -15,6 +15,7 @@ public class TemplateConfig {
 		templateResolver.setSuffix(".html");
 		templateResolver.setTemplateMode("HTML");
 		templateResolver.setCharacterEncoding("UTF-8");
+		templateResolver.setCacheable(false);
 		return templateResolver;
 	}
 }

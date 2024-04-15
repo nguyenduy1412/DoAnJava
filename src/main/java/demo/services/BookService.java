@@ -19,7 +19,7 @@ public interface BookService {
 	List<Book> findBookSale();
 	List<Book> searchBook(String keyword);
 	Page<Book> getAll(Integer page);
-	Page<Book> listBookNew(Integer page);
+	Page<Book> listBookNew(Integer page,Integer limit);
 	Page<Book> listBookSale(Integer page);
 	Page<Book> searchBook(String keyword,Integer page,Integer limit);
 	List<Book> findByCategoryId(Integer id);

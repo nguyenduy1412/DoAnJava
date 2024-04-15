@@ -77,12 +77,9 @@ public class FavouriteApi {
 		}
 		return new ResponseEntity<>("Thêm thất bại", HttpStatus.BAD_REQUEST);
 	}
-	@DeleteMapping("/delete")
-	public ResponseEntity<String> deleteFavouriteItem(@RequestParam("userId") long userId,@RequestParam("bookId") Integer bookId) {
-		Book book=this.bookService.findById(bookId);
-		Favourite favourite=this.favouriteService.findByUserId(userId);
-		FavouriteItem favouriteItem=this.favouriteItemService.findByFavouriteIdAndBookId(favourite.getId(), book.getId());
-		this.favouriteItemService.delete(favouriteItem.getId());
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<String> deleteFavouriteItem(@PathVariable("id") Integer id) {
+		this.favouriteItemService.delete(id);
 	    return new ResponseEntity<>("Xóa đối tượng thành công", HttpStatus.OK);
 	}
 }

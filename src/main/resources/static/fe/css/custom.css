@@ -1,0 +1,52 @@
+.add-to-rating {
+	background: #F7D001 none repeat scroll 0 0;
+	color: #fff;
+
+	font-weight: 400;
+	padding: 10px 56px;
+	text-transform: uppercase;
+	width: 200px;
+	font-family: 'Rufina', serif;
+
+}
+
+.add-to-rating:hover {
+	background: #F07C29 none repeat scroll 0 0;
+}
+
+.review-control-vote .star {
+	color: gray;
+	cursor: pointer;
+	font-size: 25px;
+	margin-right: 5px;
+}
+
+.review-control-vote .star.gold {
+	color: gold;
+}
+
+#star-count {
+	padding-right: 10px;
+}
+
+.imgDetail {
+	width: 90px;
+	height: 90px;
+}
+
+.imgShow {
+	width: 330px;
+	height: 418px;
+}
+.user-review{
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	
+}
+.gold{
+	color: gold;
+}
+.recent-img{
+	width: 25%;
+}

@@ -1,7 +1,8 @@
 <!doctype html>
 <html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="layout/head::head" ></head>
+<head th:replace="layout/head::head"></head>
+
 <body class="home-4">
 
 	<header th:replace="layout/header::header"></header>
@@ -9,196 +10,196 @@
 	<!-- header-area-end -->
 	<!-- slider-group-start -->
 
-		<div class="breadcrumbs-area mb-70">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="breadcrumbs-menu">
-							<ul>
-								<li><a href="#">Home</a></li>
-								<li><a href="#" class="active">checkout</a></li>
-							</ul>
-						</div>
+	<div class="breadcrumbs-area mb-70">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="breadcrumbs-menu">
+						<ul>
+							<li><a href="#">Trang chủ</a></li>
+							<li><a href="#" class="active">Thanh toán</a></li>
+						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- breadcrumbs-area-end -->
-		<!-- entry-header-area-start -->
-		
-		<!-- entry-header-area-end -->
-		<!-- coupon-area-area-start -->
-		
-		<!-- coupon-area-area-end -->
-		<!-- checkout-area-start -->
-		<div class="checkout-area mb-70">
-			<div class="container">
-				<div class="row">
-					<div class="col-12">
-					    <form  th:object="${order}" method="post" th:action="@{postCheckout}" >
-                            <div class="row">
-                                <div class="col-lg-6 col-md-12 col-12">
-                                <div class="checkbox-form">						
-                                    <h3>Billing Details</h3>
-                                    <div class="row">
+	</div>
+	<!-- breadcrumbs-area-end -->
+	<!-- entry-header-area-start -->
 
-                                        <div class="col-lg-12 col-md-12 col-12">
-                                            <div class="checkout-form-list">
-                                                <label>Họ tên </label>
-                                                <input type="text" placeholder="" th:field="*{user.fullName}" >
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-md-12 col-12">
-                                            <div class="checkout-form-list">
-                                                <label>Địa chỉ <span class="required">*</span></label>
-                                                <input type="text" th:placeholder="${order.user.address}" th:field="*{addressShip}" >
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-md-12 col-12">
-                                            <div class="checkout-form-list">	
-												<label>Số điện thoại<span class="required">*</span></label>								
-                                                <input type="text" th:placeholder="${order.user.telephone}" th:field="*{phone}" >
-                                            </div>
-                                        </div>
-                                        						
-                                    </div>
-                                    <div class="different-address">
-                                   
-                                        <div class="order-notes">
-                                            <div class="checkout-form-list">
-                                                <label>Order Notes</label>
-                                                <textarea placeholder="Notes about your order, e.g. special notes for delivery." rows="10" cols="30" th:field="*{note}" id="checkout-mess"></textarea>
-                                            </div>									
-                                        </div>
-                                    </div>													
-                                </div>
-                            </div>
-                                <div class="col-lg-6 col-md-12 col-12">
-                                <div class="your-order">
-                                    <h3>Your order</h3>
-                                    <div class="your-order-table table-responsive">
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th class="product-name">Sản phẩm</th>
-                                                    <th class="product-total">Số lượng</th>
-                                                    <th class="product-total">Tổng</th>
-                                                </tr>							
-                                            </thead>
-                                            <tbody>
-                                                <tr class="cart_item" th:each="cartItem : ${listCartItem}">
-                                                    <td class="product-name">
-                                                       <span th:text="${cartItem.book.bookName}"></span> 
-                                                    </td>
-                                                    <td>
-														<strong class="product-quantity"> x <span th:text="${cartItem.quantity}"></span></strong>
+	<!-- entry-header-area-end -->
+	<!-- coupon-area-area-start -->
+
+	<!-- coupon-area-area-end -->
+	<!-- checkout-area-start -->
+	<div class="checkout-area mb-70">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<form th:object="${order}" method="post" th:action="@{postCheckout}">
+						<div class="row">
+							<div class="col-lg-6 col-md-12 col-12">
+								<div class="checkbox-form">
+									<h3>Chi tiết đơn hàng</h3>
+									<div class="row">
+
+										<div class="col-lg-12 col-md-12 col-12">
+											<div class="checkout-form-list">
+												<label>Họ tên </label>
+												<input type="text" placeholder="" th:field="*{user.fullName}">
+											</div>
+										</div>
+										<div class="col-lg-12 col-md-12 col-12">
+											<div class="checkout-form-list">
+												<label>Địa chỉ <span class="required">*</span></label>
+												<input type="text" th:placeholder="${order.user.address}"
+													th:field="*{addressShip}">
+											</div>
+										</div>
+										<div class="col-lg-12 col-md-12 col-12">
+											<div class="checkout-form-list">
+												<label>Số điện thoại<span class="required">*</span></label>
+												<input type="text" th:placeholder="${order.user.telephone}"
+													th:field="*{phone}">
+											</div>
+										</div>
+										<div class="col-lg-12 col-md-12 col-12">
+											<div class="checkout-form-list">
+												<label>Phương thức thanh toán<span class="required">*</span></label>
+												
+												<select th:field="*{methodPay.id}">
+													<option th:each="pay : ${listPay}" th:value="${pay.id}"
+														th:text="${pay.payName}">
+														</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="different-address">
+
+										<div class="order-notes">
+											<div class="checkout-form-list">
+												<label>Ghi chú</label>
+												<textarea
+													placeholder="..."
+													rows="10" cols="30" th:field="*{note}"
+													id="checkout-mess"></textarea>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-12 col-12">
+								<div class="your-order">
+									<h3>Đơn hàng của bạn</h3>
+									<div class="your-order-table table-responsive">
+										<table>
+											<thead>
+												<tr>
+													<th class="product-name">Sản phẩm</th>
+													<th class="product-total">Số lượng</th>
+													<th class="product-total">Tổng</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr class="cart_item" th:each="cartItem : ${listCartItem}">
+													<td class="product-name">
+														<span th:text="${cartItem.book.bookName}"></span>
 													</td>
-                                                    <td class="product-total">
-                                                        <span class="amount" th:text="${#numbers.formatDecimal( cartItem.quantity * cartItem.book.price, 0, 'POINT', 0, 'COMMA')+ ' đ'}"></span>
-                                                    </td>
-                                                </tr>
-                                              
-                                            </tbody>
-                                            <tfoot>
-                                                <tr class="cart-subtotal">
-                                                    <th>Cart Subtotal</th>
-                                                    <td></td>
-                                                    <td><span class="amount" th:text="${#numbers.formatDecimal(order.sumMoney, 0, 'POINT', 0, 'COMMA')+ ' đ'}"></span></td>
-                                                </tr>
-                                                <tr class="shipping">
-                                                    <th>Shipping</th>
-                                                    <td></td>
-                                                    <td>
-                                                        <ul>
-                                                          
-                                                            <li>
-                                                                <input type="radio" checked>
-                                                                <label>Free Shipping:</label>
-                                                            </li>
-                                                            <li></li>
-                                                        </ul>
-                                                    </td>
-                                                </tr>
-                                                <tr class="order-total">
-                                                    <th>Order Total</th>
-                                                    <td></td>
-                                                    <td><strong><span class="amount" th:text="${#numbers.formatDecimal(order.sumMoney, 0, 'POINT', 0, 'COMMA')+ ' đ'}"></span></strong>
-                                                    </td>
-                                                </tr>								
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                    <div class="payment-method">
-                                        <div class="payment-accordion">
-                                            <div class="collapses-group">
-                                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                                    <div class="panel panel-default">
-                                                        <div class="panel-heading" role="tab" id="headingOne">
-                                                            <h4 class="panel-title">
-                                                                <a data-bs-toggle="collapse" data-bs-parent ="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                                  Direct Bank Transfer
-                                                                </a>
-                                                            </h4>
-                                                        </div>
-                                                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                                            <div class="panel-body">
-                                                                <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="panel panel-default">
-                                                        <div class="panel-heading" role="tab" id="headingTwo">
-                                                            <h4 class="panel-title">
-                                                                <a class="collapsed" role="button" data-bs-toggle="collapse" data-bs-parent ="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                                  Cheque Payment
-                                                                </a>
-                                                            </h4>
-                                                        </div>
-                                                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                                            <div class="panel-body">
-                                                                <p>Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="panel panel-default">
-                                                        <div class="panel-heading" role="tab" id="headingThree">
-                                                            <h4 class="panel-title">
-                                                                <a class="collapsed" role="button" data-bs-toggle="collapse" data-bs-parent ="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                                 PayPal <img th:src="@{/fe/img/2.png}" alt="payment" />
-                                                                </a>
-                                                            </h4>
-                                                        </div>
-                                                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                                          <div class="panel-body">
-                                                                <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</p>
-                                                          </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="order-button-payment">
-                                            <input type="submit" value="Đặt hàng">
-                                        </div>
-                                    </div>
-                                </div>
-                            	</div>
-                            </div>
-                        </form>
-					</div>
+													<td>
+														<strong class="product-quantity"> x <span
+																th:text="${cartItem.quantity}"></span></strong>
+													</td>
+													<td class="product-total">
+														<span class="amount"
+															th:text="${#numbers.formatDecimal( cartItem.quantity * cartItem.book.priceSale, 0, 'POINT', 0, 'COMMA')+ ' đ'}"></span>
+													</td>
+												</tr>
+
+											</tbody>
+											<tfoot>
+												<tr class="cart-subtotal">
+													<th>Tổng tiền</th>
+													<td></td>
+													<td><span class="amount"
+															th:text="${#numbers.formatDecimal(order.sumMoney, 0, 'POINT', 0, 'COMMA')+ ' đ'}"></span>
+													</td>
+												</tr>
+												<tr class="shipping">
+													<th>Shipping</th>
+													<td></td>
+													<td>
+														<ul>
+
+															<li>
+																<input type="radio" checked>
+																<label>Miễn phí vận chuyển:</label>
+															</li>
+															<li></li>
+														</ul>
+													</td>
+												</tr>
+												<tr class="order-total">
+													<th>Tiền phải trả</th>
+													<td></td>
+													<td><strong><span class="amount"
+																th:text="${#numbers.formatDecimal(order.sumMoney, 0, 'POINT', 0, 'COMMA')+ ' đ'}"></span></strong>
+													</td>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+									<div class="payment-method">
+										<div class="payment-accordion">
+											<div class="collapses-group">
+												<div class="panel-group" id="accordion" role="tablist"
+													aria-multiselectable="true">
+													
+													<div class="panel panel-default">
+														<div class="panel-heading" role="tab" id="headingThree">
+															<h4 class="panel-title">
+																<a class="collapsed" role="button"
+																	data-bs-toggle="collapse"
+																	data-bs-parent="#accordion" href="#collapseThree"
+																	aria-expanded="false" aria-controls="collapseThree">
+																	PayPal <img th:src="@{/fe/img/2.png}"
+																		alt="payment" />
+																</a>
+															</h4>
+														</div>
+														<div id="collapseThree" class="panel-collapse collapse"
+															role="tabpanel" aria-labelledby="headingThree">
+															<div class="panel-body">
+																<p>Pay via PayPal; you can pay with your credit card if
+																	you don’t have a PayPal account.</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="order-button-payment">
+											<input type="submit" value="Đặt hàng">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
+	</div>
 
 	<footer th:replace="layout/footer::footer"></footer>
 	<!-- all js here -->
 	<!-- jquery latest version -->
 	<div th:replace="layout/js::js"></div>
 	<script>
-		$('.ip').change((e) =>{
-			let value=e.target.value;
-			let cartId=e.target.id;
-			let data={quantity:parseInt(value)}
+		$('.ip').change((e) => {
+			let value = e.target.value;
+			let cartId = e.target.id;
+			let data = {quantity: parseInt(value)}
 			$.ajax({
 				type: "PUT",
 				contentType: "application/json",
@@ -209,11 +210,11 @@
 				timeout: 600000,
 				success: function (data) {
 					console.log("SUCCESS : ", data);
-				
+
 				},
 				error: function (e) {
 					console.log("ERROR : ", e);
-				
+
 
 				}
 			});
@@ -223,4 +224,5 @@
 
 
 <!-- Mirrored from htmldemo.net/koparion/koparion/index-4.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 09 Aug 2023 12:02:53 GMT -->
+
 </html>

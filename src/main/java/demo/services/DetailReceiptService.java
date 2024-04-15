@@ -14,4 +14,6 @@ public interface DetailReceiptService {
 	List<DetailReceipt> findByReceiptId(Integer id);
 	DetailReceipt findByReceiptIdAndBookId(Integer receiptId,Integer bookId);
 	DetailReceipt findByBookId(Integer bookId);
+	Boolean deleteByReceiptId(Integer id);
+	
 }

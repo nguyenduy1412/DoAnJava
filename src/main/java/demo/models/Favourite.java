@@ -38,6 +38,6 @@ public class Favourite {
 	private User user;
 	@OneToMany(mappedBy ="favourite",fetch = FetchType.EAGER)
 	@JsonIgnore
-	private Set<FavouriteItem> cartItems;
+	private Set<FavouriteItem> favouriteItems;
 	
 }

@@ -97,7 +97,7 @@
 													<th>Mã sản phẩm</th>
 													<th>Tên sản phẩm</th>
 													<th>Số lượng</th>
-													
+
 													<th>Tổng phụ</th>
 												</tr>
 											</thead>
@@ -105,9 +105,11 @@
 												<tr th:each="orderDetail : ${order.orderDetails} ">
 													<td th:text="${orderDetail.book.id}"></td>
 													<td th:text="${orderDetail.book.bookName}"></td>
-													
+
 													<td th:text="${orderDetail.quantity}"></td>
-													<td th:text="${#numbers.formatDecimal(orderDetail.price, 0, 'POINT', 0, 'COMMA')+ ' đ'}"></td>
+													<td
+														th:text="${#numbers.formatDecimal(orderDetail.price, 0, 'POINT', 0, 'COMMA')+ ' đ'}">
+													</td>
 												</tr>
 
 											</tbody>
@@ -139,7 +141,9 @@
 												<tbody>
 													<tr>
 														<th style="width:50%">Tổng phụ:</th>
-														<td th:text="${#numbers.formatDecimal(order.sumMoney, 0, 'POINT', 0, 'COMMA')+ ' VNĐ'}" ></td>
+														<td
+															th:text="${#numbers.formatDecimal(order.sumMoney, 0, 'POINT', 0, 'COMMA')+ ' VNĐ'}">
+														</td>
 													</tr>
 
 													<tr>
@@ -152,10 +156,42 @@
 														<td th:if="${order.status==1}">Đã duyệt</td>
 														<td th:if="${order.status==2}">Đang giao</td>
 														<td th:if="${order.status==3}">Giao thành công</td>
+														<td th:if="${order.status==4}">Yêu cầu hủy</td>
+														<td th:if="${order.status==5}">Đã hủy</td>
 													</tr>
 													<tr>
 														<th>Tổng:</th>
-														<td th:text="${#numbers.formatDecimal(order.sumMoney, 0, 'POINT', 0, 'COMMA')+ ' VNĐ'}"></td>
+														<td
+															th:text="${#numbers.formatDecimal(order.sumMoney, 0, 'POINT', 0, 'COMMA')+ ' VNĐ'}">
+														</td>
+													</tr>
+													<tr th:if="${order.status==4 || order.status==5}">
+														<th>Người hủy:</th>
+														<td th:text="${order.requiredCancel.canceller}"></td>
+													</tr>
+													<tr th:if="${order.status==4 || order.status==5}">
+														<th>Ngày hủy:</th>
+														<td
+															th:text="${#dates.format(order.requiredCancel.dateCancel,'dd/MM/yyyy')}">
+														</td>
+													</tr>
+													<tr th:if="${order.status==4}">
+														<th>Yêu cầu hủy:</th>
+														<td>
+															<div class="d-flex justify-content-between">
+																<form method="post" th:action="@{/admin/accept-cancel}">
+																	<input type="hidden" name="id" th:value="${order.id}" />
+																	<button type="submit" class="btn btn-success">Chấp
+																		nhận</button>
+																</form>
+																<form method="post" th:action="@{/admin/denial-cancel}">
+																	<input type="hidden" name="id" th:value="${order.id}" />
+																	<button type="submit" class="btn btn-danger">Từ
+																		chối</button>
+																</form>
+															</div>
+
+														</td>
 													</tr>
 												</tbody>
 											</table>
@@ -205,17 +241,17 @@
 	<script>
 		CKEDITOR.replace('editor1');
 	</script>
-<script>
-	$(".nav-link").each(function () {
-            var paragraph = $(this).find("p"); // Tìm thẻ <p> trong thẻ <a>
-            var paragraphText = paragraph.text().trim(); // Lấy nội dung của thẻ <p>
+	<script>
+		$(".nav-link").each(function () {
+			var paragraph = $(this).find("p"); // Tìm thẻ <p> trong thẻ <a>
+			var paragraphText = paragraph.text().trim(); // Lấy nội dung của thẻ <p>
 
-            // Kiểm tra nội dung của thẻ <p>
-            if (paragraphText === "Đơn hàng") {
-                $(this).addClass("active"); // Thêm class "active" vào thẻ <a>
-            }
-        });
-</script>
+			// Kiểm tra nội dung của thẻ <p>
+			if (paragraphText === "Đơn hàng") {
+				$(this).addClass("active"); // Thêm class "active" vào thẻ <a>
+			}
+		});
+	</script>
 </body>
 
 <!-- Mirrored from adminlte.io/themes/v3/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Aug 2023 09:23:47 GMT -->

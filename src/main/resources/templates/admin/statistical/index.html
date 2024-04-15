@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
+<!-- Mirrored from adminlte.io/themes/v3/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Aug 2023 09:23:18 GMT -->
+
+<head th:replace="admin/fragments/head::head"></head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+	<div class="wrapper">
+
+		<div class="preloader flex-column justify-content-center align-items-center">
+			<img class="animation__shake" th:src="@{/asset/img/AdminLTELogo.png}" alt="AdminLTELogo" height="60"
+				width="60">
+		</div>
+
+		<header th:replace="admin/fragments/header::header"></header>
+
+
+		<div th:replace="admin/fragments/sidebar::sidebar"></div>
+
+		<div class="content-wrapper">
+
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 class="m-0">Thống kê</h1>
+						</div>
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a th:href="@{/admin}">Trang chủ</a></li>
+								<li class="breadcrumb-item active">Thống kê</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+			</div>
+			<input type="hidden" id="dataRevenue" th:value="${dataRevenue}" />
+			<section class="content">
+
+				<!-- Default box -->
+				<div class="row" bis_skin_checked="1">
+					<div class="col-lg-3 col-6" bis_skin_checked="1">
+
+						<div class="small-box bg-info" bis_skin_checked="1">
+							<div class="inner" bis_skin_checked="1">
+								<h3>150</h3>
+								<p>Đơn hàng mới</p>
+							</div>
+							<div class="icon" bis_skin_checked="1">
+								<i class="ion ion-bag"></i>
+							</div>
+							<a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+						</div>
+					</div>
+
+					<div class="col-lg-3 col-6" bis_skin_checked="1">
+
+						<div class="small-box bg-success" bis_skin_checked="1">
+							<div class="inner" bis_skin_checked="1">
+								<h3>53<sup style="font-size: 20px">%</sup></h3>
+								<p>Giao thành công</p>
+							</div>
+							<div class="icon" bis_skin_checked="1">
+								<i class="ion ion-stats-bars"></i>
+							</div>
+							<a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+						</div>
+					</div>
+
+					<div class="col-lg-3 col-6" bis_skin_checked="1">
+
+						<div class="small-box bg-warning" bis_skin_checked="1">
+							<div class="inner" bis_skin_checked="1">
+								<h3>45</h3>
+								<p>Tài khoản mới</p>
+							</div>
+							<div class="icon" bis_skin_checked="1">
+								<i class="ion ion-person-add"></i>
+							</div>
+							<a href="#" class="small-box-footer">Xem thêm<i class="fas fa-arrow-circle-right"></i></a>
+						</div>
+					</div>
+
+					<div class="col-lg-3 col-6" bis_skin_checked="1">
+
+						<div class="small-box bg-danger" bis_skin_checked="1">
+							<div class="inner" bis_skin_checked="1">
+								<h3>65</h3>
+								<p>Đơn hàng hủy</p>
+							</div>
+							<div class="icon" bis_skin_checked="1">
+								<i class="ion ion-pie-graph"></i>
+							</div>
+							<a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+						</div>
+					</div>
+
+				</div>
+				<div class="card">
+					<canvas id="myBarChart" width="300" height="150"></canvas>
+				</div>
+				
+			</section>
+
+		</div>
+
+
+	</div>
+
+	<footer th:replace="admin/fragments/footer::footer"></footer>
+
+	<aside class="control-sidebar control-sidebar-dark">
+
+	</aside>
+
+	</div>
+
+
+	<div th:replace="admin/fragments/scrip::scrip"></div>
+	<script>
+		$(".nav-link").each(function () {
+			var paragraph = $(this).find("p"); // Tìm thẻ <p> trong thẻ <a>
+			var paragraphText = paragraph.text().trim(); // Lấy nội dung của thẻ <p>
+
+			// Kiểm tra nội dung của thẻ <p>
+			if (paragraphText === "Thống kê") {
+				$(this).addClass("active"); // Thêm class "active" vào thẻ <a>
+			}
+		});
+	</script>
+	 <script>
+		var revenueString = document.getElementById('dataRevenue').value;
+        var dataRevenue = revenueString.split(',').map(function(item) {
+            return parseInt(item.trim(), 10);  // Sử dụng trim() để loại bỏ khoảng trắng thừa.
+        });
+
+        console.log("Mảng thu nhập là:", dataRevenue);
+        
+        const data = {
+            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6','Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+            datasets: [{
+                label: 'Doanh số bán hàng',
+                data: dataRevenue,
+                backgroundColor: [
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 162, 235, 1)',
+                ],
+                borderWidth: 1,
+                barThickness: 50 // Cố định chiều rộng của cột là 20px
+            }]
+        };
+    
+        const options = {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true
+                }
+            }
+        };
+    
+        const ctx = document.getElementById('myBarChart').getContext('2d');
+        const myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: options
+        });
+    </script>
+</body>
+
+<!-- Mirrored from adminlte.io/themes/v3/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Aug 2023 09:23:47 GMT -->
+
+</html>

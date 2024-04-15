@@ -28,11 +28,13 @@ public class DetailReceipt {
 	private Integer id;
 	private int quantity;
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="bookId",referencedColumnName = "id")
-	private Book book;
-	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="receiptId",referencedColumnName = "id")
+//	@JsonIgnore
 	private Receipt receipt;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="bookId",referencedColumnName = "id")
+//	@JsonIgnore
+	private Book book;
 
 	
 }
