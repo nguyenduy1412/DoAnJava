@@ -107,6 +107,7 @@ public class CustomController {
 			this.storageService.store(file);
 			user.setImg(fileName);
 		}
+		
 		if (this.userService.update(user)!=null) {
 			session.setAttribute("user", user);
 			return "redirect:/myacount";

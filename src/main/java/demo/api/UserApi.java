@@ -171,4 +171,13 @@ public class UserApi {
 		}
 		return new ResponseEntity<>("Sai mật khẩu", HttpStatus.BAD_REQUEST);
 	}
+	@PostMapping("/updateEnable/{id}")
+	public ResponseEntity<String> updateEnable(@PathVariable Long id){
+		User user=this.userService.findById(id);
+		user.setEnabled(!user.getEnabled());
+		if(this.userService.update(user)!=null) {
+			return new ResponseEntity<>("Thành công", HttpStatus.OK);
+		}
+		return new ResponseEntity<>("thất bại", HttpStatus.BAD_REQUEST);
+	}
 }
