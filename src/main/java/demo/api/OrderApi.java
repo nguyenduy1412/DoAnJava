@@ -21,6 +21,7 @@ import org.thymeleaf.context.Context;
 import demo.models.Book;
 import demo.models.Cart;
 import demo.models.CartItem;
+import demo.models.DiscountCode;
 import demo.models.Notification;
 import demo.models.OrderDetail;
 import demo.models.Orders;
@@ -30,6 +31,7 @@ import demo.models.WareHouse;
 import demo.services.BookService;
 import demo.services.CartItemService;
 import demo.services.CartService;
+import demo.services.DiscountCodeService;
 import demo.services.EmailService;
 import demo.services.NotificationService;
 import demo.services.OrderDetailService;
@@ -64,6 +66,8 @@ public class OrderApi {
 	private NotificationService notificationService;
 	@Autowired
 	private WareHouseService wareHouseService;
+	@Autowired
+	private DiscountCodeService discountCodeService;
 	@GetMapping()
 	public List<Orders> list() {
 		return this.orderService.getAll();
@@ -102,6 +106,7 @@ public class OrderApi {
 					System.out.println("Loi");
 				}
 			}
+			orderOld.setStatusPay(true);
 		}
 		else if(order.getStatus()==4) {
 			status="Đang xử lý";
@@ -121,7 +126,14 @@ public class OrderApi {
 				Notification notification=new Notification();
 				notification.setDate(new Date());
 				notification.setMessage(message);
-				
+				// khôi phục mã giảm giá
+				if(orderOld.getDiscountCode()!=null) {
+					DiscountCode disc=orderOld.getDiscountCode();
+					disc.setQuantity(disc.getQuantity()+1);
+					if(this.discountCodeService.create(disc)) {
+						System.out.println("Thành công");
+					}
+				}
 				notification.setUser(orderOld.getUser());
 				this.notificationService.create(notification);
 			} catch (Exception e) {
@@ -135,12 +147,12 @@ public class OrderApi {
 		context.setVariable("tongtien",orderOld.getSumMoney() );
 		context.setVariable("status",status );
 		// gửi mail
-//		try {
-//			emailService.sendMail(orderOld.getUser().getEmail(), "Thông báo đơn hàng", "mailOrder", context);
-//		} catch (MessagingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		try {
+			emailService.sendMail(orderOld.getUser().getEmail(), "Thông báo đơn hàng", "mailOrder", context);
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("trang thai "+orderOld.getStatus());
 		return this.orderService.update(orderOld);
 	}

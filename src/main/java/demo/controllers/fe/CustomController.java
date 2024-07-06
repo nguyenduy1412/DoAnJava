@@ -5,9 +5,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
+import org.springframework.security.authentication.LockedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import demo.method.FileName;
 import demo.models.CustomUserDetails;
 import demo.models.Notification;
 import demo.models.Orders;
@@ -27,6 +36,7 @@ import demo.services.NotificationService;
 import demo.services.OrderService;
 import demo.services.StorageService;
 import demo.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
@@ -43,7 +53,28 @@ public class CustomController {
 	@Autowired
 	private NotificationService notificationService;
 	@RequestMapping("/login")
-	public String signin() {
+	public String signin(@RequestParam(value = "error", required = false) String error, Model model, HttpServletRequest request) {
+		if (error != null) {
+            HttpSession session = request.getSession(false);
+            String errorMessage = "";
+            if (session != null) {
+                AuthenticationException ex = (AuthenticationException) session.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+                if (ex instanceof InternalAuthenticationServiceException) {
+                    Throwable cause = ex.getCause();
+                    if (cause instanceof DisabledException) {
+                    	errorMessage= "Tài khoản của bạn đã bị vô hiệu hóa.";
+                    } else {
+                    	errorMessage= "Lỗi.";
+                    }
+                } else if (ex instanceof BadCredentialsException) {
+                		errorMessage= "Sai tên đăng nhập hoặc mật khẩu.";
+                } else {
+                	errorMessage= "Lỗi.";
+                }
+            }
+            
+            model.addAttribute("error", errorMessage);
+        }
 		return "login";
 	}
 	@RequestMapping("/register")
@@ -104,10 +135,17 @@ public class CustomController {
 			e.printStackTrace();
 		}
 		if (!isEmpty) {
-			this.storageService.store(file);
+			fileName=FileName.getFileNameToDateNow();
+			this.storageService.store(file,fileName);
+			
 			user.setImg(fileName);
 		}
-		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if (this.userService.update(user)!=null) {
 			session.setAttribute("user", user);
 			return "redirect:/myacount";

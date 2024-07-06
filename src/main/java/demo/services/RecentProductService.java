@@ -10,5 +10,5 @@ public interface RecentProductService {
 	Boolean create(Recent_Products a);
 	Boolean delete(Integer id);
 	Recent_Products findById(Integer id);
-	Boolean checkProduct(Long userId,Integer bookId);
+	Recent_Products checkProduct(Long userId,Integer bookId);
 }

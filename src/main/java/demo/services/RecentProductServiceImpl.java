@@ -51,15 +51,15 @@ public class RecentProductServiceImpl implements RecentProductService{
 	}
 
 	@Override
-	public Boolean checkProduct(Long userId, Integer bookId) {
+	public Recent_Products checkProduct(Long userId, Integer bookId) {
 		// TODO Auto-generated method stub
 		List<Recent_Products> kq=this.recentProductRepository.findByUserIdAndBookId(userId, bookId);
 		for (Recent_Products recent_Products : kq) {
 			System.out.println("Check list"+recent_Products.getBook());
 		}
 		if(kq.size()>0)
-			return true;
-		return false;
+			return kq.get(0);
+		return null;
 	}
 	
 	

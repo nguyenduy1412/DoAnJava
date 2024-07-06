@@ -38,15 +38,85 @@
 	width: 330px;
 	height: 418px;
 }
-.user-review{
+
+.user-review {
 	width: 40px;
 	height: 40px;
 	border-radius: 50%;
-	
+
 }
-.gold{
+
+.gold {
 	color: gold;
 }
-.recent-img{
+
+.recent-img {
 	width: 25%;
+}
+
+.money-discount {
+	font-weight: bold;
+	font-size: 15px;
+	color: red;
+}
+
+.quantity-discount {
+	font-weight: bold;
+	color: black;
+}
+
+.btn-discount {
+	background-color: #4FCA3C;
+	
+    border: 1px solid #eceff8;
+    display: inline-block;
+    padding: 8px 30px;
+    color: #fff;
+    text-transform: capitalize;
+    text-decoration: none;
+    float: left;
+    transition: .3s;
+    font-family: 'Rufina', serif;
+    font-weight: 400;
+}
+.btn-discount:hover{
+	 background: #F07C29;
+     color: #fff;
+     border: 1px solid #F07C29;
+}
+.nameCode{
+	font-weight: bold;
+	color: black;
+	font-size: 15px;
+}
+.discountCode {
+	background-color: gold;
+	padding: 15px;
+	margin-bottom: 10px;
+	align-items: center;
+	justify-content: space-between;
+	display: flex;
+}
+.scroll{
+	max-height: 300px; /* Giới hạn chiều cao của container */
+    overflow-y: auto;
+}
+.btn-favourite {
+    background: #000 none repeat scroll 0 0;
+    color: #fff;
+    display: inline-block;
+    font-size: 19px;
+    font-weight: 700;
+    height: 45px;
+    line-height: 45px;
+    margin-right: 5px;
+    padding: 0;
+    text-align: center;
+    text-decoration: none;
+    width: 50px;
+    transition: .3s;
+}
+
+.btn-favourite:hover {
+    background: #00ABE0 none repeat scroll 0 0;
 }

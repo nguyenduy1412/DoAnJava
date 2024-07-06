@@ -113,6 +113,84 @@ public class OrderServiceImpl implements OrderService{
 		return this.orderRepository.findByMonthAndYear(month, year);
 	}
 
+	@Override
+	public List<Orders> findByDayMonthAndYear(Integer day, Integer month, Integer year) {
+		// TODO Auto-generated method stub
+		return this.orderRepository.findByDayMonthAndYear(day, month, year);
+	}
+
+	@Override
+	public Page<Orders> findByDayMonthAndYear(Integer day, Integer month, Integer year, Integer page, Integer limit) {
+		// TODO Auto-generated method stub
+		List<Orders> list=this.findByDayMonthAndYear(day, month, year);
+		Pageable pageable = PageRequest.of(page - 1, limit);
+		int start = (int) pageable.getOffset();
+		int end = Math.min(start + pageable.getPageSize(), list.size());
+
+		List<Orders> sublist = list.subList(start, end);
+
+		return new PageImpl<>(sublist, pageable, list.size());
+	}
+
+	@Override
+	public Page<Orders> findAllByOrderByIdDesc(Integer page, Integer limit) {
+		List<Orders> list=this.orderRepository.findAllByOrderByIdDesc();
+		Pageable pageable = PageRequest.of(page - 1, limit);
+		int start = (int) pageable.getOffset();
+		int end = Math.min(start + pageable.getPageSize(), list.size());
+
+		List<Orders> sublist = list.subList(start, end);
+
+		return new PageImpl<>(sublist, pageable, list.size());
+	}
+
+	@Override
+	public Page<Orders> findByDayMonthYearAndStatus(Integer day, Integer month, Integer year, Integer page,
+			Integer limit, Integer status) {
+		List<Orders> list; 
+		if(status==6)
+		{
+			list=this.findByDayMonthAndYear(day, month, year);
+		}
+		else
+		{
+			list=this.orderRepository.findByDayMonthYearAndStatus(day, month, year, status);
+		}
+		
+		Pageable pageable = PageRequest.of(page - 1, limit);
+		int start = (int) pageable.getOffset();
+		int end = Math.min(start + pageable.getPageSize(), list.size());
+
+		List<Orders> sublist = list.subList(start, end);
+
+		return new PageImpl<>(sublist, pageable, list.size());
+	}
+
+	@Override
+	public Page<Orders> findByStatusOrderByIdDesc(Integer status, Integer page, Integer limit) {
+		List<Orders> list; 
+		if(status==6) {
+			list=this.orderRepository.findAllByOrderByIdDesc();
+		}
+		else {
+			list=this.orderRepository.findByStatusOrderByIdDesc(status);
+		}
+		
+		Pageable pageable = PageRequest.of(page - 1, limit);
+		int start = (int) pageable.getOffset();
+		int end = Math.min(start + pageable.getPageSize(), list.size());
+
+		List<Orders> sublist = list.subList(start, end);
+
+		return new PageImpl<>(sublist, pageable, list.size());
+	}
+
+	@Override
+	public List<Orders> findByIdContainingOrderByIdAsc(Integer keyword) {
+		
+		return this.orderRepository.findByIdContainingOrderByIdAsc(keyword);
+	}
+
 	
 
 }

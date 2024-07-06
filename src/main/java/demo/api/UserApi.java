@@ -171,8 +171,8 @@ public class UserApi {
 		}
 		return new ResponseEntity<>("Sai mật khẩu", HttpStatus.BAD_REQUEST);
 	}
-	@PostMapping("/updateEnable/{id}")
-	public ResponseEntity<String> updateEnable(@PathVariable Long id){
+	@PutMapping("/updateEnable/{id}")
+	public ResponseEntity<String> updateEnable(@PathVariable Long id,@RequestBody User user1){
 		User user=this.userService.findById(id);
 		user.setEnabled(!user.getEnabled());
 		if(this.userService.update(user)!=null) {

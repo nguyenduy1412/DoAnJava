@@ -89,6 +89,7 @@
 																<th>Đơn hàng</th>
 																<th>Ngày đặt</th>
 																<th>Trạng thái</th>
+																<th>Tình trạng</th>
 																<th>Tổng</th>
 																<th>Tùy chọn</th>
 															</tr>
@@ -105,6 +106,8 @@
 																<td th:if="${order.status==3}">Giao thành công</td>
 																<td th:if="${order.status==4}">Yêu cầu hủy</td>
 																<td th:if="${order.status==5}">Đã hủy</td>
+																<td th:if="${order.statusPay}">Đã thanh toán</td>
+																<td th:if="${!order.statusPay}">Chưa thanh toán</td>
 																<td
 																	th:text="${#numbers.formatDecimal(order.sumMoney, 0, 'POINT', 0, 'COMMA')+ ' đ'}">
 																</td>
@@ -149,6 +152,7 @@
 													<form th:action="@{/myacount}" th:object="${user}" method="post"
 														enctype="multipart/form-data">
 														<input type="hidden" class="form-control" th:field="*{id}">
+														<input type="hidden" class="form-control" th:field="*{enabled}">
 														<input type="hidden" class="form-control"
 															th:field="*{userName}">
 														<input type="hidden" class="form-control"

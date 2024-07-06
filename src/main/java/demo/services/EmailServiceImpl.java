@@ -23,17 +23,22 @@ public class EmailServiceImpl implements EmailService{
     private TemplateEngine templateEngine;
 	@Override
 	public void sendMail(String to, String subject, String template, Context context) throws MessagingException {
-		MimeMessage message = emailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+		try {
+			MimeMessage message = emailSender.createMimeMessage();
+	        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-        helper.setTo(to);
-        helper.setSubject(subject);
+	        helper.setTo(to);
+	        helper.setSubject(subject);
 
-        // Tạo nội dung email từ template Thymeleaf
-        String htmlContent = templateEngine.process(template, context);
-        helper.setText(htmlContent, true); // Đặt tham số true để xác định là nội dung là HTML
+	        // Tạo nội dung email từ template Thymeleaf
+	        String htmlContent = templateEngine.process(template, context);
+	        helper.setText(htmlContent, true); // Đặt tham số true để xác định là nội dung là HTML
 
-        emailSender.send(message);
+	        emailSender.send(message);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 		
 	}
 	@Override

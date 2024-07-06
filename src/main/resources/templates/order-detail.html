@@ -113,7 +113,7 @@
 									</td>
 								</tr>
 								<tr class="cart-subtotal">
-									<th>Tình trạng</th>
+									<th>Trạng thái</th>
 									<td>
 										<span class="amount" th:if="${order.status==0}">Chờ xác nhận</span>
 										<span class="amount" th:if="${order.status==1}">Đã duyệt</span>
@@ -121,6 +121,13 @@
 										<span class="amount" th:if="${order.status==3}">Giao thành công</span>
 										<span class="amount" th:if="${order.status==4}">Yêu cầu hủy</span>
 										<span class="amount" th:if="${order.status==5}">Đã hủy</span>
+									</td>
+								</tr>
+								<tr class="cart-subtotal">
+									<th>Tình trạng</th>
+									<td>
+										<span class="amount" th:if="${order.statusPay}">Đã thanh toán</span>
+										<span class="amount" th:if="${!order.statusPay}">Chưa thanh toán</span>
 									</td>
 								</tr>
 								<tr class="cart-subtotal">

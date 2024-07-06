@@ -36,7 +36,8 @@ public class BookControllerCus {
 			listRecent=this.recentProductService.getByUser(user.getId());
 			System.out.println(" user"+user.getId()+"book"+book.getId()+" KQ+ "+this.recentProductService.checkProduct(user.getId(), id));
 			// nếu bản ghi không trùng thì thêm
-			if(this.recentProductService.checkProduct(user.getId(), id)== false)
+			Recent_Products check=this.recentProductService.checkProduct(user.getId(), id);
+			if(check== null)
 			{
 				
 				Recent_Products recent=new Recent_Products();
@@ -50,11 +51,19 @@ public class BookControllerCus {
 				}
 				
 			}
+			else {
+				
+				if(this.recentProductService.delete(check.getId()))
+				{
+					this.recentProductService.create(check);
+				}
+				
+			}
 			
 		}
 		model.addAttribute("listRecent", listRecent);
 		model.addAttribute("book", book);
-		List<Review> listReview=this.reviewService.findByBookIdOrderByIdDesc(id);
+		List<Review> listReview=this.reviewService.findByBookIdAndStatusOrderByIdDesc(id,true);
 		model.addAttribute("listReview", listReview);
 		
 //		model.addAttribute("count", listReview.size());

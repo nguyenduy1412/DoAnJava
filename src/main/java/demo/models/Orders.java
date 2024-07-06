@@ -29,7 +29,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@ToString
+
 @Table(name = "orders")
 public class Orders {
 	@Id
@@ -37,6 +37,7 @@ public class Orders {
 	private Integer id;
 	private long sumMoney;
 	private Integer status;
+	private Boolean statusPay;
 	private Date dateOrder;
 	@Column(columnDefinition = "nvarchar(255)")
 	private String addressShip;
@@ -52,7 +53,10 @@ public class Orders {
 	@JoinColumn(name = "userId",referencedColumnName = "id")
 	@JsonIgnore
 	private User user;
-	private String discountCode;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "discountId", referencedColumnName = "id")
+	@JsonIgnore
+	private DiscountCode discountCode;
 	private Double moneyShip;
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "payId",referencedColumnName = "id")

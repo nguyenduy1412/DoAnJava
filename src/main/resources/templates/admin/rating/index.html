@@ -24,12 +24,12 @@
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1 class="m-0">Đơn hàng</h1>
+							<h1 class="m-0">Đánh giá sản phẩm</h1>
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
 								<li class="breadcrumb-item"><a th:href="@{/admin}">Trang chủ</a></li>
-								<li class="breadcrumb-item active">Đơn hàng</li>
+								<li class="breadcrumb-item active">Đánh giá sản phẩm</li>
 							</ol>
 						</div>
 					</div>
@@ -52,26 +52,14 @@
 											<option value="1" th:selected="${allday == 1}">Theo ngày</option>
 										</select>
 									</div>
-									<div class="input-group input-group-sm" >
-
-										<select class="badge" name="status" th:value="${status}" >
-											<option value="6" th:selected="${status == 6}">Tất cả trạng thái</option>
-											<option value="0" th:selected="${status == 0}">Chờ xác nhận</option>
-											<option value="1" th:selected="${status == 1}">Đã duyệt</option>
-											<option value="2" th:selected="${status == 2}">Đang giao</option>
-											<option value="3" th:selected="${status == 3}">Giao thành công</option>
-											<option value="4" th:selected="${status == 4}">Yêu cầu hủy</option>
-											<option value="5" th:selected="${status == 5}">Đã hủy</option>
-										</select>
-									</div>
+									
 									<div class="input-group input-group-sm" >
 										<input type="date" name="date"
 										th:value="${#dates.format(date, 'yyyy-MM-dd')}" />
 									</div>
 									<div class="input-group input-group-sm" >
 
-										<input type="text" name="keyword" class="form-control float-right"
-											placeholder="Search" th:value="${keyword}">
+										
 										<div class="input-group-append">
 											<button type="submit" class="btn btn-default">
 												<i class="fas fa-search"></i>
@@ -88,36 +76,28 @@
 								<thead>
 									<tr>
 										<th>STT</th>
-										<th>Tên tài khoản</th>
+										<th>Người đánh giá</th>
+										<th>Tên sản phẩm</th>
 										<th>Trạng thái</th>
-										<th>Ngày đặt</th>
+										<th>Số sao</th>
+										<th>Ngày đánh giá</th>
 										<th>Tùy chọn</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="order,number : ${listOrder}"
-										th:classappend="${ order.status==4 ? 'red' :'' }">
+									<tr th:each="review,number : ${listReview}">
 										<td th:text="${number.count}"></td>
-										<td th:text="${order.user.userName}"></td>
-										<td>
-											<select class="badge st" th:id="${order.id}"
-												th:classappend="${(order.status == 0 || order.status==5) ?'bg-danger' :(order.status == 1 || order.status==4) ?'bg-warning' :(order.status == 2) ?'bg-primary' :'bg-success' }">
-												<option value="0" th:selected="${order.status == 0}">Chờ xác nhận
-												</option>
-												<option value="1" th:selected="${order.status == 1}">Đã duyệt</option>
-												<option value="2" th:selected="${order.status == 2}">Đang giao</option>
-												<option value="3" th:selected="${order.status == 3}">Giao thành công
-												</option>
-												<option value="4" th:selected="${order.status == 4}">Yêu cầu hủy
-												</option>
-												<option value="5" th:selected="${order.status == 5}">Đã hủy</option>
-											</select>
+										<td th:text="${review.user.userName}"></td>
+										<td th:text="${review.book.bookName}"></td>
+										<td th:if="${review.status}"><span
+												class="badge bg-success">Hiện</span></td>
+										<td th:if="${!review.status}"><span class="badge bg-danger">Ẩn</span>
 										</td>
-
-										<td th:text="${#dates.format(order.dateOrder, 'dd/MM/yyyy HH:mm:ss')}"></td>
+										<td th:text="${review.star}"></td>
+										<td th:text="${#dates.format(review.reviewDate, 'dd/MM/yyyy HH:mm:ss')}"></td>
+										
 										<td>
-
-											<a th:href="@{/admin/edit-order/{id}(id=${order.id})}"
+											<a th:href="@{/admin/rating/{id}(id=${review.id})}"
 												class="btn btn-primary">Chi tiết</a>
 
 										</td>
@@ -125,15 +105,13 @@
 								</tbody>
 							</table>
 						</div>
-						<div class="card-footer clearfix">
+						<!--<div class="card-footer clearfix">
 							<ul class="pagination pagination-sm m-0 float-right">
 								<li th:classappend="${currentPage==1 ? 'disabled' :''}" class="page-item"><a class="page-link" th:href="@{'?page='+${currentPage-1}}">«</a></li>
-								<li th:each="i:${#numbers.sequence(1,totalPage)}" th:classappend="${currentPage==i ? 'active' :''}" class="page-item"><a class="page-link" th:text="${i}" th:href="@{'?allday='+
-								${allday}+'&status='+${status}+'&date='+${dates}+'&page='+${i}
-							}"></a></li>
+								<li th:each="i:${#numbers.sequence(1,totalPage)}" th:classappend="${currentPage==i ? 'active' :''}" class="page-item"><a class="page-link" th:text="${i}" th:href="@{${keyword!=null && keyword!='' ? '?keyword=' +keyword+'&' : '?'}+'page='+${i}}"></a></li>
 								<li th:classappend="${currentPage==totalPage ? 'disabled' :''}" class="page-item"><a class="page-link" th:href="@{'?page='+${currentPage+1}}">»</a></li>
 							</ul>
-						</div>
+						</div>-->
 					</div>
 
 				</div>
@@ -205,7 +183,7 @@
 			var paragraphText = paragraph.text().trim(); // Lấy nội dung của thẻ <p>
 
 			// Kiểm tra nội dung của thẻ <p>
-			if (paragraphText === "Đơn hàng") {
+			if (paragraphText === "Đánh giá") {
 				$(this).addClass("active"); // Thêm class "active" vào thẻ <a>
 			}
 		});

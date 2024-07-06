@@ -6,6 +6,7 @@
 <head th:replace="admin/fragments/head::head"></head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
+	
 	<div class="wrapper">
 
 		<div class="preloader flex-column justify-content-center align-items-center">
@@ -140,12 +141,31 @@
 		});
 		$(document).ready(function () {
 			$('.btnEnable').click(function () {
+				var change=$(this);
+				var status=change.text();
+				console.log("Status"+status);
 				var userId = $(this).closest('tr').find('.userId').val();
 				console.log("User ID: " + userId);
-
-				axios.post('/api/updateEnable/', {userId: userId})
+				
+				let data={
+					id:userId
+				}
+				axios.put(`/api/user/updateEnable/${userId}`, data)
 					.then(function (response) {
 						console.log('Status toggled successfully', response.data);
+						
+						if(status==="Hiện"){
+							console.log("Alo")
+							change.addClass('bg-danger');
+							change.removeClass('bg-success');
+							change.text("Ẩn");
+						}
+						else{
+							change.addClass('bg-success');
+							change.removeClass('bg-danger');
+							change.text("Hiện");
+						}
+						
 					})
 					.catch(function (error) {
 						console.error('Failed to toggle status', error);

@@ -38,65 +38,9 @@
 			<input type="hidden" id="dataRevenue" th:value="${dataRevenue}" />
 			<section class="content">
 
-				<!-- Default box -->
-				<div class="row" bis_skin_checked="1">
-					<div class="col-lg-3 col-6" bis_skin_checked="1">
-
-						<div class="small-box bg-info" bis_skin_checked="1">
-							<div class="inner" bis_skin_checked="1">
-								<h3>150</h3>
-								<p>Đơn hàng mới</p>
-							</div>
-							<div class="icon" bis_skin_checked="1">
-								<i class="ion ion-bag"></i>
-							</div>
-							<a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
-						</div>
-					</div>
-
-					<div class="col-lg-3 col-6" bis_skin_checked="1">
-
-						<div class="small-box bg-success" bis_skin_checked="1">
-							<div class="inner" bis_skin_checked="1">
-								<h3>53<sup style="font-size: 20px">%</sup></h3>
-								<p>Giao thành công</p>
-							</div>
-							<div class="icon" bis_skin_checked="1">
-								<i class="ion ion-stats-bars"></i>
-							</div>
-							<a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
-						</div>
-					</div>
-
-					<div class="col-lg-3 col-6" bis_skin_checked="1">
-
-						<div class="small-box bg-warning" bis_skin_checked="1">
-							<div class="inner" bis_skin_checked="1">
-								<h3>45</h3>
-								<p>Tài khoản mới</p>
-							</div>
-							<div class="icon" bis_skin_checked="1">
-								<i class="ion ion-person-add"></i>
-							</div>
-							<a href="#" class="small-box-footer">Xem thêm<i class="fas fa-arrow-circle-right"></i></a>
-						</div>
-					</div>
-
-					<div class="col-lg-3 col-6" bis_skin_checked="1">
-
-						<div class="small-box bg-danger" bis_skin_checked="1">
-							<div class="inner" bis_skin_checked="1">
-								<h3>65</h3>
-								<p>Đơn hàng hủy</p>
-							</div>
-							<div class="icon" bis_skin_checked="1">
-								<i class="ion ion-pie-graph"></i>
-							</div>
-							<a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
-						</div>
-					</div>
-
-				</div>
+			
+				<span>Số đơn hàng hôm nay: <span th:text="${sumOrder}"></span></span>	
+				
 				<div class="card">
 					<canvas id="myBarChart" width="300" height="150"></canvas>
 				</div>

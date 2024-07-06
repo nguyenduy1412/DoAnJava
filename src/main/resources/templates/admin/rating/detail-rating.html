@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security6">
+
+<!-- Mirrored from adminlte.io/themes/v3/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Aug 2023 09:23:18 GMT -->
+
+<head th:replace="admin/fragments/head::head"></head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+	<div class="wrapper">
+
+		<div class="preloader flex-column justify-content-center align-items-center">
+			<img class="animation__shake" th:src="@{/asset/img/AdminLTELogo.png}" alt="AdminLTELogo" height="60"
+				width="60">
+		</div>
+
+		<header th:replace="admin/fragments/header::header"></header>
+
+
+		<div th:replace="admin/fragments/sidebar::sidebar"></div>
+
+		<div class="content-wrapper">
+
+			<section class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1>Chi tiết đánh giá</h1>
+						</div>
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a th:href="@{/admin}">Trang chủ</a></li>
+								<li class="breadcrumb-item active">Chi tiết đánh giá</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							
+
+							<div class="invoice p-3 mb-3">
+
+								<div class="row">
+									<div class="col-12">
+										<h4>
+											<i class="fas fa-globe"></i>
+											<small class="float-right">Ngày đánh giá: <span
+													th:text="${#dates.format(review.reviewDate,'dd/MM/yyyy')}"></span></small>
+										</h4>
+									</div>
+
+								</div>
+
+								<div class="row invoice-info">
+									
+									<div class="col-sm-4 invoice-col">
+										
+										<address>
+											<strong th:text="${review.user.fullName}"></strong><br>
+											Địa chỉ:<span th:text="${review.user.address}"></span><br>
+											Số điện thoại: <span th:text="${review.user.telephone}"></span><br>
+											Email: <span th:text="${review.user.email}"></span>
+										</address>
+									</div>
+
+									<div class="col-sm-4 invoice-col">
+										
+										<br>
+										<b>Tên sản phẩm:</b> <span th:text="${review.book.bookName}"></span><br>
+
+										<b>Tài khoản:</b> <span th:text="${review.user.userName}"></span>
+									</div>
+
+								</div>
+
+
+								<div class="row">
+									<div class="col-12 table-responsive">
+										<table class="table table-striped">
+											<thead>
+												<tr>
+													<th>Mã sản phẩm</th>
+													<th>Nội dung đánh giá</th>
+													<th>Số sao</th>
+													<th>Ảnh</th>
+													<th>Trạng thái</th>
+													
+												</tr>
+											</thead>
+											<tbody>
+												<tr >
+													<td th:text="${review.book.id}"></td>
+													<td th:text="${review.rating}"></td>
+
+													<td th:text="${review.star}"></td>
+													<td> <img th:src="@{'/uploads/'+${review.book.image}}" width="100px">
+													</td>
+													<td th:if="${review.status}"><span class="badge bg-success">Hiện</span></td>
+													<td th:if="${!review.status}"><span class="badge bg-danger">Ẩn</span></td>
+												</tr>
+
+											</tbody>
+										</table>
+									</div>
+
+								</div>
+
+								
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</section>
+
+		</div>
+
+
+	</div>
+
+	<footer th:replace="admin/fragments/footer::footer"></footer>
+
+	<aside class="control-sidebar control-sidebar-dark">
+
+	</aside>
+
+	</div>
+
+
+
+	<div th:replace="admin/fragments/scrip::scrip"></div>
+	<script>
+		CKEDITOR.replace('editor1');
+	</script>
+	<script>
+		$(".nav-link").each(function () {
+			var paragraph = $(this).find("p"); // Tìm thẻ <p> trong thẻ <a>
+			var paragraphText = paragraph.text().trim(); // Lấy nội dung của thẻ <p>
+
+			// Kiểm tra nội dung của thẻ <p>
+			if (paragraphText === "Đơn hàng") {
+				$(this).addClass("active"); // Thêm class "active" vào thẻ <a>
+			}
+		});
+	</script>
+</body>
+
+<!-- Mirrored from adminlte.io/themes/v3/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Aug 2023 09:23:47 GMT -->
+
+</html>

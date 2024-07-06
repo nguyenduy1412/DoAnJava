@@ -1,6 +1,8 @@
 package demo.controllers.admin;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,15 @@ public class StatisticalController {
 	
 	@GetMapping("/statistical")
 	public String index(Model model) {
+		int day = 0, month = 0, year = 0;
+		Date now = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(now);
+		day = cal.get(Calendar.DAY_OF_MONTH);
+		month = cal.get(Calendar.MONTH) + 1; // Calendar.MONTH trả về giá trị từ 0-11, nên cần +1
+		year = cal.get(Calendar.YEAR);
+		List<Orders> list=this.orderService.findByDayMonthAndYear(day, month, year);
+		int sumOrder=list.size();
 		int currentYear = Year.now().getValue();
 		List<RevenueDto> listReve=new ArrayList<RevenueDto>();
 		String dataRevenue="";
@@ -46,7 +57,7 @@ public class StatisticalController {
 					totalMoneyOrder+=orders.getSumMoney();
 				}
 			}
-			totalMoneyOrder=(long) (totalMoneyOrder * 0.1);
+			
 			RevenueDto a=new RevenueDto();
 			a.setMoney(totalMoneyOrder);
 			a.setQuatity(quantity);
@@ -62,8 +73,8 @@ public class StatisticalController {
 			listReve.add(a);
 		}
 		
-		System.out.println(dataRevenue);
-		
+		System.out.println("Data"+dataRevenue);
+		model.addAttribute("sumOrder", sumOrder);
 		model.addAttribute("dataRevenue", dataRevenue);
 		return "admin/statistical/index";
 	}

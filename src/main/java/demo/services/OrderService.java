@@ -20,4 +20,10 @@ public interface OrderService {
 	List<Orders> findByStatusAndUserIdOrderByIdDesc(Integer status,long userId);
 	Page<Orders> getByStatusAndUserIdOrderByIdDesc(Integer status,long userId,Integer page,Integer limit);
 	List<Orders> findByMonthAndYear(Integer month,Integer year);
+	List<Orders> findByDayMonthAndYear(Integer day,Integer month,Integer year);
+	Page<Orders> findByDayMonthAndYear(Integer day,Integer month,Integer year,Integer page,Integer limit);
+	Page<Orders> findAllByOrderByIdDesc(Integer page,Integer limit);
+	Page<Orders> findByDayMonthYearAndStatus(Integer day,Integer month,Integer year,Integer page,Integer limit,Integer status);
+	Page<Orders> findByStatusOrderByIdDesc(Integer status,Integer page,Integer limit);
+	List<Orders> findByIdContainingOrderByIdAsc(Integer keyword);
 }

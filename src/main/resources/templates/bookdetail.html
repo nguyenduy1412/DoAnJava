@@ -80,7 +80,7 @@
 										</div>
 										<div class="reviews-actions">
 											<a href="#">Kho: <span th:text="${book.wareHouse.quantity}"></span></a>
-											<a href="#" class="view"></a>
+											
 										</div>
 									</div>
 									<div class="product-info-price">
@@ -97,7 +97,7 @@
 											<div class="quality-button">
 												<input class="qty" type="number" name="quantity" value="1">
 											</div>
-											<button type="submit">Add to cart</button>
+											<button type="submit">Thêm vào giỏ hàng</button>
 										</form>
 									</div>
 									<div class="product-social-links">
@@ -105,7 +105,7 @@
 											<form th:action="@{/add-favourite}" method="post">
 
 												<input type="hidden" name="id" th:value="${book.id}" />
-												<button type="submit"><i class="fa fa-heart"></i></button>
+												<button class="btn-favourite" type="submit"><i class="fa fa-heart"></i></button>
 											</form>
 
 											<a href="#"><i class="fa fa-pie-chart"></i></a>

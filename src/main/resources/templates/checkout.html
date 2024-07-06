@@ -38,6 +38,7 @@
 				<div class="col-12">
 					<form th:object="${order}" method="post" th:action="@{postCheckout}">
 						<div class="row">
+							<input type="hidden" placeholder="" th:field="*{sumMoney}">
 							<div class="col-lg-6 col-md-12 col-12">
 								<div class="checkbox-form">
 									<h3>Chi tiết đơn hàng</h3>
@@ -65,12 +66,37 @@
 										</div>
 										<div class="col-lg-12 col-md-12 col-12">
 											<div class="checkout-form-list">
+												<label>Mã giảm giá</label>
+												<input type="text" name="discount_code" id="nameCode">
+											</div>
+										</div>
+										<div class="col-lg-12 col-md-12 col-12 scroll">
+
+											<div class="discountCode" th:each="list : ${listDiscount}">
+												<div>
+													<div>
+														<span class="quantity-discount">Giảm</span><span
+															class="money-discount" th:text="${#numbers.formatDecimal(list.money, 0, 'POINT', 0, 'COMMA')+ ' đ'}"></span>
+													</div>
+													<div class="quantity-discount">
+														Số lượng còn: <span th:text="${list.quantity}"></span>
+													</div>
+												</div>
+												<div class="nameCode" th:text="${list.nameCode}"></div>
+												<div>
+													<button type="button" class="btn-discount">Dùng</button>
+												</div>
+											</div>
+										</div>
+
+										<div class="col-lg-12 col-md-12 col-12">
+											<div class="checkout-form-list">
 												<label>Phương thức thanh toán<span class="required">*</span></label>
-												
-												<select th:field="*{methodPay.id}">
+
+												<select id="methodPaySelect" th:field="*{methodPay.id}" onchange="handleSelectChange()">
 													<option th:each="pay : ${listPay}" th:value="${pay.id}"
 														th:text="${pay.payName}">
-														</option>
+													</option>
 												</select>
 											</div>
 										</div>
@@ -80,9 +106,7 @@
 										<div class="order-notes">
 											<div class="checkout-form-list">
 												<label>Ghi chú</label>
-												<textarea
-													placeholder="..."
-													rows="10" cols="30" th:field="*{note}"
+												<textarea placeholder="..." rows="10" cols="30" th:field="*{note}"
 													id="checkout-mess"></textarea>
 											</div>
 										</div>
@@ -119,9 +143,15 @@
 											</tbody>
 											<tfoot>
 												<tr class="cart-subtotal">
+													<th>Mã giảm giá</th>
+													<td></td>
+													<td><span class="discount-code"></span>
+													</td>
+												</tr>
+												<tr class="cart-subtotal">
 													<th>Tổng tiền</th>
 													<td></td>
-													<td><span class="amount"
+													<td><span class="amount" id="moneyOld"
 															th:text="${#numbers.formatDecimal(order.sumMoney, 0, 'POINT', 0, 'COMMA')+ ' đ'}"></span>
 													</td>
 												</tr>
@@ -142,7 +172,7 @@
 												<tr class="order-total">
 													<th>Tiền phải trả</th>
 													<td></td>
-													<td><strong><span class="amount"
+													<td><strong><span class="amount" id="totalMoney"
 																th:text="${#numbers.formatDecimal(order.sumMoney, 0, 'POINT', 0, 'COMMA')+ ' đ'}"></span></strong>
 													</td>
 												</tr>
@@ -154,7 +184,7 @@
 											<div class="collapses-group">
 												<div class="panel-group" id="accordion" role="tablist"
 													aria-multiselectable="true">
-													
+
 													<div class="panel panel-default">
 														<div class="panel-heading" role="tab" id="headingThree">
 															<h4 class="panel-title">
@@ -219,6 +249,32 @@
 				}
 			});
 		})
+		function convertToNumber(inputString) {
+			// Loại bỏ các ký tự không phải số và dấu chấm
+			var numericPart = inputString.replace(/[^\d]/g, "");
+			// Chuyển đổi chuỗi thành số
+			return parseInt(numericPart, 10);
+		}
+		function handleSelectChange() {
+            var selectElement = document.getElementById('methodPaySelect');
+            var selectedValue = selectElement.value;
+            if(selectedValue==='1'){
+				
+			}
+        }
+		$('.btn-discount').click(function () {
+			// Tìm đến phần tử có class 'nameCode' gần nhất trong cùng khối cha với nút được nhấn
+			var discountCode = $(this).closest('.discountCode').find('.nameCode').text();
+			var result = $(this).closest('.discountCode').find('.money-discount').text();
+			// Đặt giá trị cho input mã giảm giá
+			var money=convertToNumber(result);
+			$('#nameCode').val(discountCode);
+			$('.discount-code').text(result);
+			var moneyOld=convertToNumber($('#moneyOld').text());
+			var totalMoney=moneyOld-money;
+			$('#totalMoney').text(formatPrice1(totalMoney));
+			$('#sumMoney').val(totalMoney)
+		});
 	</script>
 </body>
 
