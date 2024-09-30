@@ -76,6 +76,7 @@ public class Book {
 	@OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
 	@JsonIgnore
 	private Set<Recent_Products> recentProducts;
+	@JsonIgnore
 	@OneToOne(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
 	private WareHouse wareHouse;
 }

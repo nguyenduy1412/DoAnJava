@@ -55,6 +55,14 @@ public class FavouriteApi {
 	public FavouriteItem checkFavourite(@RequestParam("userId") long userId,@RequestParam("bookId") Integer bookId) {
 		Book book=this.bookService.findById(bookId);
 		Favourite favourite=this.favouriteService.findByUserId(userId);
+		User user=this.userService.findById(userId);
+		if(favourite==null)
+		{
+			favourite=new Favourite();
+			favourite.setUser(user);
+			this.favouriteService.create(favourite);
+			return null;
+		}		
 		FavouriteItem favouriteItem=this.favouriteItemService.findByFavouriteIdAndBookId(favourite.getId(), book.getId());
 		System.out.println(favouriteItem);
 		return favouriteItem;
@@ -64,11 +72,13 @@ public class FavouriteApi {
 		User user=this.userService.findById(request.getUserId());
 		Book book=this.bookService.findById(request.getBookId());
 	    Favourite favourite = favouriteService.findByUserId(user.getId());
+	    // nếu chưa có list favorite thì tạo mới 
 		if (favourite == null) {
 			favourite = new Favourite();
 			favourite.setUser(user);
 			this.favouriteService.create(favourite);
 		}
+		//add cái item vào favorite
 		FavouriteItem favouriteItem=new FavouriteItem();
 		favouriteItem.setBook(book);
 		favouriteItem.setFavourite(favourite);
