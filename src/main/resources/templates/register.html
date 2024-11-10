@@ -40,6 +40,7 @@
 								<label>Tên đăng nhập<span>*</span></label>
 								<input type="text" th:field="*{userName}" />
 								<span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" class="text-danger"></span>
+								<span th:text="${error}" class="text-danger"></span>
 							</div>
 							<div class="single-login">
 								<label>Số điện thoại<span>*</span></label>

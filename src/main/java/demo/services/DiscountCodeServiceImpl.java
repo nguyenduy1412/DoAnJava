@@ -54,6 +54,12 @@ public class DiscountCodeServiceImpl implements DiscountCodeService{
 		return this.discountCodeRepository.findByNameCode(a);
 	}
 
+	@Override
+	public List<DiscountCode> getByQuantityGreaterThanEqual(Integer quantity) {
+		// TODO Auto-generated method stub
+		return this.discountCodeRepository.findByQuantityGreaterThanEqual(quantity);
+	}
+
 	
 
 	

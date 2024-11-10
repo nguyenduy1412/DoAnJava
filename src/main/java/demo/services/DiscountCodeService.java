@@ -12,4 +12,5 @@ public interface DiscountCodeService {
 	Boolean delete(Integer id);
 	DiscountCode findById(Integer id);
 	DiscountCode findByNameCode(String a);
+	List<DiscountCode> getByQuantityGreaterThanEqual(Integer quantity);
 }

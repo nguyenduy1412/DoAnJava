@@ -21,7 +21,7 @@ import demo.models.Category;
 import demo.services.AuthorService;
 
 @RestController
-@RequestMapping("/api/author")
+@RequestMapping("/api/discountCodeApi")
 public class DiscountCodeApi {
 	@Autowired
 	private AuthorService authorService;

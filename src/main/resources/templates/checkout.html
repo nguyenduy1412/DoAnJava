@@ -60,8 +60,9 @@
 										<div class="col-lg-12 col-md-12 col-12">
 											<div class="checkout-form-list">
 												<label>Số điện thoại<span class="required">*</span></label>
-												<input type="text" th:placeholder="${order.user.telephone}"
+												<input type="text" 
 													th:field="*{phone}">
+													<span class="text-danger" th:text="${errorMessage}"></span>
 											</div>
 										</div>
 										<div class="col-lg-12 col-md-12 col-12">

@@ -10,4 +10,5 @@ import demo.models.User;
 
 public interface DiscountCodeRepository extends JpaRepository<DiscountCode, Integer> {
 	DiscountCode findByNameCode(String a);
+	List<DiscountCode> findByQuantityGreaterThanEqual(int quantity);
 }

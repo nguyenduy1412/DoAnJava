@@ -84,12 +84,19 @@ public class CustomController {
 		return "register";
 	}
 	@PostMapping("/register")
-	public String doRegister(@Valid @ModelAttribute("user") User user,BindingResult bindingResult) {
+	public String doRegister(@Valid @ModelAttribute("user") User user,BindingResult bindingResult,Model model) {
 		if (bindingResult.hasErrors()) {
             System.out.println("ERRORR");
             return "register";
         }
+		String error="";
 		System.out.println("giá trị "+ bindingResult.hasErrors());
+		User check=userService.findByUserName(user.getUserName());
+		if(check!=null) {
+			error="Tên tài khoản bị trùng";
+			model.addAttribute("error", error);
+			return "register";
+		}
 		String pass=new BCryptPasswordEncoder().encode(user.getPassWord());
 		user.setPassWord(pass);
 		user.setEnabled(true);

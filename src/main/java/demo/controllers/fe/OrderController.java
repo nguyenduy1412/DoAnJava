@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -103,7 +105,7 @@ public class OrderController {
 		order.setMethodPay(pay);
 		model.addAttribute("listPay", listMethodPays);
 		model.addAttribute("order", order);
-		List<DiscountCode> listDiscount=this.discountCodeService.getAll();
+		List<DiscountCode> listDiscount=this.discountCodeService.getByQuantityGreaterThanEqual(1);
 		model.addAttribute("listDiscount", listDiscount);
 		System.out.println(order);
 		return "checkout";
@@ -111,7 +113,7 @@ public class OrderController {
 
 	@RequestMapping("/postCheckout")
 	public String postCheckout(HttpSession session, @ModelAttribute("order") Orders orders,
-			@RequestParam("discount_code") String nameCode) {
+			@RequestParam("discount_code") String nameCode,Model model) {
 		User user = (User) session.getAttribute("user");
 		
 		if (user == null) {
@@ -131,6 +133,22 @@ public class OrderController {
 		System.out.println("FullName "+orders.getUser().getFullName());
 		this.userService.update(user);
 		session.setAttribute("user", user);
+		try {
+			String regex="^(032|033|034|035|036|037|038|039|096|097|098|086|083|084|085|081|082|088|091|094|070|079|077|076|078|090|093|089|056|058|092|059|099)[0-9]{7}$";
+			
+			boolean isValid = Pattern.matches(regex, orders.getPhone());
+			if(isValid)
+			{
+				
+			}
+			else
+			{
+				 model.addAttribute("errorMessage", "Số điện thoại không hợp lệ. Vui lòng nhập đúng định dạng.");
+				return "redirect:/checkout";
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		Cart cart = cartService.findByUserId(user.getId());
 		orders.setUser(user);
 		orders.setDateOrder(new Date());
